@@ -4,67 +4,71 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-
-    
-    private SpriteRenderer spriteRenderer;
+    private const string BULLET_TAG = "Bullet";
     private Rigidbody2D rigidBody;
-
-
-    public float size = 2.0f;       //le kene private-olni
-
-
-    private void Start()
-    {
-        //valami valami random sprite
-
-        this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);    //megforgatja random szogben
-        this.transform.localScale = Vector3.one * this.size;
-
-        
-    }
+    private float size;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    public void Irany(Vector2 dir, float meret)
+    private void Start()
     {
-        if (meret == 2.0f)           //mekkora a meret, nagyobb a sebesseg
+        InitialForce();
+        this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);    //megforgatja random szogben
+    }
+
+
+    //Ha túl messze kerül az asteroida a playertõl akkor kitörlõdik
+    private void LateUpdate()
+    {
+        float distance = Vector2.Distance(this.transform.position, PlayerMovement.Instance.transform.position);
+        if (distance > 30f)
         {
-            rigidBody.AddForce(dir * Random.Range(5.0f, 10.0f));
+            AsteroidSpawner.Instance.DecreaseAsteroidCount();
+            Destroy(this.gameObject);
         }
-        else if (meret == 1.0f)
+    }
+
+    public void InitialForce()
+    {
+        float angle = Random.Range(0f, 2 * Mathf.PI);
+        Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+
+        if (size == 0.16f)           //mekkora a meret, nagyobb a sebesseg
         {
-            rigidBody.AddForce(dir * Random.Range(10.0f, 15.0f));
+            rigidBody.AddForce(direction * Random.Range(0.5f, 1f), ForceMode2D.Impulse);
+        }
+        else if (size == 0.08f)
+        {
+            rigidBody.AddForce(direction * Random.Range(1f, 2f), ForceMode2D.Impulse);
         }
         else
         {
-            rigidBody.AddForce(dir * Random.Range(15.0f, 20.0f));
+            rigidBody.AddForce(direction * Random.Range(2f, 3f), ForceMode2D.Impulse);
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Bullet")
+        if(collision.gameObject.tag == BULLET_TAG)
         {
-            if((this.size / 2) >= 0.5f)
-            {
-                Vector2 pos = this.transform.position;
-                pos = pos + (Random.insideUnitCircle / 2);
-
-                Asteroid miniAsteroid1 = Instantiate(this, pos, this.transform.rotation);
-                Asteroid miniAsteroid2 = Instantiate(this, pos, this.transform.rotation);
-
-                miniAsteroid1.size = this.size / 2;
-                miniAsteroid2.size = this.size / 2;
-
-                miniAsteroid1.Irany(Random.insideUnitCircle.normalized * 5.0f, miniAsteroid1.size);
-                miniAsteroid2.Irany(Random.insideUnitCircle.normalized * 5.0f, miniAsteroid2.size);
-            }
+             if((this.size) > 0.04f)
+             {
+                 Vector2 pos = this.transform.position;
+                 pos = pos + (Random.insideUnitCircle / 2);
+                 
+                 AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
+                 AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
+             }
+            AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
         }
+    }
+
+    public void SetSize(float size)
+    {
+        this.size = size;
     }
 }

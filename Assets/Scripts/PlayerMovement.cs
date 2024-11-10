@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance { get; private set; }
+
     public Bullet Lovedek;
     
     private Rigidbody2D _rigidbody;
 
-    private bool _raketa;
+    private bool forwardMovement;
+    private bool backwardMovement;
 
     private float _forog;
 
@@ -16,7 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float forogSebesseg = 1.0f;
 
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -25,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _raketa = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
-
+        forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
+        backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             _forog = 1.0f;
@@ -44,16 +50,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_raketa)
-        {
-            _rigidbody.AddForce(this.transform.up * this.sebesseg);
-        }
-
-        if (_forog != 0.0f)
-        {
-            _rigidbody.AddTorque(_forog * this.forogSebesseg);
-        }
-
+        if (forwardMovement) _rigidbody.AddForce(this.transform.up * this.sebesseg);
+        if (backwardMovement) _rigidbody.AddForce(-this.transform.up * this.sebesseg / 2);
+        if (_forog != 0.0f) _rigidbody.AddTorque(_forog * this.forogSebesseg);
     }
 
     private void Shoot()

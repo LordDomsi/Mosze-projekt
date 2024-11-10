@@ -4,27 +4,64 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    public Asteroid aszteroida;
+    public static AsteroidSpawner Instance {  get; private set; }
 
-    [SerializeField] private float AsteroidSpawnRate = 10.0f;
+    [SerializeField] private float asteroidSpawnRate; // asteroidák spawnolása közti idõ
+    [SerializeField] private int asteroidMaxNumber; // egyszerre létezõ maximális asteroid szám
+     private int asteroidCurrentNumber = 0; // jelenlegi asteroidok száma
+    [SerializeField] private List<GameObject> AsteroidList = new List<GameObject>(); //Lehetséges asteroid prefabok
+    [SerializeField] private GameObject asteroidSpawnRange1; // a kamerához csatolt gameobjectek amik meghatározzák az asteroidák spawn helyét
+    [SerializeField] private GameObject asteroidSpawnRange2;
 
-    private float[] asteroidMekkora = new float[3] { 0.5f, 1.0f, 2.0f };        //kicsi, kozepes, nagy
+    private float[] asteroidMekkora = new float[3] { 0.04f, 0.08f, 0.16f };        //kicsi, kozepes, nagy
 
-    void Start()
+    private float time = 0.0f;
+
+    private void Awake()
     {
-        InvokeRepeating(nameof(spawn), this.AsteroidSpawnRate, this.AsteroidSpawnRate);
+        Instance = this;
     }
 
-    private void spawn()           //bug: amikor a spawn megtortenik, lemasolja a jelenleg elo asteroidakat is, javitva!!!
+    //Timer
+    private void Update()
     {
-        Vector3 SpawnPos = new Vector3(Random.Range(-15.0f, 15.0f), Random.Range(-15.0f, 15.0f), 1);
+        time += Time.deltaTime;
+        if(time > asteroidSpawnRate && asteroidCurrentNumber<asteroidMaxNumber)
+        {
+            Vector2 spawnPosition = GenerateSpawnPosition();
 
+            float size = asteroidMekkora[Random.Range(0, asteroidMekkora.Length)];
+            SpawnAsteroid(spawnPosition, size);
+            
+            time = 0.0f;
+        }
+    }
+
+    //Aszteroid spawnolás
+    public void SpawnAsteroid(Vector2 spawnPos, float size)
+    {
         float var = Random.Range(-15.0f, 15.0f);
         Quaternion rot = Quaternion.AngleAxis(var, Vector3.forward);
 
-        Asteroid asteroid = Instantiate(aszteroida, SpawnPos, rot);
-        asteroid.size = Random.Range(0, asteroidMekkora.Length);
-        asteroid.Irany(rot * -SpawnPos, asteroid.size);
+        GameObject newAsteroid = Instantiate(AsteroidList[Random.Range(0, AsteroidList.Count)], spawnPos, rot);
+        
+        newAsteroid.GetComponent<Asteroid>().SetSize(size);
+        newAsteroid.transform.localScale = new Vector3(size, size, size);
+
+        asteroidCurrentNumber++;
+    }
+
+
+    //spawn pozicíó generálása
+    private Vector2 GenerateSpawnPosition()
+    {
+        Vector2 spawnPos = new Vector2(Random.Range(asteroidSpawnRange1.transform.position.x, asteroidSpawnRange2.transform.position.x), Random.Range(asteroidSpawnRange1.transform.position.y, asteroidSpawnRange2.transform.position.y));
+        return spawnPos;
+    }
+
+    public void DecreaseAsteroidCount()
+    {
+        asteroidCurrentNumber--;
     }
 
     

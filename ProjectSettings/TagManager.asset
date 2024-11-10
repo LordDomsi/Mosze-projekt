@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bullet
   - Asteroid
+  - EnemyBullet
+  - HeroBullet
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - player
   - bullet
   - asteroid
-  - 
+  - boundary
   - 
   - 
   - 

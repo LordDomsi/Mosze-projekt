@@ -122,6 +122,39 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &76247663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76247664}
+  m_Layer: 6
+  m_Name: AsteroidSpawnRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &76247664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76247663}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.12}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 996191337}
+  - {fileID: 636064633}
+  m_Father: {fileID: 519420032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &78730527
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +208,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7fbf1467f7b999344b953cec07d8db3a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -426,6 +459,38 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &107521270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107521271}
+  m_Layer: 6
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107521271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107521270}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.064, z: 0}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.12}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 117608550}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117608545
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lovedek: {fileID: -7587794966777120920, guid: 1df96d79d0d23fa4b813731cc3e3a9ab, type: 3}
   sebesseg: 3.5
-  forogSebesseg: 0.0025
+  forogSebesseg: 0.002
 --- !u!61 &117608547
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -593,12 +658,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117608545}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.064, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 0.12}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 107521271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -690,7 +755,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.064, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 76247664}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
@@ -809,7 +875,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568041742}
   - component: {fileID: 568041741}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,6 +941,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 655263223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &636064632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636064633}
+  m_Layer: 6
+  m_Name: Range2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &636064633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636064632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 400, y: 120, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 76247664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655263222
 GameObject:
@@ -1017,6 +1114,37 @@ MonoBehaviour:
   m_AmplitudeGain: 1
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &996191336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996191337}
+  m_Layer: 6
+  m_Name: Range1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &996191337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996191336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 210, y: -120, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 76247664}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1396487638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396487639}
   - component: {fileID: 1396487640}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boundary (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412517196}
   - component: {fileID: 1412517195}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boundary (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1182,7 +1310,7 @@ GameObject:
   - component: {fileID: 1637838156}
   - component: {fileID: 1637838155}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: AsteroidSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,8 +1328,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214087be865bc914f81f6c97d3b75405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aszteroida: {fileID: -1531795180581154207, guid: b9b2cf99ee7684942a69d47b8731b589, type: 3}
-  AsteroidSpawnRate: 3
+  asteroidSpawnRate: 0.5
+  asteroidMaxNumber: 16
+  AsteroidList:
+  - {fileID: 4597309596597444569, guid: 6914ffa85dda0a6428cdeb98494d20e4, type: 3}
+  - {fileID: 4795639675078868767, guid: 1d17f2835391f7040bb6e35caa4181f8, type: 3}
+  - {fileID: 7783171326262141514, guid: 81ab5efc48fafdc49aa129658e69abc5, type: 3}
+  - {fileID: 6807841445448700096, guid: a02edb39b79a86c4695b691209dac11b, type: 3}
+  - {fileID: 844697772583628979, guid: a91c42502c386dd43b240659bff6b731, type: 3}
+  asteroidSpawnRange1: {fileID: 996191336}
+  asteroidSpawnRange2: {fileID: 636064632}
 --- !u!4 &1637838156
 Transform:
   m_ObjectHideFlags: 0
@@ -1227,7 +1363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2037873658}
   - component: {fileID: 2037873657}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boundary (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1346,6 +1482,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 2128337296}
   - {fileID: 655263223}
-  - {fileID: 117608550}
+  - {fileID: 107521271}
   - {fileID: 1637838156}
   - {fileID: 555383568}
