@@ -10,8 +10,8 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private int asteroidMaxNumber; // egyszerre létezõ maximális asteroid szám
      private int asteroidCurrentNumber = 0; // jelenlegi asteroidok száma
     [SerializeField] private List<GameObject> AsteroidList = new List<GameObject>(); //Lehetséges asteroid prefabok
-    [SerializeField] private GameObject asteroidSpawnRange1; // a kamerához csatolt gameobjectek amik meghatározzák az asteroidák spawn helyét
-    [SerializeField] private GameObject asteroidSpawnRange2;
+    [SerializeField] private Transform asteroidSpawnRange1; // a kamerához csatolt gameobjectek amik meghatározzák az asteroidák spawn helyét
+    [SerializeField] private Transform asteroidSpawnRange2;
 
     private float[] asteroidMekkora = new float[3] { 0.04f, 0.08f, 0.16f };        //kicsi, kozepes, nagy
 
@@ -28,7 +28,7 @@ public class AsteroidSpawner : MonoBehaviour
         time += Time.deltaTime;
         if(time > asteroidSpawnRate && asteroidCurrentNumber<asteroidMaxNumber)
         {
-            Vector2 spawnPosition = GenerateSpawnPosition();
+            Vector2 spawnPosition = SpawnPositionGenerator.GenerateSpawnPosition(asteroidSpawnRange1,asteroidSpawnRange2);
 
             float size = asteroidMekkora[Random.Range(0, asteroidMekkora.Length)];
             SpawnAsteroid(spawnPosition, size);
@@ -49,14 +49,6 @@ public class AsteroidSpawner : MonoBehaviour
         newAsteroid.transform.localScale = new Vector3(size, size, size);
 
         asteroidCurrentNumber++;
-    }
-
-
-    //spawn pozicíó generálása
-    private Vector2 GenerateSpawnPosition()
-    {
-        Vector2 spawnPos = new Vector2(Random.Range(asteroidSpawnRange1.transform.position.x, asteroidSpawnRange2.transform.position.x), Random.Range(asteroidSpawnRange1.transform.position.y, asteroidSpawnRange2.transform.position.y));
-        return spawnPos;
     }
 
     public void DecreaseAsteroidCount()

@@ -23,12 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2312673056509765871}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.75, y: 5, z: 289.79297}
   m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5874208858662701785}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4256370227845209066
 GameObject:
@@ -53,12 +54,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4256370227845209066}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.85, y: 5, z: 289.79297}
   m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5874208858662701785}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5956380156563035849
 GameObject:
@@ -70,14 +72,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5874208858662701785}
   - component: {fileID: 2142563959165559217}
-  - component: {fileID: -2687430241351865025}
-  - component: {fileID: 1017229087129891683}
   - component: {fileID: 2196486811501629842}
   - component: {fileID: 1458173015284019745}
   - component: {fileID: 1015503167631181117}
   - component: {fileID: 5290649535284166130}
   m_Layer: 6
-  m_Name: Enemy_03
+  m_Name: StageTwoEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,15 +90,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5956380156563035849}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7223146661362413713}
   - {fileID: 2792440222361184909}
   - {fileID: 8319544336308845414}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2142563959165559217
 SpriteRenderer:
@@ -111,6 +112,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -151,41 +153,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2687430241351865025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5956380156563035849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a0d9aef15bd39468dd366120d47f89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HitEffect: {fileID: 891779620237815634, guid: 0ff604493066c8c4793be2a6fc99fe0c, type: 3}
-  ExplosionSound: {fileID: 8300000, guid: ad5b06002657521479bfa1dde8fdb46d, type: 3}
-  Health: 50
---- !u!114 &1017229087129891683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5956380156563035849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c701333889daf4b842a70e49f79919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirePoints:
-  - {fileID: 2792440222361184909}
-  - {fileID: 8319544336308845414}
-  BulletPrefab: {fileID: 129647278509321024, guid: 9140a5ee26d7cb1458966e0b10ede509, type: 3}
-  MainAudioSource: {fileID: 2196486811501629842}
-  LaserShootSound: {fileID: 8300000, guid: b7b3aeef5a392a446ae3eb4011dab114, type: 3}
-  BulletForce: 150
-  FireRate: 0.5
 --- !u!82 &2196486811501629842
 AudioSource:
   m_ObjectHideFlags: 0
@@ -292,6 +259,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -611,6 +597,7 @@ PolygonCollider2D:
       - {x: -3.31, y: -9.4}
       - {x: -3.25, y: -9.32}
       - {x: -3.21, y: -9.21}
+  m_UseDelaunayMesh: 0
 --- !u!61 &1015503167631181117
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -621,6 +608,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -654,6 +660,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -663,6 +675,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 5874208858662701785}
     m_Modifications:
     - target: {fileID: 143310348422820261, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
@@ -742,6 +755,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
 --- !u!4 &7223146661362413713 stripped
 Transform:
