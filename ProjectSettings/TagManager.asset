@@ -8,6 +8,8 @@ TagManager:
   - Asteroid
   - EnemyBullet
   - HeroBullet
+  - Enemy
+  - Boundary
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - bullet
   - asteroid
   - boundary
-  - 
+  - enemy
   - 
   - 
   - 

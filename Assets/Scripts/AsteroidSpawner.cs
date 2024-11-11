@@ -28,7 +28,7 @@ public class AsteroidSpawner : MonoBehaviour
         time += Time.deltaTime;
         if(time > asteroidSpawnRate && asteroidCurrentNumber<asteroidMaxNumber)
         {
-            Vector2 spawnPosition = SpawnPositionGenerator.GenerateSpawnPosition(asteroidSpawnRange1,asteroidSpawnRange2);
+            Vector2 spawnPosition = GenerateSpawnPosition(asteroidSpawnRange1,asteroidSpawnRange2);
 
             float size = asteroidMekkora[Random.Range(0, asteroidMekkora.Length)];
             SpawnAsteroid(spawnPosition, size);
@@ -56,5 +56,11 @@ public class AsteroidSpawner : MonoBehaviour
         asteroidCurrentNumber--;
     }
 
-    
+    public Vector2 GenerateSpawnPosition(Transform corner1, Transform corner2)
+    {
+        Vector2 spawnPos = new Vector2(Random.Range(corner1.position.x, corner2.position.x), Random.Range(corner1.position.y, corner2.position.y));
+        return spawnPos;
+    }
+
+
 }

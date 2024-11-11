@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private float eletIdo = 5.0f;
 
-
+    [SerializeField] private float bulletDamage = 1f;
 
     private void Awake()
     {
@@ -28,6 +28,15 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Asteroid")
+        {
+            Destroy(this.gameObject);
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<EnemyAI>().TakeDamage(bulletDamage);
+            Destroy(this.gameObject);
+        }
+        if (collision.gameObject.tag == "Boundary")
         {
             Destroy(this.gameObject);
         }

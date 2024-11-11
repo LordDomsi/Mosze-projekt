@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 5229681609687805932}
   - component: {fileID: -7534826811901151033}
   - component: {fileID: -2371575776545132204}
-  m_Layer: 6
+  - component: {fileID: -3841421988478195516}
+  m_Layer: 10
   m_Name: StageThreeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,6 +564,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-3841421988478195516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086067191987387682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3862580673e3da45bea19b61a297e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7869548253215329187
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5407293621787271242}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: FirePointLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1262561144332940512}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: FirePointRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,15 +652,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143310348422820261, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4128679586655631008, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6604183384418453397, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6795704718243366263, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_LocalPosition.y

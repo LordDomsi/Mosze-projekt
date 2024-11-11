@@ -60,6 +60,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
 
+
+        //ha pálya szélét érinti a hajó akkor teleportáljon a túloldalra
+        if(transform.position.y > 6.9f)
+        {
+            float newPosY = transform.position.y * -1 + 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+        if (transform.position.y < -6.9f)
+        {
+            float newPosY = transform.position.y * -1 - 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+
     }
 
     private void FixedUpdate()
