@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class BlackHole : MonoBehaviour
 {
-    [SerializeField]private Transform SpawnPosition;
+    
 
     //csak akkor jelenik meg a fekete lyuk amikor legyõztük az összes  ellenfelet
     private void Start()
@@ -23,17 +23,15 @@ public class BlackHole : MonoBehaviour
 
     private void EnemySpawner_OnEnemiesCleared(object sender, System.EventArgs e)
     {
-        if(StageManager.Instance.currentStage<3) this.gameObject.SetActive(true);
+        if (StageManager.Instance.currentStage < 3)
+        {
+            this.gameObject.SetActive(true);
+            PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
+        }
+        
     }
 
 
     //ha a player hozzáér betölti a következõ pályát
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.transform.position = SpawnPosition.position;// visszarakja a playert a kezdõhelyzetbe
-            if (StageManager.Instance.currentStage < 3) StageManager.Instance.NextStage();
-        }
-    }
+    
 }

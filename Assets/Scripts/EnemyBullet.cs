@@ -12,6 +12,10 @@ public class EnemyBullet : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetBulletDamage(float damage)
