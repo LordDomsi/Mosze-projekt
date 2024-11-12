@@ -31,6 +31,20 @@ public class Asteroid : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (transform.position.y > 6.9f)
+        {
+            float newPosY = transform.position.y * -1 + 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+        if (transform.position.y < -6.9f)
+        {
+            float newPosY = transform.position.y * -1 - 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+    }
+
     public void InitialForce()
     {
         float angle = Random.Range(0f, 2 * Mathf.PI);
