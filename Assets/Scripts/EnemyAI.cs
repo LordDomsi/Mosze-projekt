@@ -16,7 +16,6 @@ public class EnemyAI : MonoBehaviour
     private float enemyHealth;
     public event EventHandler OnEnemyActivated;
     public event EventHandler OnEnemyDisabled;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,6 +52,7 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             Destroy(gameObject);
+            EnemySpawner.Instance.DecreaseEnemyCount();
         }
     }
 

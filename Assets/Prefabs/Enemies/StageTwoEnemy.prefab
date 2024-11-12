@@ -651,7 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
-  bulletLifeTime: 5
+  bulletStartLocation: {fileID: 2792440222361184909}
 --- !u!1001 &671186756623128495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -667,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 143310348422820261, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 143310348422820261, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4128679586655631008, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
       propertyPath: m_Layer
