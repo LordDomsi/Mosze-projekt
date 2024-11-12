@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -33,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform bulletStartLocation;
 
+    public bool canMove = true;
+
     private void Awake()
     {
         Instance = this;
@@ -45,26 +48,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+        if (canMove)
         {
-            OnForwardStopped?.Invoke(this, EventArgs.Empty);
+            forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                OnForwardStopped?.Invoke(this, EventArgs.Empty);
+            }
+            backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                _forog = 1.0f;
+                OnTurnLeft?.Invoke(this, EventArgs.Empty);
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                _forog = -1.0f;
+                OnTurnRight?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                _forog = 0.0f;
+                OnStopTurn?.Invoke(this, EventArgs.Empty);
+            }
         }
-        backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            _forog = 1.0f;
-            OnTurnLeft?.Invoke(this, EventArgs.Empty);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
-            _forog = -1.0f;
-            OnTurnRight?.Invoke(this, EventArgs.Empty);
-        } else
-        {
-            _forog = 0.0f;
-            OnStopTurn?.Invoke(this, EventArgs.Empty);
-        }
-
         if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
 
 
@@ -98,6 +105,11 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
         newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+    }
+
+    public void StopPlayer()
+    {
+        _rigidbody.velocity = Vector2.zero;
     }
 
 }
