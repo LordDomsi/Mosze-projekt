@@ -6,6 +6,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Asteroid : MonoBehaviour
 {
+
     private const string BULLET_TAG = "Bullet";
     private Rigidbody2D rigidBody;
     private float size;
@@ -69,17 +70,24 @@ public class Asteroid : MonoBehaviour
     {
         if(collision.gameObject.tag == BULLET_TAG)
         {
-             if((this.size) > 0.04f)
+            Vector2 pos = this.transform.position;
+            if ((this.size) > 0.04f)
              {
-                 Vector2 pos = this.transform.position;
-                 pos = pos + (Random.insideUnitCircle / 2);
                  
+                 pos = pos + (Random.insideUnitCircle / 2);
+
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
              }
             AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
+
+            if (Random.Range(1, 100) < 6)        //Power-up 5% eséllyel spawnol
+            {
+                GetComponent<Powerups>().PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
+            }
         }
+        
     }
 
     public void SetSize(float size)
