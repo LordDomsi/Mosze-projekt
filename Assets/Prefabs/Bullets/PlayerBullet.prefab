@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4142828136224258647}
   - component: {fileID: -7587794966777120920}
   m_Layer: 7
-  m_Name: Lovedek
+  m_Name: PlayerBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,5 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47915513f2b32bb4fbad496ea0598314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LovSebesseg: 666
-  eletIdo: 5
+  bulletDamage: 1

@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance { get; private set; }
 
-    public Bullet Lovedek;
+    public GameObject Lovedek;
     
     private Rigidbody2D _rigidbody;
 
@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sebesseg = 1.0f;
 
     [SerializeField] private float forogSebesseg = 1.0f;
+
+    [SerializeField] private float LovSebesseg = 666.0f;
+
+    [SerializeField] private float eletIdo = 5.0f;
+
+    [SerializeField] private Transform bulletStartLocation;
 
     private void Awake()
     {
@@ -89,8 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shoot()
     {
-        Bullet bullet = Instantiate(this.Lovedek, this.transform.position, this.transform.rotation);
-        bullet.shoot(this.transform.up);
+        GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
+        newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
     }
 
 }

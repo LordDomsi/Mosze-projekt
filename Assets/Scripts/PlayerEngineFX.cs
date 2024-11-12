@@ -7,7 +7,7 @@ public class PlayerEngineFX : MonoBehaviour
     [SerializeField] private GameObject LeftEngine;
     [SerializeField] private GameObject RightEngine;
 
-    public PlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
 
     private bool forward = false;
 
