@@ -524,9 +524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d7a9b76c4850e499fa8d9a1992d99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lovedek: {fileID: -7587794966777120920, guid: 1df96d79d0d23fa4b813731cc3e3a9ab, type: 3}
+  Lovedek: {fileID: 8343992249122312408, guid: 1df96d79d0d23fa4b813731cc3e3a9ab, type: 3}
   sebesseg: 3.5
-  forogSebesseg: 0.002
+  forogSebesseg: 0.001
+  LovSebesseg: 666
+  eletIdo: 5
+  bulletStartLocation: {fileID: 1559334243}
 --- !u!61 &117608547
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -665,6 +668,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1625070233}
+  - {fileID: 1559334243}
   m_Father: {fileID: 107521271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &117608551
@@ -681,7 +685,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftEngine: {fileID: 1426859450}
   RightEngine: {fileID: 404291831}
-  playerMovement: {fileID: 0}
 --- !u!1 &404291831 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4128679586655631008, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
@@ -1569,6 +1572,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}
+--- !u!1 &1559334242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1559334243}
+  m_Layer: 6
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1559334243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559334242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 117608550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1625070233 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7885043540692690750, guid: c9421cf777959ab4bbe57e31eab23f57, type: 3}

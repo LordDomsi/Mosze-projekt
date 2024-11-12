@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 386298187277369731}
   - component: {fileID: 7350168424157362682}
   - component: {fileID: 5229681609687805932}
-  - component: {fileID: -7534826811901151033}
   - component: {fileID: -2371575776545132204}
   - component: {fileID: -3841421988478195516}
+  - component: {fileID: 4703060079090723409}
   m_Layer: 10
   m_Name: StageThreeEnemy
   m_TagString: Enemy
@@ -492,51 +492,6 @@ PolygonCollider2D:
       - {x: -4.71, y: -8.21}
       - {x: -4.41, y: -8.21}
   m_UseDelaunayMesh: 0
---- !u!61 &-7534826811901151033
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5086067191987387682}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.48, y: 20.48}
-    newSize: {x: 20.48, y: 20.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 20.48, y: 20.48}
-  m_EdgeRadius: 0
 --- !u!50 &-2371575776545132204
 Rigidbody2D:
   serializedVersion: 4
@@ -576,6 +531,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3862580673e3da45bea19b61a297e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4703060079090723409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086067191987387682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13650302465a7e8409e4627080c723b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
+  bulletLifeTime: 5
 --- !u!1 &7869548253215329187
 GameObject:
   m_ObjectHideFlags: 0
