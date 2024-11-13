@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     private bool PoweredUp = false;
 
     [SerializeField] private float PowerUpTimeLimit;
+    public bool canMove = true;
+
 
     private void Awake()
     {
@@ -55,30 +58,34 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+        if (canMove)
         {
-            OnForwardStopped?.Invoke(this, EventArgs.Empty);
+            forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                OnForwardStopped?.Invoke(this, EventArgs.Empty);
+            }
+            backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                _forog = 1.0f;
+                OnTurnLeft?.Invoke(this, EventArgs.Empty);
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                _forog = -1.0f;
+                OnTurnRight?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                _forog = 0.0f;
+                OnStopTurn?.Invoke(this, EventArgs.Empty);
+            }
         }
-        backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            _forog = 1.0f;
-            OnTurnLeft?.Invoke(this, EventArgs.Empty);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
-            _forog = -1.0f;
-            OnTurnRight?.Invoke(this, EventArgs.Empty);
-        } else
-        {
-            _forog = 0.0f;
-            OnStopTurn?.Invoke(this, EventArgs.Empty);
-        }
-
         if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
 
 
-        //ha pálya szélét érinti a hajó akkor teleportáljon a túloldalra
+        //ha pÃ¡lya szÃ©lÃ©t Ã©rinti a hajÃ³ akkor teleportÃ¡ljon a tÃºloldalra
         if(transform.position.y > 6.9f)
         {
             float newPosY = transform.position.y * -1 + 0.1f;
@@ -130,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        else       //sima lövedék
+        else       //sima lÃ¶vedÃ©k
         {
             GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
@@ -160,6 +167,11 @@ public class PlayerMovement : MonoBehaviour
             PoweredUp = true;
             PowerUpType = 3;
         }
+    }
+
+    public void StopPlayer()
+    {
+        _rigidbody.velocity = Vector2.zero;
     }
 
 }

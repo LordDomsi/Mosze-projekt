@@ -19,7 +19,6 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        EnemySpawner.Instance.SpawnAllEnemies();
         OnStageInit?.Invoke(this, EventArgs.Empty);
     }
 
