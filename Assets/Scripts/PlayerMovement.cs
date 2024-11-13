@@ -45,6 +45,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float PowerUpTimeLimit;
     public bool canMove = true;
 
+    public event EventHandler<OnThreeWayPowerUpPickupArgs> OnThreeWayPowerUpPickup;
+    public class OnThreeWayPowerUpPickupArgs: EventArgs
+    {
+        public float powerUpTimeLimit;
+    }
+
 
     private void Awake()
     {
@@ -152,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == POWERUP_TAG1)
         {
             StartCoroutine(PowerUpTimer());
+            OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit} );
             PoweredUp = true;
             PowerUpType = 1;
         } 
