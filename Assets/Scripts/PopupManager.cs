@@ -10,7 +10,7 @@ public class PopupManager : MonoBehaviour
     public static PopupManager Instance {  get; private set; }
 
     [SerializeField] private AnimationCurve BlackHoleCurve;
-    [SerializeField] private float blackHoleAnimSpeedMultiplier;
+    [SerializeField] private float blackHoleAnimSpeed;
     [SerializeField] private CinemachineVirtualCamera VirtualCamera;
     [SerializeField] private AnimationCurve ZoomInCurve;
     [SerializeField] private AnimationCurve ZoomOutCurve;
@@ -29,14 +29,15 @@ public class PopupManager : MonoBehaviour
     
 
     //alap animáció
-    public IEnumerator PopupCurveAnim(GameObject gameObject, float speedMultiplier, AnimationCurve curve)
+    public IEnumerator PopupCurveAnim(GameObject gameObject, float speed, AnimationCurve curve)
     {
         float curveTime = 0;
         float curveAmount = curve.Evaluate(curveTime);
-        while (curveTime < 1f)
+        while (curveTime < speed)
         {
-            curveTime += Time.deltaTime*speedMultiplier;
-            curveAmount = curve.Evaluate(curveTime);
+            curveTime += Time.deltaTime;
+            float t = Mathf.Clamp01(curveTime / speed);
+            curveAmount = curve.Evaluate(t);
             gameObject.transform.localScale = new Vector3 (curveAmount, curveAmount, curveAmount);
             yield return null;
         }
@@ -63,7 +64,7 @@ public class PopupManager : MonoBehaviour
 
     public void StartBlackHoleAnim(GameObject gameObject)
     {
-        StartCoroutine(PopupCurveAnim(gameObject, blackHoleAnimSpeedMultiplier, BlackHoleCurve));
+        StartCoroutine(PopupCurveAnim(gameObject, blackHoleAnimSpeed, BlackHoleCurve));
     }
 
     public void StartZoomInAnim()

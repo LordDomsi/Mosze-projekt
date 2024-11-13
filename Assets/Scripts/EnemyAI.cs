@@ -49,6 +49,8 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float playerBulletDamage)
     {
         enemyHealth = enemyHealth - playerBulletDamage;
+        EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
+        enemyHealthBar.UpdateHealthBar(enemyHealth, enemyTypeSO.enemyHealth);
         if (enemyHealth <= 0)
         {
             Destroy(gameObject);
@@ -60,6 +62,8 @@ public class EnemyAI : MonoBehaviour
     {
         this.enemyTypeSO = enemyType;
         enemyHealth = enemyType.enemyHealth;
+        EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
+        enemyHealthBar.UpdateHealthBar(enemyHealth, enemyTypeSO.enemyHealth);
     }
 
     private void LookTowardsPlayer()
