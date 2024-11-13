@@ -12,7 +12,7 @@ public class EnemyTypeScriptableObject : ScriptableObject
     public float enemyHealth;
     public float enemySpeed;
     public float enemyShootSpeed;
-    public float enemyDamage;
+    public int enemyDamage;
     public float enemyBulletSpeed;
     public List<int> enemyCountBasedOnStage;
 }
