@@ -33,11 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform bulletStartLocation;
 
-    private const string POWERUP_TAG = "PowerUp";
+    private const string POWERUP_TAG1 = "PowerUp1";
+    private const string POWERUP_TAG2 = "PowerUp2";
+    private const string POWERUP_TAG3 = "PowerUp3";
+
+    private int PowerUpType = 0;
 
     private bool PoweredUp = false;
 
-    private float PowerUpTime = 15.0f;
+    [SerializeField] private float PowerUpTimeLimit;
 
     private void Awake()
     {
@@ -85,11 +89,9 @@ public class PlayerMovement : MonoBehaviour
             float newPosY = transform.position.y * -1 - 0.1f;
             transform.position = new Vector2(transform.position.x, newPosY);
         }
-        if (PowerUpTime <= 15.0f)        //ameddig nem éri el a power-up time limitet számol felfelé
-        {
-            PowerUpTime += Time.deltaTime;
-        }
+
     }
+
 
     private void FixedUpdate()
     {
@@ -103,26 +105,29 @@ public class PlayerMovement : MonoBehaviour
         if (_forog != 0.0f) _rigidbody.AddTorque(_forog * this.forogSebesseg);
     }
 
+    private IEnumerator PowerUpTimer()
+    {
+        yield return new WaitForSeconds(PowerUpTimeLimit);
+        PoweredUp = false;
+    }
+
     private void Shoot()
     {
         if (PoweredUp)      //Power-uppok
         {
-            do
-            {
-                if (GetComponent<Powerups>().PowerUpID == 0)
+                if (PowerUpType == 1)       //three-way shot
                 {
                     GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
                     newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
 
-                    /*GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler);
-                    newBullet2.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+                    GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, 30) * this.transform.rotation);
+                    newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 30) * this.transform.up * this.LovSebesseg);
 
-                    GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, );
-                    newBullet3.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);*/
+                    GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -30) * this.transform.rotation);
+                    newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -30) * this.transform.up * this.LovSebesseg);
                 }
 
 
-            } while (PowerUpTime < 15.0f);
         }
 
         else       //sima lövedék
@@ -131,14 +136,29 @@ public class PlayerMovement : MonoBehaviour
             newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
         }
 
+        
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 turbo, 3 WIP
     {
-        if (collision.gameObject.tag == POWERUP_TAG)
+        if (collision.gameObject.tag == POWERUP_TAG1)
         {
-            PowerUpTime = 0.0f;
+            StartCoroutine(PowerUpTimer());
             PoweredUp = true;
+            PowerUpType = 1;
+        } 
+        else if(collision.gameObject.tag == POWERUP_TAG2)
+        {
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 2;
+        }
+        else if (collision.gameObject.tag == POWERUP_TAG3)
+        {
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 3;
         }
     }
 

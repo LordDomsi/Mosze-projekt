@@ -10,7 +10,9 @@ TagManager:
   - HeroBullet
   - Enemy
   - Boundary
-  - PowerUp
+  - PowerUp3
+  - PowerUp2
+  - PowerUp1
   layers:
   - Default
   - TransparentFX
