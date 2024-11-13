@@ -33,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform bulletStartLocation;
 
+    private const string POWERUP_TAG = "PowerUp";
+
+    private bool PoweredUp = false;
+
+    private float PowerUpTime = 15.0f;
+
     private void Awake()
     {
         Instance = this;
@@ -79,7 +85,10 @@ public class PlayerMovement : MonoBehaviour
             float newPosY = transform.position.y * -1 - 0.1f;
             transform.position = new Vector2(transform.position.x, newPosY);
         }
-
+        if (PowerUpTime <= 15.0f)        //ameddig nem éri el a power-up time limitet számol felfelé
+        {
+            PowerUpTime += Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -96,8 +105,41 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
-        newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+        if (PoweredUp)      //Power-uppok
+        {
+            do
+            {
+                if (GetComponent<Powerups>().PowerUpID == 0)
+                {
+                    GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
+                    newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+
+                    /*GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler);
+                    newBullet2.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+
+                    GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, );
+                    newBullet3.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);*/
+                }
+
+
+            } while (PowerUpTime < 15.0f);
+        }
+
+        else       //sima lövedék
+        {
+            GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
+            newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == POWERUP_TAG)
+        {
+            PowerUpTime = 0.0f;
+            PoweredUp = true;
+        }
     }
 
 }
