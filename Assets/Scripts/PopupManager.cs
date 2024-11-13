@@ -16,7 +16,9 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private AnimationCurve ZoomOutCurve;
     [SerializeField] private AnimationCurve PowerUpUICurveOpen;
     [SerializeField] private AnimationCurve PowerUpUICurveClose;
+    [SerializeField] private AnimationCurve UIScaleForTransitionCurve;
     [SerializeField] private GameObject PowerUpUIGameObject;
+    [SerializeField] private GameObject UIGameObject;
 
     [SerializeField] private float zoomInAnimSpeed;
     [SerializeField] private float zoomOutAnimSpeed;
@@ -87,10 +89,12 @@ public class PopupManager : MonoBehaviour
         PlayerMovement.Instance.canMove = false;
         PlayerMovement.Instance.StopPlayer();
         StartZoomInAnim();
+        StartUIScaleAnimClose();
         yield return new WaitForSeconds(zoomInAnimSpeed);//pályaváltásnál meg kell várni hogy bezoomoljon az animáció és utána vált pályát
         player.transform.position = spawnPos.position;
         if (StageManager.Instance.currentStage < 3) StageManager.Instance.NextStage();
         StartZoomOutAnim();
+        StartUIScaleAnimOpen();
         PlayerMovement.Instance.canMove = true;
     }
 
@@ -122,6 +126,15 @@ public class PopupManager : MonoBehaviour
     public void Transition(GameObject player, Transform spawnPos)
     {
         StartCoroutine(TransitionZoom(player, spawnPos));
+    }
+
+    public void StartUIScaleAnimClose()
+    {
+        StartCoroutine(PopupCurveAnimReverse(UIGameObject, zoomInAnimSpeed, UIScaleForTransitionCurve));
+    }
+    public void StartUIScaleAnimOpen()
+    {
+        StartCoroutine(PopupCurveAnim(UIGameObject, zoomOutAnimSpeed, ZoomOutCurve));
     }
 
 }
