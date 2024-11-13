@@ -34,7 +34,17 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform bulletStartLocation;
 
+    private const string POWERUP_TAG1 = "PowerUp1";
+    private const string POWERUP_TAG2 = "PowerUp2";
+    private const string POWERUP_TAG3 = "PowerUp3";
+
+    private int PowerUpType = 0;
+
+    private bool PoweredUp = false;
+
+    [SerializeField] private float PowerUpTimeLimit;
     public bool canMove = true;
+
 
     private void Awake()
     {
@@ -75,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
 
 
-        //ha p·lya szÈlÈt Èrinti a hajÛ akkor teleport·ljon a t˙loldalra
+        //ha p√°lya sz√©l√©t √©rinti a haj√≥ akkor teleport√°ljon a t√∫loldalra
         if(transform.position.y > 6.9f)
         {
             float newPosY = transform.position.y * -1 + 0.1f;
@@ -89,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+
     private void FixedUpdate()
     {
         if (forwardMovement)
@@ -101,10 +112,61 @@ public class PlayerMovement : MonoBehaviour
         if (_forog != 0.0f) _rigidbody.AddTorque(_forog * this.forogSebesseg);
     }
 
+    private IEnumerator PowerUpTimer()
+    {
+        yield return new WaitForSeconds(PowerUpTimeLimit);
+        PoweredUp = false;
+    }
+
     private void Shoot()
     {
-        GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
-        newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+        if (PoweredUp)      //Power-uppok
+        {
+                if (PowerUpType == 1)       //three-way shot
+                {
+                    GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
+                    newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+
+                    GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, 30) * this.transform.rotation);
+                    newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 30) * this.transform.up * this.LovSebesseg);
+
+                    GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -30) * this.transform.rotation);
+                    newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -30) * this.transform.up * this.LovSebesseg);
+                }
+
+
+        }
+
+        else       //sima l√∂ved√©k
+        {
+            GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
+            newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+        }
+
+        
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 turbo, 3 WIP
+    {
+        if (collision.gameObject.tag == POWERUP_TAG1)
+        {
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 1;
+        } 
+        else if(collision.gameObject.tag == POWERUP_TAG2)
+        {
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 2;
+        }
+        else if (collision.gameObject.tag == POWERUP_TAG3)
+        {
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 3;
+        }
     }
 
     public void StopPlayer()

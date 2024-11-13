@@ -82,7 +82,7 @@ public class Asteroid : MonoBehaviour
             AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
 
-            if (Random.Range(1, 100) < 6)        //Power-up 5% eséllyel spawnol
+            if (Random.Range(1, 101) < 6)        //Power-up 5% eséllyel spawnol
             {
                 GetComponent<Powerups>().PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
             }

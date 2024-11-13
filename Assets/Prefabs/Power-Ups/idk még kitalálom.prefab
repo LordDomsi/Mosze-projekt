@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 527750602358879191}
   - component: {fileID: 5947956874894852276}
   - component: {fileID: -8857508999493797130}
+  - component: {fileID: 7136477622587582779}
   m_Layer: 12
   m_Name: "idk m\xE9g kital\xE1lom"
-  m_TagString: PowerUp
+  m_TagString: PowerUp3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,3 +159,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &7136477622587582779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512878726503520895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60389bfba9ab08419d09a10e29dfd5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PowerUpList: []
+  PowerUpID: 0
