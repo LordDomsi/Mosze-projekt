@@ -10,14 +10,21 @@ public class PopupManager : MonoBehaviour
     public static PopupManager Instance {  get; private set; }
 
     [SerializeField] private AnimationCurve BlackHoleCurve;
-    [SerializeField] private float blackHoleAnimSpeedMultiplier;
+    [SerializeField] private float blackHoleAnimSpeed;
     [SerializeField] private CinemachineVirtualCamera VirtualCamera;
     [SerializeField] private AnimationCurve ZoomInCurve;
     [SerializeField] private AnimationCurve ZoomOutCurve;
-    [SerializeField] float zoomInAnimSpeed;
-    [SerializeField] float zoomOutAnimSpeed;
-    [SerializeField] float zoomInSize;
-    [SerializeField] float zoomOutSize;
+    [SerializeField] private AnimationCurve PowerUpUICurveOpen;
+    [SerializeField] private AnimationCurve PowerUpUICurveClose;
+    [SerializeField] private AnimationCurve UIScaleForTransitionCurve;
+    [SerializeField] private GameObject PowerUpUIGameObject;
+    [SerializeField] private GameObject UIGameObject;
+
+    [SerializeField] private float zoomInAnimSpeed;
+    [SerializeField] private float zoomOutAnimSpeed;
+    [SerializeField] private float zoomInSize;
+    [SerializeField] private float zoomOutSize;
+    public float powerUpUIAnimSpeed;
 
     
 
@@ -29,19 +36,36 @@ public class PopupManager : MonoBehaviour
     
 
     //alap animáció
-    public IEnumerator PopupCurveAnim(GameObject gameObject, float speedMultiplier, AnimationCurve curve)
+    public IEnumerator PopupCurveAnim(GameObject gameObject, float speed, AnimationCurve curve)
     {
         float curveTime = 0;
         float curveAmount = curve.Evaluate(curveTime);
-        while (curveTime < 1f)
+        while (curveTime < speed)
         {
-            curveTime += Time.deltaTime*speedMultiplier;
-            curveAmount = curve.Evaluate(curveTime);
+            curveTime += Time.deltaTime;
+            float t = Mathf.Clamp01(curveTime / speed);
+            curveAmount = curve.Evaluate(t);
             gameObject.transform.localScale = new Vector3 (curveAmount, curveAmount, curveAmount);
             yield return null;
         }
 
     }
+    public IEnumerator PopupCurveAnimReverse(GameObject gameObject, float speed, AnimationCurve curve)
+    {
+        float curveTime = 0;
+        float curveAmount = curve.Evaluate(curveTime);
+        while (curveTime < speed)
+        {
+            curveTime += Time.deltaTime;
+            float t = Mathf.Clamp01(curveTime / speed);
+            curveAmount = curve.Evaluate(t);
+            curveAmount = 1 - curveAmount;
+            gameObject.transform.localScale = new Vector3(curveAmount, curveAmount, curveAmount);
+            yield return null;
+        }
+
+    }
+
     //kamera zoom animáció
     public IEnumerator CameraZoomAnim(AnimationCurve curve, float targetSize, float zoomAnimSpeed)
     {
@@ -60,10 +84,23 @@ public class PopupManager : MonoBehaviour
 
         VirtualCamera.m_Lens.OrthographicSize = targetSize;
     }
+    public IEnumerator TransitionZoom(GameObject player, Transform spawnPos)
+    {
+        PlayerMovement.Instance.canMove = false;
+        PlayerMovement.Instance.StopPlayer();
+        StartZoomInAnim();
+        StartUIScaleAnimClose();
+        yield return new WaitForSeconds(zoomInAnimSpeed);//pályaváltásnál meg kell várni hogy bezoomoljon az animáció és utána vált pályát
+        player.transform.position = spawnPos.position;
+        if (StageManager.Instance.currentStage < 3) StageManager.Instance.NextStage();
+        StartZoomOutAnim();
+        StartUIScaleAnimOpen();
+        PlayerMovement.Instance.canMove = true;
+    }
 
     public void StartBlackHoleAnim(GameObject gameObject)
     {
-        StartCoroutine(PopupCurveAnim(gameObject, blackHoleAnimSpeedMultiplier, BlackHoleCurve));
+        StartCoroutine(PopupCurveAnim(gameObject, blackHoleAnimSpeed, BlackHoleCurve));
     }
 
     public void StartZoomInAnim()
@@ -76,22 +113,28 @@ public class PopupManager : MonoBehaviour
         StartCoroutine(CameraZoomAnim(ZoomOutCurve, zoomOutSize, zoomOutAnimSpeed));
     }
 
-    
-    public IEnumerator TransitionZoom(GameObject player, Transform spawnPos)
+    public void StartPowerUpUIAnimOpen()
     {
-        PlayerMovement.Instance.canMove = false;
-        PlayerMovement.Instance.StopPlayer();
-        StartZoomInAnim();
-        yield return new WaitForSeconds(zoomInAnimSpeed);//pályaváltásnál meg kell várni hogy bezoomoljon az animáció és utána vált pályát
-        player.transform.position =spawnPos.position;
-        if (StageManager.Instance.currentStage < 3) StageManager.Instance.NextStage();
-        StartZoomOutAnim();
-        PlayerMovement.Instance.canMove = true;
+        StartCoroutine(PopupCurveAnim(PowerUpUIGameObject, powerUpUIAnimSpeed, PowerUpUICurveOpen));
+    }
+
+    public void StartPowerUpUIAnimClose()
+    {
+        StartCoroutine(PopupCurveAnimReverse(PowerUpUIGameObject, powerUpUIAnimSpeed, PowerUpUICurveClose));
     }
 
     public void Transition(GameObject player, Transform spawnPos)
     {
         StartCoroutine(TransitionZoom(player, spawnPos));
+    }
+
+    public void StartUIScaleAnimClose()
+    {
+        StartCoroutine(PopupCurveAnimReverse(UIGameObject, zoomInAnimSpeed, UIScaleForTransitionCurve));
+    }
+    public void StartUIScaleAnimOpen()
+    {
+        StartCoroutine(PopupCurveAnim(UIGameObject, zoomOutAnimSpeed, ZoomOutCurve));
     }
 
 }
