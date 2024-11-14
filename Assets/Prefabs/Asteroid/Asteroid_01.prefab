@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3693604464092310601}
   - component: {fileID: -117477349419720332}
   - component: {fileID: 713330850622971029}
+  - component: {fileID: 6416084334142156795}
   m_Layer: 8
   m_Name: Asteroid_01
   m_TagString: Asteroid
@@ -285,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac52647da6e251d4893ab31261a30045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsWorthList: 0f0000000a00000005000000
 --- !u!114 &713330850622971029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +303,19 @@ MonoBehaviour:
   - {fileID: 8106611013895732132, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
   - {fileID: 7690415043877031524, guid: fe7d2a45f049e4e4195a779703498a5f, type: 3}
   - {fileID: 6512878726503520895, guid: eeb712e7d2a33bf4eab68a8b9b3aec09, type: 3}
+  PowerUpID: 0
+--- !u!114 &6416084334142156795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597309596597444569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be01b1378f40fe141b70d9f7b4a15df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0.5, y: -0.5, z: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.54509807}
