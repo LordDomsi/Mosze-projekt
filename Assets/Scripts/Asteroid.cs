@@ -10,6 +10,7 @@ public class Asteroid : MonoBehaviour
     private const string BULLET_TAG = "Bullet";
     private Rigidbody2D rigidBody;
     private float size;
+    [SerializeField]private List<int> pointsWorthList;
 
     private void Awake()
     {
@@ -81,6 +82,10 @@ public class Asteroid : MonoBehaviour
              }
             AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
+
+            if (size == 0.04f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[0]); // méret szerint növeli a player score-t
+            if (size == 0.08f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[1]);
+            if (size == 0.16f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[2]);
 
             if (Random.Range(1, 101) < 6)        //Power-up 5% eséllyel spawnol
             {

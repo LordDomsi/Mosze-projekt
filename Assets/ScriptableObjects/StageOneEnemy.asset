@@ -19,4 +19,5 @@ MonoBehaviour:
   enemyShootSpeed: 1.5
   enemyDamage: 5
   enemyBulletSpeed: 400
+  pointsWorth: 100
   enemyCountBasedOnStage: 020000000000000000000000
