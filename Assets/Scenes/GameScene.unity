@@ -3733,7 +3733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidSpawnRate: 0.5
-  asteroidMaxNumber: 16
+  asteroidMaxNumber: 10
   AsteroidList:
   - {fileID: 4597309596597444569, guid: 6914ffa85dda0a6428cdeb98494d20e4, type: 3}
   - {fileID: 4795639675078868767, guid: 1d17f2835391f7040bb6e35caa4181f8, type: 3}
@@ -3858,6 +3858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1695286654}
+  - component: {fileID: 1695286655}
   m_Layer: 0
   m_Name: BossSpawner
   m_TagString: Untagged
@@ -3880,6 +3881,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1695286655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695286653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26173fb5816c50e448798e6acc80869e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Boss1SO: {fileID: 11400000, guid: b93d79efedfe2134783f7e583f54a9c0, type: 2}
+  Boss2SO: {fileID: 11400000, guid: ae9b0679263915d41ba6bb58c2ca1ce4, type: 2}
+  Boss3SO: {fileID: 11400000, guid: f1e27c35ffbc3704e860780d939f4804, type: 2}
 --- !u!1 &1725577985
 GameObject:
   m_ObjectHideFlags: 0
@@ -4626,63 +4642,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086135584}
   m_CullTransparentMesh: 1
---- !u!1001 &2107155777
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.2924194
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.1414185
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 991335494282296404, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8106611013895732132, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
-      propertyPath: m_Name
-      value: 3 way shot
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a987dc515abda784b9ec1003c0a76203, type: 3}
 --- !u!1 &2128337294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4796,5 +4755,4 @@ SceneRoots:
   - {fileID: 35324244}
   - {fileID: 1349997240}
   - {fileID: 1938857530}
-  - {fileID: 2107155777}
   - {fileID: 1695286654}

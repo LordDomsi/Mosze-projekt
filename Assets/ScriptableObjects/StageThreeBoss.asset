@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageThreeBoss
   m_EditorClassIdentifier: 
   enemyType: Boss3
-  enemyPrefab: {fileID: 5086067191987387682, guid: 591872c3724fc65489ee18bde66d3a2e, type: 3}
+  enemyPrefab: {fileID: 5086067191987387682, guid: 4d2d39d80fadc244998cdb2f09c14f2b, type: 3}
   enemyHealth: 0
   enemySpeed: 0
   enemyShootSpeed: 0

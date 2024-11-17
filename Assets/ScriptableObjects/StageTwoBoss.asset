@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageTwoBoss
   m_EditorClassIdentifier: 
   enemyType: Boss2
-  enemyPrefab: {fileID: 5956380156563035849, guid: e07829ad780235c448c9898eb825c661, type: 3}
+  enemyPrefab: {fileID: 5956380156563035849, guid: 4d2b48bc07cac504485b887ae09a875f, type: 3}
   enemyHealth: 0
   enemySpeed: 0
   enemyShootSpeed: 0

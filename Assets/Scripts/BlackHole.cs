@@ -23,10 +23,10 @@ public class BlackHole : MonoBehaviour
 
     private void EnemySpawner_OnEnemiesCleared(object sender, System.EventArgs e)
     {
-        if (StageManager.Instance.currentStage < 3)
+       if (StageManager.Instance.currentStage < 3)
         {
-            this.gameObject.SetActive(true);
-            PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
+           // this.gameObject.SetActive(true);
+            //PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
         }
         
     }
