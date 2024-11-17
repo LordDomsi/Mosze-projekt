@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 5229681609687805932}
   - component: {fileID: -2371575776545132204}
   - component: {fileID: 2442681239949086970}
+  - component: {fileID: -6568905960466713193}
   m_Layer: 10
   m_Name: StageThreeEnemyBoss
   m_TagString: Boss
@@ -684,6 +685,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 5588008763259747623}
   HealthBarParent: {fileID: 6351034292898098324}
+--- !u!114 &-6568905960466713193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086067191987387682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5d96745766881498d36294835d5799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPosition: {fileID: 0}
 --- !u!1 &5710894693504468476
 GameObject:
   m_ObjectHideFlags: 0

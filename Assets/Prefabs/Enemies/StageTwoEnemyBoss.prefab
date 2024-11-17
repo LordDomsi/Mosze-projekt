@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 1458173015284019745}
   - component: {fileID: 5290649535284166130}
   - component: {fileID: 6486537146965874076}
+  - component: {fileID: 269221217067466810}
   m_Layer: 10
   m_Name: StageTwoEnemyBoss
   m_TagString: Boss
@@ -969,6 +970,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 6893910156454516695}
   HealthBarParent: {fileID: 4142301587682660560}
+--- !u!114 &269221217067466810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956380156563035849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5d96745766881498d36294835d5799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPosition: {fileID: 0}
 --- !u!1001 &671186756623128495
 PrefabInstance:
   m_ObjectHideFlags: 0

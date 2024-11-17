@@ -30,7 +30,7 @@ public class BossSpawner : MonoBehaviour
         GameObject newBoss = Instantiate(Boss.enemyPrefab, bossPos, Quaternion.identity);
         newBoss.transform.localScale = new Vector2(0.16f, 0.16f);
         newBoss.transform.rotation = Quaternion.Euler(0, 0, 90);
-
+        newBoss.GetComponent<BossAI>().SetBossType(Boss);
 
     }
 }

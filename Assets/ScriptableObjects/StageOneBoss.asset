@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Boss1
   enemyPrefab: {fileID: 1116344592514689231, guid: 3e283caf47caf884b8622d9470a2b8ee, type: 3}
-  enemyHealth: 0
-  enemySpeed: 0
+  enemyHealth: 5
+  enemySpeed: 2
   enemyShootSpeed: 0
   enemyDamage: 0
   enemyBulletSpeed: 0
