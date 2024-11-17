@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f49e63de2f9ee4e9db07bb44711e32, type: 3}
+  m_Name: StageThreeBoss
+  m_EditorClassIdentifier: 
+  enemyType: Boss3
+  enemyPrefab: {fileID: 5086067191987387682, guid: 591872c3724fc65489ee18bde66d3a2e, type: 3}
+  enemyHealth: 0
+  enemySpeed: 0
+  enemyShootSpeed: 0
+  enemyDamage: 0
+  enemyBulletSpeed: 0
+  pointsWorth: 0
+  enemyCountBasedOnStage: 
