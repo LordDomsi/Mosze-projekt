@@ -164,6 +164,8 @@ GameObject:
   - component: {fileID: 7350168424157362682}
   - component: {fileID: 5229681609687805932}
   - component: {fileID: -2371575776545132204}
+  - component: {fileID: 6425276823825867615}
+  - component: {fileID: -8894587869156887928}
   - component: {fileID: 2442681239949086970}
   - component: {fileID: -6568905960466713193}
   m_Layer: 10
@@ -671,6 +673,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6425276823825867615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086067191987387682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be01b1378f40fe141b70d9f7b4a15df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 1, y: -1, z: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &-8894587869156887928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086067191987387682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 606bd6dd06ae28548bb3c05e8814cee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColor: {r: 0.7921569, g: 0.40784314, b: 0.29411766, a: 0.19215687}
 --- !u!114 &2442681239949086970
 MonoBehaviour:
   m_ObjectHideFlags: 0

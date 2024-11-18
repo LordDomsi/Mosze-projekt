@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 117608553}
   - component: {fileID: 117608552}
   - component: {fileID: 117608555}
+  - component: {fileID: 117608557}
   - component: {fileID: 117608554}
   - component: {fileID: 117608556}
   m_Layer: 6
@@ -1153,6 +1154,19 @@ PolygonCollider2D:
       - {x: -2.6399999, y: -7.8599997}
       - {x: -2.34, y: -7.62}
   m_UseDelaunayMesh: 0
+--- !u!114 &117608557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117608545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 606bd6dd06ae28548bb3c05e8814cee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColor: {r: 1, g: 0, b: 0, a: 0.15686275}
 --- !u!1 &248652886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1557,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 2086135586}
+  Outline: {fileID: 1725577987}
+  Glow: {fileID: 504183081}
+  hitColor: {r: 0.6901961, g: 0, b: 0.007843138, a: 1}
 --- !u!1 &555383566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2314,6 +2331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 704204609}
+  increaseColor: {r: 1, g: 0.49411765, b: 0, a: 1}
 --- !u!1 &996191336
 GameObject:
   m_ObjectHideFlags: 0

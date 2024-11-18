@@ -194,6 +194,7 @@ public class BossAI : MonoBehaviour
     {
         bossHealth = bossHealth - playerBulletDamage;
         EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
+        this.gameObject.GetComponent<HitIndicator>().Hit();
         enemyHealthBar.UpdateHealthBar(bossHealth, bossTypeSO.enemyHealth);
         if (bossHealth <= 0)
         {
