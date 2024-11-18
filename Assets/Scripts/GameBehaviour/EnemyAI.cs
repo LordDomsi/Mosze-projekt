@@ -49,10 +49,12 @@ public class EnemyAI : MonoBehaviour
     {
         enemyHealth = enemyHealth - playerBulletDamage;
         EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
+        this.gameObject.GetComponent<HitIndicator>().Hit();
         enemyHealthBar.UpdateHealthBar(enemyHealth, enemyTypeSO.enemyHealth);
         if (enemyHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth);
+            ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth);
             Destroy(gameObject);
             EnemySpawner.Instance.DecreaseEnemyCount();
         }

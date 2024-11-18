@@ -55,7 +55,6 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.transform.rotation = Quaternion.Euler(0, 0, 90);
             newEnemy.GetComponent<EnemyAI>().SetEnemyType(enemy); // beállítja az enemy típust az enemyAI scriptben hogy az tudja milyen statjai vannak
             enemyCount++;
-            Debug.Log(enemyCount);
         }
     }
     public Vector2 GenerateSpawnPosition(Transform corner1, Transform corner2)

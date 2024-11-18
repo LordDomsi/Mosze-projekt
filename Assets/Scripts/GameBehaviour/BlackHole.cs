@@ -7,10 +7,10 @@ public class BlackHole : MonoBehaviour
 {
     private Vector3 offset = new Vector3(10f,0f,0f);
 
-    //csak akkor jelenik meg a fekete lyuk amikor legyõztük a jelenlegi stage bosst
+    //csak akkor jelenik meg a fekete lyuk amikor felvesszük a lokátort
     private void Start()
     {
-        BossSpawner.Instance.OnBossDeath += BossSpawner_OnBossDeath;
+        LocatorSpawner.Instance.OnLocatorPickup += BossSpawner_OnLocatorPickup;
         EnemySpawner.Instance.OnEnemiesSpawned += EnemySpawner_OnEnemiesSpawned;
 
         this.gameObject.SetActive(false);
@@ -21,9 +21,9 @@ public class BlackHole : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void BossSpawner_OnBossDeath(object sender, System.EventArgs e)
+    private void BossSpawner_OnLocatorPickup(object sender, System.EventArgs e)
     {
-       if (StageManager.Instance.currentStage < 3)
+        if (StageManager.Instance.currentStage < 3)
         {
             //megjelenés
             this.gameObject.SetActive(true);
@@ -36,7 +36,7 @@ public class BlackHole : MonoBehaviour
 
             PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
         }
-        
+
     }
-    
+
 }

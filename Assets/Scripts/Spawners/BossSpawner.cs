@@ -11,8 +11,6 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] private EnemyTypeScriptableObject Boss2SO;
     [SerializeField] private EnemyTypeScriptableObject Boss3SO;
 
-    public event EventHandler OnBossDeath;
-
     private void Awake()
     {
         Instance = this;
@@ -44,11 +42,5 @@ public class BossSpawner : MonoBehaviour
         newBoss.transform.rotation = Quaternion.Euler(0, 0, 90);
         newBoss.GetComponent<BossAI>().SetBossType(Boss);
 
-    }
-
-    public void BossDead()
-    {
-        //ha meghal akkor spawnol a feketelyuk
-        OnBossDeath?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -22,4 +22,6 @@ MonoBehaviour:
   pointsWorth: 300
   rotationSpeed: 25
   specialAttackShootSpeed: 0
+  specialAttackRotationSpeed: 0
+  twoFirePoints: 1
   enemyCountBasedOnStage: 000000000000000002000000

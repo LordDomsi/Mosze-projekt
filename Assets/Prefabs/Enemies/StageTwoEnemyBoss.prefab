@@ -404,6 +404,8 @@ GameObject:
   - component: {fileID: 2196486811501629842}
   - component: {fileID: 1458173015284019745}
   - component: {fileID: 5290649535284166130}
+  - component: {fileID: 2805660115502858888}
+  - component: {fileID: -1219407025260223851}
   - component: {fileID: 6486537146965874076}
   - component: {fileID: 269221217067466810}
   m_Layer: 10
@@ -956,6 +958,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2805660115502858888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956380156563035849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be01b1378f40fe141b70d9f7b4a15df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 1, y: -1, z: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &-1219407025260223851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956380156563035849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 606bd6dd06ae28548bb3c05e8814cee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColor: {r: 1, g: 0.5686275, b: 0.53333336, a: 0.19215687}
 --- !u!114 &6486537146965874076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,10 +1014,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
   bulletStartLocation: {fileID: 2792440222361184909}
+  bulletStartLocation2: {fileID: 8319544336308845414}
   basicAttackTime: 6
   specialAttackTime: 6
-  specialAttackRotationSpeed: 1.9
-  specialAttackShootingSpeed: 0.1
 --- !u!1001 &671186756623128495
 PrefabInstance:
   m_ObjectHideFlags: 0

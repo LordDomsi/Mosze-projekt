@@ -23,4 +23,5 @@ MonoBehaviour:
   rotationSpeed: 18
   specialAttackShootSpeed: 0
   specialAttackRotationSpeed: 0
+  twoFirePoints: 1
   enemyCountBasedOnStage: 000000000200000000000000

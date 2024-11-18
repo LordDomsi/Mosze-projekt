@@ -20,8 +20,16 @@ public class BossAI : MonoBehaviour
         Up,
         Down
     }
+
+    private enum ShootingPoint
+    {
+        Left,
+        Right
+    }
+    private ShootingPoint shootingPoint;
     [SerializeField] private GameObject enemyBulletPrefab;
     [SerializeField] private Transform bulletStartLocation;
+    [SerializeField] private Transform bulletStartLocation2;
     private Transform LookUp;
     private Transform LookDown;
     [SerializeField] private float basicAttackTime;
@@ -33,6 +41,7 @@ public class BossAI : MonoBehaviour
     private float specialAttackShootingTimer;
     private BossState bossState;
     private LookingTo looking;
+
 
     private void Awake()
     {
@@ -51,6 +60,7 @@ public class BossAI : MonoBehaviour
     private void Start()
     {
         bossState = BossState.BasicAttack;
+        shootingPoint = ShootingPoint.Left;
         looking = LookingTo.Up;
     }
 
@@ -155,20 +165,41 @@ public class BossAI : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject newEnemyBullet = Instantiate(enemyBulletPrefab, bulletStartLocation.position, this.transform.rotation);
+        GameObject newEnemyBullet = null;
+        if (!bossTypeSO.twoFirePoints)
+        {
+            newEnemyBullet = Instantiate(enemyBulletPrefab, bulletStartLocation.position, this.transform.rotation);
+            //a lespawnolt bulletnek átadjuk az enemy sebzését
+        }
+        else
+        {
+            //ha két lövési pontja van az enemynek akkor váltogat a kettõ között
+            switch (shootingPoint)
+            {
+                case ShootingPoint.Left:
+                    newEnemyBullet = Instantiate(enemyBulletPrefab, bulletStartLocation.position, this.transform.rotation);
+                    shootingPoint = ShootingPoint.Right;
+                    break;
+                case ShootingPoint.Right:
+                    newEnemyBullet = Instantiate(enemyBulletPrefab, bulletStartLocation2.position, this.transform.rotation);
+                    shootingPoint = ShootingPoint.Left;
+                    break;
+            }
+        }
         newEnemyBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.bossTypeSO.enemyBulletSpeed);
-        newEnemyBullet.GetComponent<EnemyBullet>().SetBulletDamage(bossTypeSO.enemyDamage); //a lespawnolt bulletnek átadjuk a boss sebzését
+        newEnemyBullet.GetComponent<EnemyBullet>().SetBulletDamage(bossTypeSO.enemyDamage);
     }
 
     public void TakeDamage(float playerBulletDamage)
     {
         bossHealth = bossHealth - playerBulletDamage;
         EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
+        this.gameObject.GetComponent<HitIndicator>().Hit();
         enemyHealthBar.UpdateHealthBar(bossHealth, bossTypeSO.enemyHealth);
         if (bossHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(bossTypeSO.pointsWorth);
-            BossSpawner.Instance.BossDead();
+            LocatorSpawner.Instance.Spawn(this.transform);
             Destroy(gameObject);
         }
     }
