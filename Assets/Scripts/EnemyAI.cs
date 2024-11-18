@@ -53,6 +53,7 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth);
+            ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth);
             Destroy(gameObject);
             EnemySpawner.Instance.DecreaseEnemyCount();
         }
