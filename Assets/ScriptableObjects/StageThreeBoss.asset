@@ -16,8 +16,11 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5086067191987387682, guid: 4d2d39d80fadc244998cdb2f09c14f2b, type: 3}
   enemyHealth: 15
   enemySpeed: 2
-  enemyShootSpeed: 0
-  enemyDamage: 0
-  enemyBulletSpeed: 0
-  pointsWorth: 0
+  enemyShootSpeed: 0.5
+  enemyDamage: 30
+  enemyBulletSpeed: 750
+  pointsWorth: 10000
+  rotationSpeed: 25
+  specialAttackShootSpeed: 0.1
+  specialAttackRotationSpeed: 70
   enemyCountBasedOnStage: 

@@ -982,7 +982,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5d96745766881498d36294835d5799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossPosition: {fileID: 0}
+  enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
+  bulletStartLocation: {fileID: 2792440222361184909}
+  basicAttackTime: 6
+  specialAttackTime: 6
+  specialAttackRotationSpeed: 1.9
+  specialAttackShootingSpeed: 0.1
 --- !u!1001 &671186756623128495
 PrefabInstance:
   m_ObjectHideFlags: 0

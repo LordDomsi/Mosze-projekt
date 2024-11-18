@@ -15,5 +15,8 @@ public class EnemyTypeScriptableObject : ScriptableObject
     public int enemyDamage;
     public float enemyBulletSpeed;
     public int pointsWorth;
+    public float rotationSpeed;
+    public float specialAttackShootSpeed;
+    public float specialAttackRotationSpeed;
     public List<int> enemyCountBasedOnStage;
 }
