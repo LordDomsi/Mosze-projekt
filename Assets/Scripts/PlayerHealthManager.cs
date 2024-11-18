@@ -21,7 +21,6 @@ public class PlayerHealthManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         playerHealth -= damage;
-        Debug.Log("taken damage");
         OnPlayerTakeDamage?.Invoke(this, EventArgs.Empty);
     }
 

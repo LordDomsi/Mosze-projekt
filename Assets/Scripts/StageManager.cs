@@ -25,6 +25,7 @@ public class StageManager : MonoBehaviour
     public void NextStage()
     {
         currentStage++;
+        Debug.Log("Current Stage: " + currentStage);
         OnStageInit?.Invoke(this, EventArgs.Empty);
     }
 
