@@ -199,7 +199,7 @@ public class BossAI : MonoBehaviour
         if (bossHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(bossTypeSO.pointsWorth);
-            BossSpawner.Instance.BossDead();
+            LocatorSpawner.Instance.Spawn(this.transform);
             Destroy(gameObject);
         }
     }
