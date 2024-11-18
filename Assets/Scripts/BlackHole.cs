@@ -5,12 +5,12 @@ using UnityEngine.Rendering;
 
 public class BlackHole : MonoBehaviour
 {
-    
+    private Vector3 offset = new Vector3(10f,0f,0f);
 
-    //csak akkor jelenik meg a fekete lyuk amikor legyõztük az összes  ellenfelet
+    //csak akkor jelenik meg a fekete lyuk amikor legyõztük a jelenlegi stage bosst
     private void Start()
     {
-        EnemySpawner.Instance.OnEnemiesCleared += EnemySpawner_OnEnemiesCleared;
+        BossSpawner.Instance.OnBossDeath += BossSpawner_OnBossDeath;
         EnemySpawner.Instance.OnEnemiesSpawned += EnemySpawner_OnEnemiesSpawned;
 
         this.gameObject.SetActive(false);
@@ -21,17 +21,22 @@ public class BlackHole : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void EnemySpawner_OnEnemiesCleared(object sender, System.EventArgs e)
+    private void BossSpawner_OnBossDeath(object sender, System.EventArgs e)
     {
-        if (StageManager.Instance.currentStage < 3)
+       if (StageManager.Instance.currentStage < 3)
         {
+            //megjelenés
             this.gameObject.SetActive(true);
+
+            //player pozicióhoz képest spawnol
+            Vector3 newPos = PlayerMovement.Instance.transform.position;
+            newPos.y = 0f;
+            newPos += offset;
+            this.transform.position = newPos;
+
             PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
         }
         
     }
-
-
-    //ha a player hozzáér betölti a következõ pályát
     
 }

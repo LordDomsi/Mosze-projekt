@@ -12,7 +12,6 @@ public class EnemyAI : MonoBehaviour
     private int direction = 1;
     private Rigidbody2D rb;
     private PolygonCollider2D polygonCollider;
-    private float rotationSpeed = 0.6f;
     private float enemyHealth;
     public event EventHandler OnEnemyActivated;
     public event EventHandler OnEnemyDisabled;
@@ -72,7 +71,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 direction = PlayerMovement.Instance.transform.position - transform.position; // a player felé nézzen az enemy
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemyTypeSO.rotationSpeed * Time.deltaTime);
     }
 
     private void MovementHandle(float distance)
