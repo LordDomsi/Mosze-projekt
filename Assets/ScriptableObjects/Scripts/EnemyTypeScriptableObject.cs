@@ -18,5 +18,6 @@ public class EnemyTypeScriptableObject : ScriptableObject
     public float rotationSpeed;
     public float specialAttackShootSpeed;
     public float specialAttackRotationSpeed;
+    public bool twoFirePoints;
     public List<int> enemyCountBasedOnStage;
 }

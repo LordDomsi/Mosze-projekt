@@ -699,10 +699,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
   bulletStartLocation: {fileID: 5407293621787271242}
+  bulletStartLocation2: {fileID: 1262561144332940512}
   basicAttackTime: 5
   specialAttackTime: 5
-  specialAttackRotationSpeed: 2
-  specialAttackShootingSpeed: 0.05
 --- !u!1 &5710894693504468476
 GameObject:
   m_ObjectHideFlags: 0

@@ -698,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
   bulletStartLocation: {fileID: 5407293621787271242}
+  bulletStartLocation2: {fileID: 1262561144332940512}
 --- !u!114 &2442681239949086970
 MonoBehaviour:
   m_ObjectHideFlags: 0
