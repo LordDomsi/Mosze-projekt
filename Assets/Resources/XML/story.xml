@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story>
+	<backstory>
+		<section>2097-ben az emberiség végleg elhagyta a Földet, miután a globális felmelegedés pusztító hatásai élhetetlenné tették a bolygót. A túlélők több hatalmas, űrjáró városba költöztek, ahol százezrek utaztak az ismeretlen felé, egy új otthont keresve a csillagok között.</section>
+		<section>A technológiai fejlődésük csúcsán álltak, de még így sem volt elég élelmük a végtelennek tűnő útra. Tíz év elteltével az ételkészleteik 90%-a elfogyott, ezért a vezetők drasztikus döntést hoztak.</section>
+		<section>A mesterséges intelligencia és a robotok irányításával a lakosságot hibernálták. Az emberek aludtak, míg az űrhajóik némán sodródtak az űrben, várva, hogy egy lakható bolygóra bukkanjanak.</section>
+		<section>Ennek ellenére elérkezett 2150, és az emberiség még mindig a végtelen űr foglya volt.</section>
+		<section>Az egyik város-hajót, a GIVTech-et, amely Győrből indult, egy rejtélyes és ellenséges faj, a Lexadariták támadták meg. Ezek a kegyetlen idegenek elfoglalták a hajót, és az emberi túlélők legrosszabb rémálma valósult meg: technológiai fölényük ellenére az emberek veszteséget szenvedtek.</section>
+		<section>A legénység kétségbeesetten küzdött, de az ellenség túlerőben volt. Azonban az utolsó pillanatban sikerült kimenekíteniük öt harcost, az emberiség legbátrabbjai közül, akik a jövőben talán képesek lehetnek visszaszerezni a GIVTech-et és legyőzni a Lexadaritákat.</section>
+		<section>A harcosokat egy kis, gyors támadó hajóra, a Codebreaker24-re helyezték, és velük tartott Albert, a mesterséges intelligencia, aki a küldetés irányításáért volt felelős. Mikor a Codebreaker24 elég messze került az anyahajótól, Albert megkezdte az ébresztési folyamatot. Ahogy a fagyos kamrák lassan felengedtek, az öt harcos lassan magához tért.</section>
+	</backstory>
+	<stages>
+		<stage id="1">
+			<start>
+				<dialogue>
+					<name>Albert</name>
+					<text>Üdvözlöm önöket a fedélzeten.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>A Lexadariták elfoglalták a GIVTech-et, és most az ellenség kezében van. Az emberek megmaradt technológiája veszélyben van, de a hajó visszaszerzésével talán meg lehet menteni a még hibernált milliókat.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Ehhez viszont szükségünk lesz az anyahajó koordinátáira, amihez egy lokátort kell építenünk.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Az alakatrészeket a lokátorhoz viszont ellenségeinktől meg is tudjuk szerezni.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Jelvevőim szerint az aszteroida-mező felé kell haladnunk.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Az emberiség sorsa az önök kezében van!</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Megszereztük az első alkatrészt. Már csak 2 kell az anyahajó megtalálásához</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Számításaim szerint a kinyílt feketelyuk közelebb juttathat a következő alkatrészhez.</text>
+				</dialogue>
+			</end>
+		</stage>
+		<stage id="2">
+			<start>
+				<dialogue>
+					<name>Albert</name>
+					<text>Ez a hely már veszélyesebbnek tűnik, nem árt óvatosnak lenni.</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Még egy alkatrész! Már csak 1 kell</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>IRÁNY A FEKETELYUK! megint...</text>
+				</dialogue>
+			</end>
+		</stage>
+		<stage id="3">
+			<start>
+				<dialogue>
+					<name>Albert</name>
+					<text>Számításaim szerint ideje felkötni a gatyákat uraim!</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Ez a hely a Lexadaritákon kívűl más élő organizmussal még nem találkozott.</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Gratulálok uraim! Ezzel végre megtudjuk építeni az anyahajó lokátort</text>
+				</dialogue>
+			</end>
+		</stage>
+	</stages>
+	<ending>
+		<section>szövegszövegszövegszövegszövegszöveg</section>
+		<section>szövegszövegszövegszövegszövegszövegszövegszövegszöveg</section>
+		<section>szövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszöveg</section>
+		<section>szövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszövegszöveg</section>
+	</ending>
+</story>
+
+
