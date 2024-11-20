@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BlackHole : MonoBehaviour
 {
-    private Vector3 offset = new Vector3(10f,0f,0f);
+    private float spawnDelay = 1f;
+
+    private Vector3 offset = new Vector3(12f,0f,0f);
 
     //csak akkor jelenik meg a fekete lyuk amikor felvesszük a lokátort
     private void Start()
@@ -27,6 +29,7 @@ public class BlackHole : MonoBehaviour
             //megjelenés
             this.gameObject.SetActive(true);
 
+            
             //player pozicióhoz képest spawnol
             Vector3 newPos = PlayerMovement.Instance.transform.position;
             newPos.y = 0f;
@@ -35,7 +38,6 @@ public class BlackHole : MonoBehaviour
 
             PopupManager.Instance.StartBlackHoleAnim(this.gameObject); // feketelyuk megjelenésénél lévõ animáció
         }
-
     }
 
 }

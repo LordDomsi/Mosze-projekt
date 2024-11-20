@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float _forog;
 
-    [SerializeField] private float sebesseg = 1.0f;
+    [SerializeField] private float playerSpeed = 6f;
+    public float sebesseg;
+    [SerializeField] private float blackholeSebesseg = 3f;
 
     [SerializeField] private float forogSebesseg = 1.0f;
 
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float PowerUpTimeLimit;
     public bool canMove = true;
+    public bool canShoot = true;
 
     public event EventHandler<OnThreeWayPowerUpPickupArgs> OnThreeWayPowerUpPickup;
     public class OnThreeWayPowerUpPickupArgs: EventArgs
@@ -56,14 +59,27 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {
+        LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
+        StageManager.Instance.OnStageInit += StageManager_OnStageInit;
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void StageManager_OnStageInit(object sender, EventArgs e)
+    {
+        sebesseg = playerSpeed;
+    }
+
+    private void LocatorSpawner_OnLocatorPickup(object sender, EventArgs e)
+    {
+        sebesseg = blackholeSebesseg;
+        StopPlayer();
+    }
 
     private void Update()
     {
         if (canMove)
         {
+
             forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
             {
@@ -86,7 +102,11 @@ public class PlayerMovement : MonoBehaviour
                 OnStopTurn?.Invoke(this, EventArgs.Empty);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
+        if (canShoot)
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
+        }
+        
 
 
         //ha pálya szélét érinti a hajó akkor teleportáljon a túloldalra
@@ -106,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (forwardMovement)
         {
             _rigidbody.AddForce(this.transform.up * this.sebesseg);
@@ -176,7 +197,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopPlayer()
     {
-        _rigidbody.velocity = Vector2.zero;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = 0f;
     }
 
 }

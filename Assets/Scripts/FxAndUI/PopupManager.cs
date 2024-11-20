@@ -26,8 +26,6 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private float zoomOutSize;
     public float powerUpUIAnimSpeed;
 
-    
-
     private void Awake()
     {
         Instance = this;
@@ -47,9 +45,9 @@ public class PopupManager : MonoBehaviour
             curveAmount = curve.Evaluate(t);
             gameObject.transform.localScale = new Vector3 (curveAmount, curveAmount, curveAmount);
             yield return null;
-        }
-
+        } 
     }
+
     public IEnumerator PopupCurveAnimReverse(GameObject gameObject, float speed, AnimationCurve curve)
     {
         float curveTime = 0;
