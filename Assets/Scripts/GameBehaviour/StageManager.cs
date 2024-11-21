@@ -17,8 +17,9 @@ public class StageManager : MonoBehaviour
         currentStage = 1;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => DialogueBoxUI.Instance.isSubscribed == true);
         OnStageInit?.Invoke(this, EventArgs.Empty);
     }
 

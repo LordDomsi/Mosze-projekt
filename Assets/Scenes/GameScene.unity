@@ -4346,6 +4346,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1273754739}
   avatar: {fileID: 1848897980}
   displayingText: 0
+  isSubscribed: 0
 --- !u!1 &1486350720
 GameObject:
   m_ObjectHideFlags: 0

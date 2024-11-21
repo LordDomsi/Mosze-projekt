@@ -22,6 +22,8 @@ public class DialogueBoxUI : MonoBehaviour
 
     List<XmlLoader.DialogueData> dialogues = new List<XmlLoader.DialogueData>();
 
+    public bool isSubscribed = false;
+
     private void Awake()
     {
         Instance = this;
@@ -31,6 +33,7 @@ public class DialogueBoxUI : MonoBehaviour
     {
         StageManager.Instance.OnStageInit += StageManager_OnStageInit;
         LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
+        isSubscribed = true;
         dialogueBox.gameObject.SetActive(false);
     }
     private void Update()
