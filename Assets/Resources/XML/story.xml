@@ -30,7 +30,7 @@
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
-					<text>Ahhoz szükségünk lesz az anyahajó koordinátáira, amihez egy lokátort kell építenünk.</text>
+					<text>Ahhoz szükségünk lesz az anyahajó koordinátáira. Ehhez egy lokátort kell építenünk.</text>
 				</dialogue>
 				<dialogue>
 					<name>Rana</name>
@@ -38,7 +38,7 @@
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
-					<text>Pedig az alkatrészeket tőlük kell megszereznünk, csak nem épp barátságos módon. Más opciónk nincs. Jelvevőim szerint az aszteroida-mező felé kell haladnunk.</text>
+					<text>Pedig az alkatrészeket tőlük kell megszereznünk. Csak nem épp barátságos módon. Más opciónk nincs. Jelvevőim szerint az aszteroida-mező felé kell haladnunk.</text>
 				</dialogue>
 				<dialogue>
 					<name>Marko</name>
@@ -80,7 +80,7 @@
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
-					<text>Ez a hely már veszélyesebbnek tűnik, nem árt óvatosnak lenni.</text>
+					<text>Ez a hely már veszélyesebbnek tűnik. Nem árt óvatosnak lenni.</text>
 				</dialogue>
 				<dialogue>
 					<name>Rana</name>
@@ -88,15 +88,11 @@
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
-					<text>{@{Ł{#$łŁ$b}@ÄÄíÍŁłíł</text>
+					<text>Nem pesszimizmusra lettem programozva. Megkíméllek a túlélési adatoktól.</text>
 				</dialogue>
 				<dialogue>
 					<name>Rana</name>
-					<text>ok.</text>
-				</dialogue>
-				<dialogue>
-					<name>Elena</name>
-					<text>Hamarosan úgyis kiderül.</text>
+					<text>kösz?</text>
 				</dialogue>
 			</start>
 			<end>
@@ -106,7 +102,7 @@
 				</dialogue>
 				<dialogue>
 					<name>Elena</name>
-					<text>Ez már kemyény volt. Mi lesz legközelebb? Megint beleugrunk egy fekete lyukba?</text>
+					<text>Ez már kemény volt. Mi lesz legközelebb? Megint beleugrunk egy fekete lyukba?</text>
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
@@ -118,7 +114,15 @@
 			<start>
 				<dialogue>
 					<name>Albert</name>
-					<text>Számításaim szerint ideje felkötni a gatyákat!</text>
+					<text>Számításaim szerint ez a környezet túlélés szempontjából nem éppen optimális.</text>
+				</dialogue>
+				<dialogue>
+					<name>Marko</name>
+					<text>Mert az előzőek azok voltak?</text>
+				</dialogue>
+				<dialogue>
+					<name>Elena</name>
+					<text>Az előbb nem azt mondta hogy nem pesszimizmusra lett programozva?</text>
 				</dialogue>
 				<dialogue>
 					<name>Tareq</name>
@@ -126,7 +130,7 @@
 				</dialogue>
 				<dialogue>
 					<name>Mira</name>
-					<text>Nincs idő a panaszkodásra, Tareq. Mozgás, mielőtt tényleg megölnek minket!</text>
+					<text>Nincs idő a panaszkodásra. Mozgás, mielőtt tényleg megölnek minket!</text>
 				</dialogue>
 			</start>
 			<end>
@@ -148,7 +152,7 @@
 		<section>A harcosoknak dönteniük kellett: elpusztítják Albertet, kockáztatva, hogy elveszítik a hajó irányítását, vagy megpróbálják újraprogramozni őt a harc közben. Az egyikük, Elena, az AI-rendszerek specialistája, elindult az irányítóterem felé, míg a többiek kitartottak a védelemben.</section>
 		<section>Elena egy szűk időkereten belül sikeresen átprogramozta Albertet, bár a folyamat végén a mesterséges intelligencia zavarosan, de hűségesen kezdett működni. Albert feladata ismét az emberiség megmentése volt. Ehhez viszont egy drasztikus döntésre volt szükség, hiszen a Lexadariták túlerőben voltak. Albert csak ennyit mondott:</section>
 		<section>– „Egy öröm volt felfedezni a galaxist önökkel, de attól tartok elérkeztünk közös utunk végéhez.”</section>
-		<section>Ezután kitépte magából az atommagját, ami életben tartotta majd utolsó mozdulatával belerakta a hajó lövő rendszerébe. Tareq megdöbbenve, de hezitáció nélkül kilőtte az atommagot, ami robbanásával elpusztította a Lexadariták flottájának 90 százalékát.</section>
+		<section>Ezután kitépte mellkasából az atommagot, ami életben tartotta majd utolsó mozdulatával belerakta a hajó lövő rendszerébe. Tareq megdöbbenve, de hezitáció nélkül kilőtte az atommagot, ami robbanásával elpusztította a Lexadariták flottájának 90 százalékát.</section>
 		<section>Miután legyőzték a flottát, a harcosok elindultak visszavenni a GIVTechet, de meglepődtek, amikor felfedezték, hogy az eddig GIVTechet irányító Lexadariták mind elpusztultak.  A hajón viszont egy másik sokkoló információra tettek szert.</section>
 		<section>A Lexadariták nem egyszerűen megszállók voltak. A fajuk egy evolúciós zsákutca volt, és kihaló félben voltak. Az emberi DNS-t használták volna túlélésükhöz. Nem pusztítani akartak, hanem egy kétségbeesett tervet hajtottak végre.</section>
 		<section>A csapat döntési helyzetbe került: elpusztítják a maradék Lexadaritákat, megvédve az emberiséget, vagy megpróbálnak tárgyalni velük, kockáztatva, hogy egy újabb háború alakul ki.</section>

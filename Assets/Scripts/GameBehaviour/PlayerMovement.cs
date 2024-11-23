@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -52,6 +54,14 @@ public class PlayerMovement : MonoBehaviour
         public float powerUpTimeLimit;
     }
 
+    public bool legacyMovement = false;
+    [SerializeField] private Transform cursor;
+    [SerializeField] private Texture2D cursorTexture;
+    private Vector2 cursorPosition;
+    [SerializeField] private float speed;
+    [SerializeField] private float blackholeSpeed;
+    [SerializeField] private float defaultSpeed;
+
 
     private void Awake()
     {
@@ -62,22 +72,68 @@ public class PlayerMovement : MonoBehaviour
         LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
         StageManager.Instance.OnStageInit += StageManager_OnStageInit;
         _rigidbody = GetComponent<Rigidbody2D>();
+        if (!legacyMovement)
+        {
+            cursor.gameObject.SetActive(true);
+            cursorPosition = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
+            Cursor.SetCursor(cursorTexture, cursorPosition, CursorMode.Auto);
+        }
     }
 
     private void StageManager_OnStageInit(object sender, EventArgs e)
     {
         sebesseg = playerSpeed;
+        speed = defaultSpeed;
     }
 
     private void LocatorSpawner_OnLocatorPickup(object sender, EventArgs e)
     {
         sebesseg = blackholeSebesseg;
+        speed = blackholeSpeed;
         StopPlayer();
     }
 
     private void Update()
     {
-        if (canMove)
+        if (legacyMovement == false)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            Vector3 direction = (mousePosition - transform.position).normalized;
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle-90, Time.deltaTime * 2f);
+            transform.rotation = Quaternion.Euler(0, 0, (currentAngle));
+            float mouseDistance = Vector2.Distance(transform.position, mousePosition);
+            Vector3 targetPoint = transform.position + transform.up * mouseDistance;
+            cursor.position = targetPoint;
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
+                OnForwardPressed?.Invoke(this, EventArgs.Empty);
+            }
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                OnForwardStopped?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                _rigidbody.AddForce(-this.transform.up * speed/2 * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                _rigidbody.AddForce(-this.transform.right * speed / 1.5f * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                _rigidbody.AddForce(this.transform.right * speed / 1.5f * Time.deltaTime);
+            }
+
+        }
+        if (canMove && legacyMovement == true)
         {
 
             forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
@@ -200,5 +256,4 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = 0f;
     }
-
 }
