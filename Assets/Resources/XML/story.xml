@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story>
+	<backstory>
+		<section>2097-ben az emberiség végleg elhagyta a Földet, miután a globális felmelegedés pusztító hatásai élhetetlenné tették a bolygót. A túlélők több hatalmas, űrjáró városba költöztek, ahol százezrek utaztak az ismeretlen felé, egy új otthont keresve a csillagok között.</section>
+		<section>A technológiai fejlődésük csúcsán álltak, de még így sem volt elég élelmük a végtelennek tűnő útra. Tíz év elteltével az ételkészleteik 90%-a elfogyott, ezért a vezetők drasztikus döntést hoztak.</section>
+		<section>A mesterséges intelligencia és a robotok irányításával a lakosságot hibernálták. Az emberek aludtak, míg az űrhajóik némán sodródtak az űrben, várva, hogy egy lakható bolygóra bukkanjanak.</section>
+		<section>Ennek ellenére elérkezett 2150, és az emberiség még mindig a végtelen űr foglya volt.</section>
+		<section>Az egyik város-hajót, a GIVTech-et, amely Győrből indult, egy rejtélyes és ellenséges faj, a Lexadariták támadták meg. Ezek a kegyetlen idegenek elfoglalták a hajót, és az emberi túlélők legrosszabb rémálma valósult meg: technológiai fölényük ellenére az emberek veszteséget szenvedtek.</section>
+		<section>A legénység kétségbeesetten küzdött, de az ellenség túlerőben volt. Azonban az utolsó pillanatban sikerült kimenekíteniük öt harcost, az emberiség legbátrabbjai közül, akik a jövőben talán képesek lehetnek visszaszerezni a GIVTech-et és legyőzni a Lexadaritákat.</section>
+		<section>A harcosokat egy kis, gyors támadó hajóra, a Codebreaker24-re helyezték, és velük tartott Albert, a mesterséges intelligencia, aki a küldetés irányításáért volt felelős. Mikor a Codebreaker24 elég messze került az anyahajótól, Albert megkezdte az ébresztési folyamatot. Ahogy a fagyos kamrák lassan felengedtek, az öt harcos lassan magához tért.</section>
+	</backstory>
+	<stages>
+		<stage id="1">
+			<start>
+				<dialogue>
+					<name>Albert</name>
+					<text>Üdvözlöm önöket a fedélzeten.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>A Lexadariták elfoglalták a GIVTech-et, és most az ellenség kezében van. Az emberek megmaradt technológiája veszélyben van, de a hajó visszaszerzésével talán meg lehet menteni a még hibernált milliókat.</text>
+				</dialogue>
+				<dialogue>
+					<name>Elena</name>
+					<text>Szóval, ha jól értem, mi vagyunk az utolsó esély. Szuper. Pont erre vágytam egy hosszú, hibernációban töltött évszázad után.</text>
+				</dialogue>
+				<dialogue>
+					<name>Tareq</name>
+					<text>Várjunk csak, milyen állapotban van a hajó? És hogy a fenébe jutunk el hozzá?</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Ahhoz szükségünk lesz az anyahajó koordinátáira. Ehhez egy lokátort kell építenünk.</text>
+				</dialogue>
+				<dialogue>
+					<name>Rana</name>
+					<text>Lokátor? És az alkatrészeket hozzá honnan szerezzük? Nem hiszem, hogy a Lexadarita hardver piacon tárt karokkal fogadnának.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Pedig az alkatrészeket tőlük kell megszereznünk. Csak nem épp barátságos módon. Más opciónk nincs. Jelvevőim szerint az aszteroida-mező felé kell haladnunk.</text>
+				</dialogue>
+				<dialogue>
+					<name>Marko</name>
+					<text>Remek, aszteroida-mező. Csak azt ne mond, hogy még egy fekete lyuk is lesz a végén.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Az emberiség sorsa az önök kezében van!</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Megszereztük az első alkatrészt. Már csak 2 kell az anyahajó megtalálásához</text>
+				</dialogue>
+				<dialogue>
+					<name>Mira</name>
+					<text>Ez nem is volt olyan nehéz. Ez most gyanús. Lehet meggyengültek a Lexadariták?</text>
+				</dialogue>
+				<dialogue>
+					<name>Tareq</name>
+					<text>Kétlem de reménykedni szabad.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Számításaim szerint a kinyílt feketelyuk közelebb juttathat a következő alkatrészhez.</text>
+				</dialogue>
+				<dialogue>
+					<name>Marko</name>
+					<text>...</text>
+				</dialogue>
+			</end>
+		</stage>
+		<stage id="2">
+			<start>
+				<dialogue>
+					<name>Marko</name>
+					<text>Mindjárt hányok, köszi!</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Ez a hely már veszélyesebbnek tűnik. Nem árt óvatosnak lenni.</text>
+				</dialogue>
+				<dialogue>
+					<name>Rana</name>
+					<text>Óvatosnak? Ez alatt mit értesz?</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Nem pesszimizmusra lettem programozva. Megkíméllek a túlélési adatoktól.</text>
+				</dialogue>
+				<dialogue>
+					<name>Rana</name>
+					<text>kösz?</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Még egy alkatrész! Már csak 1 kell</text>
+				</dialogue>
+				<dialogue>
+					<name>Elena</name>
+					<text>Ez már kemény volt. Mi lesz legközelebb? Megint beleugrunk egy fekete lyukba?</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>IGEN!!! IRÁNY A FEKETELYUK!</text>
+				</dialogue>
+			</end>
+		</stage>
+		<stage id="3">
+			<start>
+				<dialogue>
+					<name>Albert</name>
+					<text>Számításaim szerint ez a környezet túlélés szempontjából nem éppen optimális.</text>
+				</dialogue>
+				<dialogue>
+					<name>Marko</name>
+					<text>Mert az előzőek azok voltak?</text>
+				</dialogue>
+				<dialogue>
+					<name>Elena</name>
+					<text>Az előbb nem azt mondta hogy nem pesszimizmusra lett programozva?</text>
+				</dialogue>
+				<dialogue>
+					<name>Tareq</name>
+					<text>Ez a hely tele van halálos sugárzással. Ha nem ölnek meg minket az idegenek, akkor a sugárzás fog.</text>
+				</dialogue>
+				<dialogue>
+					<name>Mira</name>
+					<text>Nincs idő a panaszkodásra. Mozgás, mielőtt tényleg megölnek minket!</text>
+				</dialogue>
+			</start>
+			<end>
+				<dialogue>
+					<name>Albert</name>
+					<text>Gratulálok! Ezzel végre megtudjuk építeni az anyahajó lokátort</text>
+				</dialogue>
+			</end>
+		</stage>
+	</stages>
+	<ending>
+		<section>Ahogy az utolsó alkatrész a helyére került, a Codebreaker24 fedélzetén Albert aktiválta az anyahajó helyzetét feltáró lokátort. Az eszköz élesen felvillant, és megjelenítette a GIVTech pontos koordinátáit. Az emberek túlélésének reménye újjászületett, de az öröm rövid életű volt.</section>
+		<section>Az utolsó adatokat rögzítve Albert szavai váratlanul váltottak rideg monotóniára: „Vészhelyzeti protokoll aktiválva. A Lexadariták megérkeztek.”</section>
+		<section>A hajó megrázkódott, amikor egy ellenséges űrhajó flotta jelent meg a semmiből. Az öt harcos gyorsan akcióba lépett. Ketten a hajó védelméért feleltek, míg a többiek megpróbálták előkészíteni a hyperhajtóművet a meneküléshez, de helyzet kilátástalannak tűnt.</section>
+		<section>Albert feladata mindig is az emberiség védelme volt ezt viszont a jelenlegi helyzetben csak egyféleképpen tudta teljesíteni. Albert csak ennyit mondott: „Köszönöm ezt a kalandot, de attól tartok elérkeztünk közös utunk végéhez.”</section>
+		<section>Ezután kitépte mellkasából az atommagot, ami életben tartotta majd utolsó mozdulatával belerakta a hajó lövő rendszerébe. Tareq megdöbbenve, de hezitáció nélkül kilőtte az atommagot, ami robbanásával elpusztította a Lexadariták flottájának 90 százalékát.</section>
+		<section>Miután legyőzték a flottát, a harcosok elindultak visszavenni a GIVTechet, de meglepődtek, amikor felfedezték, hogy az eddig GIVTechet irányító Lexadariták mind elpusztultak. A hajón viszont egy másik sokkoló információra tettek szert.</section>
+		<section>A Lexadariták nem egyszerűen megszállók voltak. A fajuk egy evolúciós zsákutca volt, és kihaló félben voltak. Az emberi DNS-t használták volna túlélésükhöz. Nem pusztítani akartak, hanem egy kétségbeesett tervet hajtottak végre.</section>
+		<section>A csapat döntési helyzetbe került: elpusztítják a maradék Lexadaritákat, megvédve az emberiséget, vagy megpróbálnak tárgyalni velük, kockáztatva, hogy egy újabb háború alakul ki.</section>
+		<section>A harcosok, miután hosszasan vitáztak, úgy döntöttek, megadják a Lexadaritáknak az esélyt, hogy békés megoldást találjanak. Az emberiség első nagy intergalaktikus szövetsége megszületett – egy törékeny, de reményteli kezdet.</section>
+		<section>A hajó lassan továbbhaladt a csillagok között, egy új otthont keresve. De most már nem egyedül.</section>
+	</ending>
+</story>
+
+
