@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Powerups : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> PowerUpList = new List<GameObject>();     // Power-upok lehetséges prefabjai, 0 a háromlövet, 1 a turbo, 2 WIP
+    [SerializeField] private List<GameObject> PowerUpList = new List<GameObject>();     // Power-upok lehetséges prefabjai, 0 a háromlövet, 1 a speed, 2 shield
     private Rigidbody2D rigidBody;
     public int PowerUpID = 0;      //melyik power-up
 

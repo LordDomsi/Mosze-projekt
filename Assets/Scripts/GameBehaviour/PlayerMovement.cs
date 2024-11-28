@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement Instance { get; private set; }
 
     public GameObject Lovedek;
+    public GameObject Shield;
     
     private Rigidbody2D _rigidbody;
 
@@ -43,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private int PowerUpType = 0;
 
     private bool PoweredUp = false;
+    public bool shielded = false;
+    private bool speedBoost = false;
 
     [SerializeField] private float PowerUpTimeLimit;
     public bool canMove = true;
@@ -111,8 +114,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
-                OnForwardPressed?.Invoke(this, EventArgs.Empty);
+                if (speedBoost)
+                {
+                    _rigidbody.AddForce(this.transform.up * speed * 1.75f * Time.deltaTime);
+                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
+                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
+                }  
             }
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
             {
@@ -121,17 +132,38 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                _rigidbody.AddForce(-this.transform.up * speed/2 * Time.deltaTime);
+                if (speedBoost)
+                {
+                    _rigidbody.AddForce(-this.transform.up * (speed / 2) * 1.75f * Time.deltaTime);
+                }
+                else 
+                {
+                    _rigidbody.AddForce(-this.transform.up * speed / 2 * Time.deltaTime);
+                }
             }
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                _rigidbody.AddForce(-this.transform.right * speed / 1.5f * Time.deltaTime);
+                if (speedBoost)
+                {
+                    _rigidbody.AddForce(-this.transform.right * (speed / 1.5f) * 1.75f * Time.deltaTime);
+                }
+                else
+                {
+                    _rigidbody.AddForce(-this.transform.right * speed / 1.5f * Time.deltaTime);
+                }                
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                _rigidbody.AddForce(this.transform.right * speed / 1.5f * Time.deltaTime);
+                if (speedBoost)
+                {
+                    _rigidbody.AddForce(this.transform.right * (speed / 1.5f) * 1.75f * Time.deltaTime);
+                }
+                else
+                {
+                    _rigidbody.AddForce(this.transform.right * speed / 1.5f * Time.deltaTime);
+                }
             }
 
         }
@@ -162,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canShoot)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
         
 
@@ -181,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
+    
     private void FixedUpdate()
     {
 
@@ -199,14 +231,13 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(PowerUpTimeLimit);
         PoweredUp = false;
+        
     }
 
     private void Shoot()
     {
-        if (PoweredUp)      //Power-uppok
+        if (PoweredUp)      //three-way shot
         {
-                if (PowerUpType == 1)       //three-way shot
-                {
                     GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
                     newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
 
@@ -215,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
                     GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -30) * this.transform.rotation);
                     newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -30) * this.transform.up * this.LovSebesseg);
-                }
+                
 
 
         }
@@ -230,26 +261,30 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 turbo, 3 WIP
+    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 speed, 3 shield
     {
         if (collision.gameObject.tag == POWERUP_TAG1)
         {
             StartCoroutine(PowerUpTimer());
             OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit} );
             PoweredUp = true;
-            PowerUpType = 1;
         } 
         else if(collision.gameObject.tag == POWERUP_TAG2)
         {
             StartCoroutine(PowerUpTimer());
-            PoweredUp = true;
-            PowerUpType = 2;
+            OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit });
+            speedBoost = true;
         }
         else if (collision.gameObject.tag == POWERUP_TAG3)
         {
-            StartCoroutine(PowerUpTimer());
-            PoweredUp = true;
-            PowerUpType = 3;
+            if(shielded == false)
+            {
+                shielded = true;
+                GameObject newShield = Instantiate(Shield, this.transform.position, this.transform.rotation);
+                newShield.transform.parent = this.transform;        //BUG: WASD mozgást nem veszi fel?
+            }
+            
+            
         }
     }
 
