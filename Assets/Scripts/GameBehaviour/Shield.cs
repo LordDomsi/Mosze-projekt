@@ -12,14 +12,29 @@ public class Shield : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private float speed = 6f;
 
-    
+    private int shieldHealth;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnEnable()
+    {
+        shieldHealth = 3;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == ASTEROID_TAG || collision.gameObject.tag == ENEMY_TAG || collision.gameObject.tag == ENEMY_BULLET_TAG)
         {
-            Destroy(this.gameObject);
-            PlayerMovement.Instance.shielded = false;
+            ReduceShieldHealth();
         }
     }
+
+    public void ReduceShieldHealth()
+    {
+        shieldHealth--;
+        if (shieldHealth <= 0)
+        {
+            PlayerMovement.Instance.DisableShield();
+        }
+    }
+
+    
 }

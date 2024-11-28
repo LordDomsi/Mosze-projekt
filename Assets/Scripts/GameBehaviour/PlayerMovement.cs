@@ -261,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 speed, 3 shield
+    private void OnTriggerEnter2D(Collider2D collision)      //1 three-way, 2 speed, 3 shield
     {
         if (collision.gameObject.tag == POWERUP_TAG1)
         {
@@ -279,12 +279,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if(shielded == false)
             {
-                shielded = true;
-                GameObject newShield = Instantiate(Shield, this.transform.position, this.transform.rotation);
-                newShield.transform.parent = this.transform;        //BUG: WASD mozgást nem veszi fel?
-            }
-            
-            
+                EnableShield();
+            } 
         }
     }
 
@@ -292,5 +288,17 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = 0f;
+    }
+
+    public void EnableShield()
+    {
+        Shield.gameObject.SetActive(true);
+        shielded = true;
+    }
+
+    public void DisableShield()
+    {
+        Shield.gameObject.SetActive(false);
+        shielded = false;
     }
 }
