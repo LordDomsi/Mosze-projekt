@@ -808,6 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Lovedek: {fileID: 8343992249122312408, guid: 1df96d79d0d23fa4b813731cc3e3a9ab, type: 3}
+  Shield: {fileID: 6579961372470129435, guid: 472cc785cfcea3f4ab4bebd0696371e0, type: 3}
   playerSpeed: 6
   sebesseg: 6
   blackholeSebesseg: 2
@@ -815,6 +816,7 @@ MonoBehaviour:
   LovSebesseg: 800
   eletIdo: 5
   bulletStartLocation: {fileID: 1559334243}
+  shielded: 0
   PowerUpTimeLimit: 15
   canMove: 1
   canShoot: 1
