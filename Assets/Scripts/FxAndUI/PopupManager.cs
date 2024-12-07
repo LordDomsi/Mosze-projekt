@@ -24,11 +24,20 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private float zoomOutAnimSpeed;
     [SerializeField] private float zoomInSize;
     [SerializeField] private float zoomOutSize;
+    
     public float powerUpUIAnimSpeed;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     
