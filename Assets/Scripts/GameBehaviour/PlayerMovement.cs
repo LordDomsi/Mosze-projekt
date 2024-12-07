@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float LovSebesseg = 666.0f;
 
-    [SerializeField] private float eletIdo = 5.0f;
+    //[SerializeField] private float eletIdo = 5.0f;
 
     [SerializeField] private Transform bulletStartLocation;
 
@@ -62,6 +62,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float blackholeSpeed;
     [SerializeField] private float defaultSpeed;
 
+    public void SetForwardMovement(bool isMoving)
+    {
+        forwardMovement = isMoving;
+    }
+
+    public void SetBackwardMovement(bool isMoving)
+    {
+        backwardMovement = isMoving;
+    }
+    public void TriggerOnTurnLeft()
+    {
+        OnTurnLeft?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void TriggerOnTurnRight()
+    {
+        OnTurnRight?.Invoke(this, EventArgs.Empty);
+    }
 
     private void Awake()
     {

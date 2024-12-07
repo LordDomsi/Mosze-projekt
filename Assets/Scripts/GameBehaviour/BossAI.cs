@@ -35,7 +35,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float specialAttackTime;
     private float timerBasic;
     private float timerSpecial;
-    private float rotationSpeed = 1f;
+    //private float rotationSpeed = 1f;
     private float shootingTimer;
     private float specialAttackShootingTimer;
     private BossState bossState;
