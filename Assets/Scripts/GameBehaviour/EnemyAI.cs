@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     private float enemyHealth;
     public event EventHandler OnEnemyActivated;
     public event EventHandler OnEnemyDisabled;
+    [SerializeField] private GameObject explosionPrefab;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -51,6 +52,7 @@ public class EnemyAI : MonoBehaviour
         {
             ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth);
             ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth);
+            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             Destroy(gameObject);
             EnemySpawner.Instance.DecreaseEnemyCount();
         }

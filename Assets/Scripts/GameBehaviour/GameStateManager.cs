@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,11 @@ public class GameStateManager : MonoBehaviour
         Ending
     }
 
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameResumed;
+
+    private bool isGamePaused = false;
+
     public GameState gameState;
     private void Awake()
     {
@@ -28,5 +34,35 @@ public class GameStateManager : MonoBehaviour
 
         gameState = GameState.Menu;
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.Game)
+        {
+            if(!GameOverUI.Instance.gameOver) ToggleGamePause();
+        }
+    }
+
+    public void ToggleGamePause()
+    {
+        isGamePaused = !isGamePaused;
+        if (isGamePaused) { StopGame(); OnGamePaused?.Invoke(this, EventArgs.Empty); }
+        else { ContinueGame(); OnGameResumed?.Invoke(this, EventArgs.Empty); }
+    }
+
+    public void ContinueGame()
+    {
+        if(!DialogueBoxUI.Instance.displayingText)Time.timeScale = 1f;
+    }
+
+    public void StopGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public bool IsGamePaused()
+    {
+        return isGamePaused;
     }
 }

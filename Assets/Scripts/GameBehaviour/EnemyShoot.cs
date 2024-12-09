@@ -41,7 +41,7 @@ public class EnemyShoot : MonoBehaviour
 
     private void Update()
     {
-        if (shootingActive)
+        if (shootingActive && !GameOverUI.Instance.gameOver)
         {
             //lövés timer
             time += Time.deltaTime;

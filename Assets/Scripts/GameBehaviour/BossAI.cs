@@ -8,6 +8,7 @@ public class BossAI : MonoBehaviour
     private Transform bossPosition;
     private bool initialMovement = true;
     private float bossHealth;
+    [SerializeField] private GameObject explosionPrefab;
     public enum BossState
     {
         BasicAttack,
@@ -198,6 +199,7 @@ public class BossAI : MonoBehaviour
         if (bossHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(bossTypeSO.pointsWorth);
+            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             LocatorSpawner.Instance.Spawn(this.transform);
             Destroy(gameObject);
         }
