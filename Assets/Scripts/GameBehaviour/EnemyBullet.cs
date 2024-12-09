@@ -17,6 +17,10 @@ public class EnemyBullet : MonoBehaviour
             PlayerHealthManager.Instance.TakeDamage(bulletDamage);
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.tag == "Shield")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetBulletDamage(int damage)
