@@ -25,6 +25,8 @@ public class SaveManager : MonoBehaviour
     {
         public string enteredName;
         public int currentLevel; //jelenlegi szint elmentése
+        public int currentScore;
+        public int currentHealth;
         public SettingsData settings;
         public List<UserData> leaderboardData = new List<UserData>(); //leaderboard lista
     }
@@ -106,6 +108,18 @@ public class SaveManager : MonoBehaviour
     public void SaveEnteredName(string name)
     {
         saveData.enteredName = name;
+        Save();
+    }
+
+    public void SaveScore(int score)
+    {
+        saveData.currentScore = score;
+        Save();
+    }
+
+    public void SaveHealth(int health)
+    {
+        saveData.currentHealth = health;
         Save();
     }
 

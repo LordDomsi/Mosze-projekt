@@ -13,6 +13,9 @@ public class MainMenuUI : MonoBehaviour
     //a menü gombokért felelõs script
     public static MainMenuUI Instance {  get; private set; }
 
+    [SerializeField] private Texture2D defaultCursor;
+    private Vector2 cursorPosition;
+
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button leaderboardButton;
@@ -45,10 +48,15 @@ public class MainMenuUI : MonoBehaviour
 
         newGameButton.onClick.AddListener(() =>
         {
-            Loader.LoadScene(Loader.Scene.GameScene);
+            SaveManager.Instance.SaveLevel(1);
+            SaveManager.Instance.SaveScore(0);
+            SaveManager.Instance.SaveHealth(100);
+            GameStateManager.Instance.gameState = GameStateManager.GameState.NewGame;
+            Loader.LoadScene(Loader.Scene.CutScene);
         });
         continueButton.onClick.AddListener(() =>
         {
+            GameStateManager.Instance.gameState = GameStateManager.GameState.Game;
             Loader.LoadScene(Loader.Scene.GameScene);
         });
         leaderboardButton.onClick.AddListener(() =>
@@ -100,6 +108,9 @@ public class MainMenuUI : MonoBehaviour
     
     private IEnumerator Start()
     {
+        cursorPosition = new Vector2(0,0);
+        Cursor.SetCursor(defaultCursor, cursorPosition, CursorMode.Auto);
+        Time.timeScale = 1.0f;
         StartCoroutine(PopupManager.Instance.PopupCurveAnim(titleUI, uiElementSpeed, UIElementCurve));
         StartCoroutine(PopupManager.Instance.PopupCurveAnim(menuUI, uiElementSpeed, UIElementCurve));
         yield return new WaitUntil(() => SaveManager.Instance.loaded == true);

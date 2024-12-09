@@ -14,8 +14,7 @@ public class PlayerHealthManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        //fájlból kell majd betölteni
-        playerHealth = playerMaxHealth;
+        playerHealth = SaveManager.Instance.saveData.currentHealth;
     }
 
     public void TakeDamage(int damage)

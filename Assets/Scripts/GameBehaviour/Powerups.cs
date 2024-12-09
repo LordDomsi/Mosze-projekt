@@ -34,9 +34,4 @@ public class Powerups : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-        private void Update()
-    {
-        
-    }
 }

@@ -20,6 +20,8 @@ public class DialogueBoxUI : MonoBehaviour
 
     private int i;
 
+    [SerializeField] private float cutSceneDelay = 3f;
+
     List<XmlLoader.DialogueData> dialogues = new List<XmlLoader.DialogueData>();
 
     public bool isSubscribed = false;
@@ -40,7 +42,7 @@ public class DialogueBoxUI : MonoBehaviour
     {   //space-el tovább lehet nyomni a dialógust
         if (displayingText)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
             {
                 NextText();
             }
@@ -95,6 +97,10 @@ public class DialogueBoxUI : MonoBehaviour
             dialogueBox.gameObject.SetActive(false);
             Time.timeScale=1f;
             PlayerMovement.Instance.canShoot = true;
+            if (LocatorSpawner.Instance.GetCurrentLocators() == 3)
+            {
+                StartCoroutine(WaitThenEndScene(cutSceneDelay));
+            }
         }
     }
 
@@ -109,4 +115,10 @@ public class DialogueBoxUI : MonoBehaviour
         }
     }
 
+    private IEnumerator WaitThenEndScene(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameStateManager.Instance.gameState = GameStateManager.GameState.Ending;
+        Loader.LoadScene(Loader.Scene.CutScene);
+    }
 }
