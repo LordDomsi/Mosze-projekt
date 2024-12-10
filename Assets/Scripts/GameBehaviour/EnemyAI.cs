@@ -11,7 +11,6 @@ public class EnemyAI : MonoBehaviour
     private float enemyHealth;
     public event EventHandler OnEnemyActivated;
     public event EventHandler OnEnemyDisabled;
-    [SerializeField] private GameObject explosionPrefab;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,7 +43,6 @@ public class EnemyAI : MonoBehaviour
 
     public void TakeDamage(float playerBulletDamage)
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_HIT);
         enemyHealth = enemyHealth - playerBulletDamage;
         EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
         this.gameObject.GetComponent<HitIndicator>().Hit();
@@ -52,9 +50,7 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION);
             ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth);
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             Destroy(gameObject);
             EnemySpawner.Instance.DecreaseEnemyCount();
         }

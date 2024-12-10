@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,15 +14,11 @@ public class DialogueBoxUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Image avatar;
-    private float textDisplaySpeed = 0.04f;
+    private float textDisplaySpeed = 0.02f;
 
     public bool displayingText = false;
 
-    public event EventHandler OnGameEnd;
-
     private int i;
-
-    [SerializeField] private float cutSceneDelay = 2f;
 
     List<XmlLoader.DialogueData> dialogues = new List<XmlLoader.DialogueData>();
 
@@ -45,7 +40,7 @@ public class DialogueBoxUI : MonoBehaviour
     {   //space-el tovább lehet nyomni a dialógust
         if (displayingText)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 NextText();
             }
@@ -73,7 +68,6 @@ public class DialogueBoxUI : MonoBehaviour
         {
             //ha van dialógus akkor megjelenik a ui
             dialogueBox.gameObject.SetActive(true);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.DIALOGUE_POPUP);
             displayingText = true;
             PlayerMovement.Instance.canShoot = false;
             Time.timeScale = 0; //megállít mindent ami deltatime-ot használ (lényegében mindent)
@@ -90,7 +84,6 @@ public class DialogueBoxUI : MonoBehaviour
             avatar.sprite = Resources.Load<Sprite>(pathToImage);
             nameText.SetText(dialogues[i].name); //a beszélõnek a nevét átállítja
             StopAllCoroutines();
-            if(i!=0)AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.NEXT_TEXT);
             StartCoroutine(TypeText(dialogues[i].dialogueText)); // coroutine animálja a kiírást
             i++;
         }
@@ -100,13 +93,8 @@ public class DialogueBoxUI : MonoBehaviour
             dialogues.Clear();
             displayingText=false;
             dialogueBox.gameObject.SetActive(false);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.DIALOGUE_POPUP);
             Time.timeScale=1f;
             PlayerMovement.Instance.canShoot = true;
-            if (LocatorSpawner.Instance.GetCurrentLocators() == 3)
-            {
-                StartCoroutine(WaitThenEndScene(cutSceneDelay));
-            }
         }
     }
 
@@ -117,18 +105,8 @@ public class DialogueBoxUI : MonoBehaviour
         foreach (char letter in text.ToCharArray())
         {
             dialogueText.text += letter;
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.TYPING);
             yield return new WaitForSecondsRealtime(textDisplaySpeed); //sima WaitForSeconds nem jó mert azt megállítja a timeScale = 0
         }
     }
 
-    private IEnumerator WaitThenEndScene(float delay)
-    {
-        SaveManager.Instance.AddScoreToLeaderboard(ScoreManager.Instance.GetPlayerScore());
-        OnGameEnd?.Invoke(this, EventArgs.Empty);
-        yield return new WaitForSeconds(delay);
-        GameStateManager.Instance.gameState = GameStateManager.GameState.Ending;
-        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.ENDING_THEME);
-        Loader.LoadScene(Loader.Scene.CutScene);
-    }
 }
