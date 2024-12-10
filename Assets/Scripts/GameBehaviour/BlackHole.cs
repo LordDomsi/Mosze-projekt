@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlackHole : MonoBehaviour
 {
-    private float spawnDelay = 1f;
+   // private float spawnDelay = 1f;
 
     private Vector3 offset = new Vector3(12f,0f,0f);
 
