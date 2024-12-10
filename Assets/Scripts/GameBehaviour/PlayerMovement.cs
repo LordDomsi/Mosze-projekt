@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement Instance { get; private set; }
 
     public GameObject Lovedek;
-    public GameObject Shield;
     
     private Rigidbody2D _rigidbody;
 
@@ -33,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float LovSebesseg = 666.0f;
 
-    //[SerializeField] private float eletIdo = 5.0f;
+    [SerializeField] private float eletIdo = 5.0f;
 
     [SerializeField] private Transform bulletStartLocation;
 
@@ -44,8 +43,6 @@ public class PlayerMovement : MonoBehaviour
     private int PowerUpType = 0;
 
     private bool PoweredUp = false;
-    public bool shielded = false;
-    private bool speedBoost = false;
 
     [SerializeField] private float PowerUpTimeLimit;
     public bool canMove = true;
@@ -65,24 +62,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float blackholeSpeed;
     [SerializeField] private float defaultSpeed;
 
-    public void SetForwardMovement(bool isMoving)
-    {
-        forwardMovement = isMoving;
-    }
-
-    public void SetBackwardMovement(bool isMoving)
-    {
-        backwardMovement = isMoving;
-    }
-    public void TriggerOnTurnLeft()
-    {
-        OnTurnLeft?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void TriggerOnTurnRight()
-    {
-        OnTurnRight?.Invoke(this, EventArgs.Empty);
-    }
 
     private void Awake()
     {
@@ -132,16 +111,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(this.transform.up * speed * 1.75f * Time.deltaTime);
-                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
-                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
-                }  
+                _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
+                OnForwardPressed?.Invoke(this, EventArgs.Empty);
             }
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
             {
@@ -150,38 +121,17 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(-this.transform.up * (speed / 2) * 1.75f * Time.deltaTime);
-                }
-                else 
-                {
-                    _rigidbody.AddForce(-this.transform.up * speed / 2 * Time.deltaTime);
-                }
+                _rigidbody.AddForce(-this.transform.up * speed/2 * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(-this.transform.right * (speed / 1.5f) * 1.75f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.AddForce(-this.transform.right * speed / 1.5f * Time.deltaTime);
-                }                
+                _rigidbody.AddForce(-this.transform.right * speed / 1.5f * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(this.transform.right * (speed / 1.5f) * 1.75f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.AddForce(this.transform.right * speed / 1.5f * Time.deltaTime);
-                }
+                _rigidbody.AddForce(this.transform.right * speed / 1.5f * Time.deltaTime);
             }
 
         }
@@ -212,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canShoot)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
+            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
         
 
@@ -231,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    
+
     private void FixedUpdate()
     {
 
@@ -249,13 +199,14 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(PowerUpTimeLimit);
         PoweredUp = false;
-        
     }
 
     private void Shoot()
     {
-        if (PoweredUp)      //three-way shot
+        if (PoweredUp)      //Power-uppok
         {
+                if (PowerUpType == 1)       //three-way shot
+                {
                     GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
                     newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
 
@@ -264,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
 
                     GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -30) * this.transform.rotation);
                     newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -30) * this.transform.up * this.LovSebesseg);
-                
+                }
 
 
         }
@@ -279,26 +230,26 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)      //1 three-way, 2 speed, 3 shield
+    private void OnCollisionEnter2D(Collision2D collision)      //1 three-way, 2 turbo, 3 WIP
     {
         if (collision.gameObject.tag == POWERUP_TAG1)
         {
             StartCoroutine(PowerUpTimer());
             OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit} );
             PoweredUp = true;
+            PowerUpType = 1;
         } 
         else if(collision.gameObject.tag == POWERUP_TAG2)
         {
             StartCoroutine(PowerUpTimer());
-            OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit });
-            speedBoost = true;
+            PoweredUp = true;
+            PowerUpType = 2;
         }
         else if (collision.gameObject.tag == POWERUP_TAG3)
         {
-            if(shielded == false)
-            {
-                EnableShield();
-            } 
+            StartCoroutine(PowerUpTimer());
+            PoweredUp = true;
+            PowerUpType = 3;
         }
     }
 
@@ -306,17 +257,5 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = 0f;
-    }
-
-    public void EnableShield()
-    {
-        Shield.gameObject.SetActive(true);
-        shielded = true;
-    }
-
-    public void DisableShield()
-    {
-        Shield.gameObject.SetActive(false);
-        shielded = false;
     }
 }

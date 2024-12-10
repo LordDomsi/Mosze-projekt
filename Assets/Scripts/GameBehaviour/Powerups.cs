@@ -6,10 +6,17 @@ using UnityEngine;
 
 public class Powerups : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> PowerUpList = new List<GameObject>();     // Power-upok lehetséges prefabjai, 0 a háromlövet, 1 a speed, 2 shield
+    [SerializeField] private List<GameObject> PowerUpList = new List<GameObject>();     // Power-upok lehetséges prefabjai, 0 a háromlövet, 1 a turbo, 2 WIP
+    private Rigidbody2D rigidBody;
     public int PowerUpID = 0;      //melyik power-up
 
     private const string PLAYER_TAG = "Player";
+
+
+    private void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody2D>();
+    }
 
     public void PowerUpSpawn(Vector2 spawnPos)
     {
@@ -20,7 +27,7 @@ public class Powerups : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == PLAYER_TAG)
         {
