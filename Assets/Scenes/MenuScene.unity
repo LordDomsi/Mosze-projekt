@@ -18816,7 +18816,7 @@ MonoBehaviour:
     loop: 0
     type: 13
   - clip: {fileID: 8300000, guid: 5ebb6ceabb143fa4886edbc2183518c8, type: 3}
-    volume: 1
+    volume: 0.8
     loop: 0
     type: 14
   - clip: {fileID: 8300000, guid: c4821441f29e9f34a83506a787aedf38, type: 3}
@@ -18832,7 +18832,7 @@ MonoBehaviour:
     loop: 0
     type: 4
   - clip: {fileID: 8300000, guid: 743eb490a5e57944e9e62640a9fe31b1, type: 3}
-    volume: 1
+    volume: 0.8
     loop: 0
     type: 15
   - clip: {fileID: 8300000, guid: c5e5c49a4f2027d4d9a363800f6ea9a8, type: 3}
@@ -18848,7 +18848,7 @@ MonoBehaviour:
     loop: 0
     type: 9
   - clip: {fileID: 8300000, guid: ed1c055d13800d74aba5fac33eea1f24, type: 3}
-    volume: 0.6
+    volume: 0.8
     loop: 0
     type: 16
   musicData:
