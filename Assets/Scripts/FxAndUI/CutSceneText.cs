@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class CutSceneText : MonoBehaviour
 {
-    private float textDisplaySpeed = 0.02f;
+    private float textDisplaySpeed = 0.04f;
     [SerializeField]private List<TextMeshProUGUI> dialogueBoxes = new List<TextMeshProUGUI>();
     private float timeBeforeDialogueDisplayStart = 2f;
     private List<string> dialogueTexts = new List<string>();
@@ -15,7 +15,10 @@ public class CutSceneText : MonoBehaviour
     public bool displayingText = false;
     private int currentTextCount = 0;
     private int i;
+    private bool typingText = false;
 
+    [SerializeField] private Texture2D defaultCursorTexture;
+    private Vector2 cursorPosition;
     private void Start()
     {
         Time.timeScale = 1f;
@@ -24,6 +27,8 @@ public class CutSceneText : MonoBehaviour
         currentTextCount = 0;
         i = 0;
         displayingText = false;
+        cursorPosition = new Vector2(0, 0);
+        Cursor.SetCursor(defaultCursorTexture, cursorPosition, CursorMode.Auto);
         Debug.Log(GameStateManager.Instance.gameState.ToString());
         if(GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame)
         {
@@ -63,7 +68,11 @@ public class CutSceneText : MonoBehaviour
         if (i < dialogueTexts.Count)
         {
             displayingText = true;
-            StopAllCoroutines();
+            if (typingText) { 
+                typingText = false;
+                StopAllCoroutines();
+                dialogueBoxes[currentTextCount-1].text = dialogueTexts[i-1];
+            }
             if (currentTextCount == dialogueBoxes.Count) { ResetBoxes(); currentTextCount = 0; }
             StartCoroutine(TypeText(dialogueTexts[i], dialogueBoxes[currentTextCount]));
             currentTextCount++;
@@ -87,12 +96,15 @@ public class CutSceneText : MonoBehaviour
 
     private IEnumerator TypeText(string text, TextMeshProUGUI box)
     {
+        typingText = true;
         box.text = "";
         foreach (char letter in text.ToCharArray())
         {
             box.text += letter;
+            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.TYPING);
             yield return new WaitForSecondsRealtime(textDisplaySpeed);
         }
+        typingText = false;
     }
     public void ResetBoxes()
     {

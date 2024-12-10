@@ -19,6 +19,8 @@ public class PlayerHealthManager : MonoBehaviour
 
     public bool exploded = false;
 
+    private bool godMode = false;
+
     [SerializeField] private Sprite explosionTexture;
     [SerializeField] private Sprite defaultTexture;
     private SpriteRenderer spriteRenderer;
@@ -31,18 +33,30 @@ public class PlayerHealthManager : MonoBehaviour
         playerHealth = SaveManager.Instance.saveData.currentHealth;
     }
 
-    public void TakeDamage(int damage)
-    { 
-        if (playerHealth <= 0  && exploded == false)
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.G))
         {
-            exploded = true;
-            StartCoroutine(PlayerDeath());
+            ToggleGodMode();
         }
-        else
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (!godMode)
         {
-            playerHealth -= damage;
-            PlayerMovement.Instance.gameObject.GetComponent<HitIndicator>().Hit();
-            OnPlayerTakeDamage?.Invoke(this, EventArgs.Empty);
+            if (playerHealth <= 0 && exploded == false)
+            {
+                exploded = true;
+                StartCoroutine(PlayerDeath());
+            }
+            else
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_HIT);
+                playerHealth -= damage;
+                PlayerMovement.Instance.gameObject.GetComponent<HitIndicator>().Hit();
+                OnPlayerTakeDamage?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -59,11 +73,18 @@ public class PlayerHealthManager : MonoBehaviour
     private IEnumerator PlayerDeath()
     {
         Instantiate(explosionPrefab, this.transform.position , Quaternion.identity);
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION);
         spriteRenderer.sprite = explosionTexture;
         PlayerMovement.Instance.canMove = false;
         PlayerMovement.Instance.canShoot = false;
+        SaveManager.Instance.AddScoreToLeaderboard(ScoreManager.Instance.GetPlayerScore());
         yield return new WaitForSeconds(timeTillGameOver);
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ToggleGodMode()
+    { 
+        godMode = !godMode;
     }
 
 

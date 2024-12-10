@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canShoot)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
+            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
         
 

@@ -55,6 +55,7 @@ public class EnemyShoot : MonoBehaviour
 
     private void Shoot()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_SHOOT);
         GameObject newEnemyBullet = null;
         if (!enemyTypeSO.twoFirePoints)
         {

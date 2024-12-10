@@ -666,6 +666,7 @@ MonoBehaviour:
   - {fileID: 215157427}
   - {fileID: 228740809}
   displayingText: 0
+  defaultCursorTexture: {fileID: 2800000, guid: e8b400456aff78a40b221b4433bc2578, type: 3}
 --- !u!1 &306488198
 GameObject:
   m_ObjectHideFlags: 0

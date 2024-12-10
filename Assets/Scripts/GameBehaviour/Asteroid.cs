@@ -80,6 +80,7 @@ public class Asteroid : MonoBehaviour
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
              }
             AsteroidSpawner.Instance.DecreaseAsteroidCount();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
             Destroy(this.gameObject);
 
             if (size == 0.04f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[0]); // méret szerint növeli a player score-t

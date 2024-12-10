@@ -111,6 +111,7 @@ public class MainMenuUI : MonoBehaviour
         cursorPosition = new Vector2(0,0);
         Cursor.SetCursor(defaultCursor, cursorPosition, CursorMode.Auto);
         Time.timeScale = 1.0f;
+        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.MENU_THEME);
         StartCoroutine(PopupManager.Instance.PopupCurveAnim(titleUI, uiElementSpeed, UIElementCurve));
         StartCoroutine(PopupManager.Instance.PopupCurveAnim(menuUI, uiElementSpeed, UIElementCurve));
         yield return new WaitUntil(() => SaveManager.Instance.loaded == true);

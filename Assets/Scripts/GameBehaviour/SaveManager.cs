@@ -76,7 +76,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData,true);
         string path = Path.Combine(Application.persistentDataPath, "saveData.json");
         File.WriteAllText(path, json);
-        Debug.Log(Application.persistentDataPath);
+        Debug.Log("Saved");
     }
     //betöltés
     public void Load()
@@ -123,5 +123,31 @@ public class SaveManager : MonoBehaviour
         Save();
     }
 
-    
+    public void AddScoreToLeaderboard(int playerScore)
+    {
+        UserData newUserData = new UserData();
+        newUserData.name = saveData.enteredName;
+        newUserData.score = playerScore;
+        bool newName = true;
+        for (int i = 0; i < saveData.leaderboardData.Count; i++)
+        {
+            if (newUserData.name == saveData.leaderboardData[i].name)
+            {
+                newName = false;
+                if (newUserData.score > saveData.leaderboardData[i].score)
+                {
+                    saveData.leaderboardData[i].score = newUserData.score;
+                    Debug.Log("updated leaderboard data");
+                }
+            }
+        }
+        if (newName)
+        {
+            saveData.leaderboardData.Add(newUserData);
+            Debug.Log("added new leaderboard data entry");
+        }
+        Save();
+        
+    }
+
 }

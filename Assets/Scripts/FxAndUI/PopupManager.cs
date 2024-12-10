@@ -95,6 +95,7 @@ public class PopupManager : MonoBehaviour
     {
         PlayerMovement.Instance.canMove = false;
         PlayerMovement.Instance.StopPlayer();
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENTER_BLACKHOLE);
         StartZoomInAnim();
         StartUIScaleAnimClose();
         yield return new WaitForSeconds(zoomInAnimSpeed);//pályaváltásnál meg kell várni hogy bezoomoljon az animáció és utána vált pályát
