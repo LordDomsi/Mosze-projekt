@@ -18,13 +18,11 @@ public class LocatorSpawner : MonoBehaviour
 
     private int currentLocators;
 
-
-
     private void Awake()
     {
         Instance = this;
         // ezt az értéket majd fájlból kell betölteni 
-        currentLocators = SaveManager.Instance.saveData.currentLevel-1;
+        currentLocators = 0;
         locatorAnimator = locatorText.gameObject.GetComponent<Animator>();
         UpdateUI();
     }
@@ -48,10 +46,4 @@ public class LocatorSpawner : MonoBehaviour
     {
         locatorText.SetText(currentLocators.ToString() + "|3");
     }
-
-    public int GetCurrentLocators()
-    {
-        return currentLocators;
-    }
-    
 }

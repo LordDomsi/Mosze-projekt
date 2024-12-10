@@ -29,7 +29,6 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StageManager.Instance.OnStageInit += StageManager_OnStageInit;
-        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.GAME_THEME);
     }
 
     private void StageManager_OnStageInit(object sender, EventArgs e)
