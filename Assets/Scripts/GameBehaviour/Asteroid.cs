@@ -98,6 +98,4 @@ public class Asteroid : MonoBehaviour
     {
         this.size = size;
     }
-    public float GetSize() { return this.size; }
-
 }
