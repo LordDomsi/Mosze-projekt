@@ -99,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
             cursorPosition = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
             Cursor.SetCursor(cursorTexture, cursorPosition, CursorMode.Auto);
         }
+        canMove = true;
+        canShoot = true;
     }
 
     private void StageManager_OnStageInit(object sender, EventArgs e)
@@ -116,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (legacyMovement == false)
+        if (legacyMovement == false && canMove)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
@@ -210,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canShoot)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
         
 

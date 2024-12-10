@@ -29,12 +29,20 @@ public class XmlLoader : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
         //xml file betöltése
         TextAsset xmlTextAsset = Resources.Load<TextAsset>("XML/story");
         storyData = new XmlDocument();
         storyData.LoadXml(xmlTextAsset.text);
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     //az xml fileból kiszedi a történetet attól függõen hogy háttértörténet vagy pedig ending
