@@ -8,7 +8,6 @@ public class BossAI : MonoBehaviour
     private Transform bossPosition;
     private bool initialMovement = true;
     private float bossHealth;
-    [SerializeField] private GameObject explosionPrefab;
     public enum BossState
     {
         BasicAttack,
@@ -59,7 +58,6 @@ public class BossAI : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.BOSS_SPAWN);
         bossState = BossState.BasicAttack;
         shootingPoint = ShootingPoint.Left;
         looking = LookingTo.Up;
@@ -166,7 +164,6 @@ public class BossAI : MonoBehaviour
 
     private void Shoot()
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.BOSS_SHOOT);
         GameObject newEnemyBullet = null;
         if (!bossTypeSO.twoFirePoints)
         {
@@ -194,7 +191,6 @@ public class BossAI : MonoBehaviour
 
     public void TakeDamage(float playerBulletDamage)
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_HIT);
         bossHealth = bossHealth - playerBulletDamage;
         EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
         this.gameObject.GetComponent<HitIndicator>().Hit();
@@ -202,8 +198,6 @@ public class BossAI : MonoBehaviour
         if (bossHealth <= 0)
         {
             ScoreManager.Instance.IncreasePlayerScore(bossTypeSO.pointsWorth);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.BOSS_EXPLOSION);
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             LocatorSpawner.Instance.Spawn(this.transform);
             Destroy(gameObject);
         }

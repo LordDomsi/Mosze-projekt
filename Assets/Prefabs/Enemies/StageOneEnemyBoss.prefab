@@ -630,7 +630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5d96745766881498d36294835d5799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 2937568307168881339, guid: 120d2a0ebd948f545839c60fc24ea6ec, type: 3}
   enemyBulletPrefab: {fileID: 8343992249122312408, guid: deef177f5cc1b9c44a810e45e71034fe, type: 3}
   bulletStartLocation: {fileID: 7860160488410594334}
   bulletStartLocation2: {fileID: 0}
