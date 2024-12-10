@@ -5,7 +5,7 @@ public class EnemyAI : MonoBehaviour
 {
     private EnemyTypeScriptableObject enemyTypeSO;
     private bool enemyActive = false;
-    private int direction = 1;
+    //private int direction = 1;
     private Rigidbody2D rb;
     private PolygonCollider2D polygonCollider;
     private float enemyHealth;
