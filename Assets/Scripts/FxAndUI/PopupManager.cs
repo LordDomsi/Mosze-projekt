@@ -24,11 +24,20 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private float zoomOutAnimSpeed;
     [SerializeField] private float zoomInSize;
     [SerializeField] private float zoomOutSize;
+    
     public float powerUpUIAnimSpeed;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     
@@ -86,6 +95,7 @@ public class PopupManager : MonoBehaviour
     {
         PlayerMovement.Instance.canMove = false;
         PlayerMovement.Instance.StopPlayer();
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENTER_BLACKHOLE);
         StartZoomInAnim();
         StartUIScaleAnimClose();
         yield return new WaitForSeconds(zoomInAnimSpeed);//pályaváltásnál meg kell várni hogy bezoomoljon az animáció és utána vált pályát
