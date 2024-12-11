@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {// ezt az értéket majd fájlból kell betölteni 
         Instance = this;
-        currentStage = 1;
+        currentStage = SaveManager.Instance.saveData.currentLevel;
     }
 
     private IEnumerator Start()
@@ -27,6 +27,9 @@ public class StageManager : MonoBehaviour
     {
         currentStage++;
         Debug.Log("Current Stage: " + currentStage);
+        SaveManager.Instance.SaveLevel(currentStage);
+        SaveManager.Instance.SaveScore(ScoreManager.Instance.GetPlayerScore());
+        SaveManager.Instance.SaveHealth(PlayerHealthManager.Instance.GetPlayerHealth());
         OnStageInit?.Invoke(this, EventArgs.Empty);
     }
 

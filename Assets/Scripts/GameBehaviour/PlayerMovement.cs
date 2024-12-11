@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float LovSebesseg = 666.0f;
 
-    //[SerializeField] private float eletIdo = 5.0f;
+    [SerializeField] private float eletIdo = 5.0f;
 
     [SerializeField] private Transform bulletStartLocation;
 
@@ -62,24 +62,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float blackholeSpeed;
     [SerializeField] private float defaultSpeed;
 
-    public void SetForwardMovement(bool isMoving)
-    {
-        forwardMovement = isMoving;
-    }
-
-    public void SetBackwardMovement(bool isMoving)
-    {
-        backwardMovement = isMoving;
-    }
-    public void TriggerOnTurnLeft()
-    {
-        OnTurnLeft?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void TriggerOnTurnRight()
-    {
-        OnTurnRight?.Invoke(this, EventArgs.Empty);
-    }
 
     private void Awake()
     {
@@ -96,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
             cursorPosition = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
             Cursor.SetCursor(cursorTexture, cursorPosition, CursorMode.Auto);
         }
+        canMove = true;
+        canShoot = true;
     }
 
     private void StageManager_OnStageInit(object sender, EventArgs e)
@@ -113,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (legacyMovement == false)
+        if (legacyMovement == false && canMove)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
@@ -178,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canShoot)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); }
+            if (Input.GetKeyDown(KeyCode.Space)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
         
 

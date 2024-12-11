@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        playerScore = 0;
+        playerScore = SaveManager.Instance.saveData.currentScore;
     }
 
     
