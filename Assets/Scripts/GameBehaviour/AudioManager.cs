@@ -36,7 +36,8 @@ public class AudioManager : MonoBehaviour
         MENU_THEME,
         GAME_THEME,
         GAMEOVER_THEME,
-        ENDING_THEME
+        ENDING_THEME,
+        INTRO_THEME
     }
 
     //hangokhoz kapcsolódó adatstruktúra

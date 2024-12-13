@@ -128,7 +128,6 @@ public class DialogueBoxUI : MonoBehaviour
         OnGameEnd?.Invoke(this, EventArgs.Empty);
         yield return new WaitForSeconds(delay);
         GameStateManager.Instance.gameState = GameStateManager.GameState.Ending;
-        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.ENDING_THEME);
         Loader.LoadScene(Loader.Scene.CutScene);
     }
 }

@@ -16,6 +16,7 @@ TagManager:
   - Boss
   - BlackHole
   - Shield
+  - PowerUp4
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,6 @@ TagManager:
   - blackholeouter
   - MenuBackground
   - Shield
-  - 
   - 
   - 
   - 

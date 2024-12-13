@@ -16,12 +16,13 @@ public class Asteroid : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    public int damage = 5;
+
     private void Start()
     {
         InitialForce();
         this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);    //megforgatja random szogben
     }
-
 
     //Ha túl messze kerül az asteroida a playertõl akkor kitörlõdik
     private void LateUpdate()
@@ -80,7 +81,7 @@ public class Asteroid : MonoBehaviour
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
              }
             AsteroidSpawner.Instance.DecreaseAsteroidCount();
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
+            TryPlayAudio();
             Destroy(this.gameObject);
 
             if (size == 0.04f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[0]); // méret szerint növeli a player score-t
@@ -98,7 +99,13 @@ public class Asteroid : MonoBehaviour
     public void SetSize(float size)
     {
         this.size = size;
+        damage = (int)(size / 0.04f * 5);
     }
     public float GetSize() { return this.size; }
+
+    public void TryPlayAudio() //csak akkor játsza le a hangeffektet ha a képernyõn belül van az eltalált aszteroida hogy ne legyen összezavaró
+    {
+        if(this.transform.position.y <= 8f && this.transform.position.y >= -8f && this.transform.position.x <= PlayerMovement.Instance.transform.position.x + 14f && this.transform.position.x >= PlayerMovement.Instance.transform.position.x - 14f) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
+    }
 
 }

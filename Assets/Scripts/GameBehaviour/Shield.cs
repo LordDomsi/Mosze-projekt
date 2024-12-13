@@ -11,12 +11,20 @@ public class Shield : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private float speed = 6f;
-
     private int shieldHealth;
+
+    [SerializeField] private Material defaultShieldMaterial;
+    [SerializeField] private Material hitShieldMaterial;
+    [SerializeField] private SpriteRenderer shieldRenderer;
+
+    private float hitAnimLength = 0.15f;
+
 
     private void OnEnable()
     {
-        shieldHealth = 3;
+        shieldRenderer.material = defaultShieldMaterial;
+        shieldHealth = PlayerMovement.Instance.maxShield;
+        ShieldUI.Instance.UpdateVisual();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,17 +32,32 @@ public class Shield : MonoBehaviour
         if (collision.gameObject.tag == ASTEROID_TAG || collision.gameObject.tag == ENEMY_TAG || collision.gameObject.tag == ENEMY_BULLET_TAG)
         {
             ReduceShieldHealth();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_HIT);
+            if(shieldRenderer.gameObject.activeSelf)StartCoroutine(ShieldHitVisual());
+            if (collision.gameObject.tag == ASTEROID_TAG) { Destroy(collision.gameObject); collision.gameObject.GetComponent<Asteroid>().TryPlayAudio(); };
         }
     }
 
     public void ReduceShieldHealth()
     {
         shieldHealth--;
+        ShieldUI.Instance.UpdateVisual();
         if (shieldHealth <= 0)
         {
             PlayerMovement.Instance.DisableShield();
         }
     }
 
-    
+    public int GetShieldHealth()
+    {
+        return shieldHealth;
+    }
+
+    private IEnumerator ShieldHitVisual()
+    {
+        shieldRenderer.material = hitShieldMaterial;
+        yield return new WaitForSeconds(hitAnimLength);
+        shieldRenderer.material = defaultShieldMaterial;
+    }
+
 }

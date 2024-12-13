@@ -26,6 +26,7 @@ public class StageManager : MonoBehaviour
     public void NextStage()
     {
         currentStage++;
+        if (currentStage > 1) PlayerMovement.Instance.IncreaseMaxShield(1);
         Debug.Log("Current Stage: " + currentStage);
         SaveManager.Instance.SaveLevel(currentStage);
         SaveManager.Instance.SaveScore(ScoreManager.Instance.GetPlayerScore());

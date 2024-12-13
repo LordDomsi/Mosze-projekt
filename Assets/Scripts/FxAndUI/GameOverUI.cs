@@ -34,6 +34,7 @@ public class GameOverUI : MonoBehaviour
         cursorPosition = new Vector2(0, 0);
         Cursor.SetCursor(defaultCursorTexture, cursorPosition, CursorMode.Auto);
         gameOver = true;
+        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.GAMEOVER_THEME);
     }
 
     private void OnDestroy()

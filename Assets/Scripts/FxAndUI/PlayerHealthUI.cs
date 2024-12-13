@@ -11,6 +11,7 @@ public class PlayerHealthUI : MonoBehaviour
     [SerializeField] private Image Glow;
 
     [SerializeField] private Color hitColor;
+    [SerializeField] private Color healColor;
     private Color originalColorBar;
     private Color originalColorOutline;
     private Color originalColorGlow;
@@ -26,6 +27,7 @@ public class PlayerHealthUI : MonoBehaviour
     private void Start()
     {
         PlayerHealthManager.Instance.OnPlayerTakeDamage += PlayerHealthManager_OnPlayerTakeDamage;
+        PlayerHealthManager.Instance.OnPlayerHeal += PlayerHealthManager_OnPlayerHeal;
         UpdateHealthBar();
     }
 
@@ -33,6 +35,12 @@ public class PlayerHealthUI : MonoBehaviour
     {
         UpdateHealthBar();
         StartCoroutine(HitAnim());
+    }
+
+    private void PlayerHealthManager_OnPlayerHeal(object sender, System.EventArgs e)
+    {
+        UpdateHealthBar();
+        StartCoroutine(HealAnim());
     }
 
     public void UpdateHealthBar()
@@ -49,5 +57,22 @@ public class PlayerHealthUI : MonoBehaviour
         HealthBar.color = originalColorBar;
         Outline.color = originalColorOutline;
         Glow.color = originalColorGlow;
+    }
+
+    private IEnumerator HealAnim()
+    {
+        HealthBar.color = healColor;
+        Outline.color = healColor;
+        Glow.color = healColor;
+        yield return new WaitForSeconds(animLength);
+        HealthBar.color = originalColorBar;
+        Outline.color = originalColorOutline;
+        Glow.color = originalColorGlow;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerHealthManager.Instance.OnPlayerTakeDamage -= PlayerHealthManager_OnPlayerTakeDamage;
+        PlayerHealthManager.Instance.OnPlayerHeal -= PlayerHealthManager_OnPlayerHeal;
     }
 }

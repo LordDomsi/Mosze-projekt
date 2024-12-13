@@ -32,10 +32,12 @@ public class CutSceneText : MonoBehaviour
         if(GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame)
         {
             dialogueTexts = XmlLoader.Instance.GetStoryText(XmlLoader.TextID.backstory);
+            AudioManager.Instance.PlayMusic(AudioManager.Music_enum.INTRO_THEME);
         }
         if (GameStateManager.Instance.gameState == GameStateManager.GameState.Ending)
         {
             dialogueTexts = XmlLoader.Instance.GetStoryText(XmlLoader.TextID.ending);
+            AudioManager.Instance.PlayMusic(AudioManager.Music_enum.ENDING_THEME);
         }
         Debug.Log(dialogueTexts.Count);
         StartCoroutine(WaitThenDisplayDialogues(timeBeforeDialogueDisplayStart));

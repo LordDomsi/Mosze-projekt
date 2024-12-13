@@ -18852,22 +18852,26 @@ MonoBehaviour:
     loop: 0
     type: 16
   musicData:
-  - clip: {fileID: 8300000, guid: ffb81db72926dee459d29958083c1d61, type: 3}
+  - clip: {fileID: 8300000, guid: c80cc32fd2ed5a641a20dd110c00a7b5, type: 3}
     volume: 1
     loop: 1
     type: 0
-  - clip: {fileID: 8300000, guid: 1b738f42d33abe54ba5e700b082d59df, type: 3}
+  - clip: {fileID: 8300000, guid: c154bc5525d04a045a6f7040e2f5054a, type: 3}
     volume: 1
     loop: 1
     type: 1
-  - clip: {fileID: 8300000, guid: 3136735a801382f43aa62e0df75a0e0d, type: 3}
+  - clip: {fileID: 8300000, guid: 3052966c55f687347aaa077dc4cc1d98, type: 3}
     volume: 1
-    loop: 1
+    loop: 0
     type: 3
-  - clip: {fileID: 8300000, guid: 3136735a801382f43aa62e0df75a0e0d, type: 3}
+  - clip: {fileID: 8300000, guid: 6afc858263a98db48808fe9806b412db, type: 3}
     volume: 1
     loop: 1
     type: 2
+  - clip: {fileID: 8300000, guid: eff8eb4f95554d940988a1a70540da7b, type: 3}
+    volume: 1
+    loop: 0
+    type: 4
   musicSource: {fileID: 157266389}
   sfxSource: {fileID: 1560854312}
   audioMixer: {fileID: 24100000, guid: 5bcadeaef5dbccc4dbac92f30018df17, type: 2}

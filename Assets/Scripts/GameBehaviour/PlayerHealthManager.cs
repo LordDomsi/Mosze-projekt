@@ -9,6 +9,7 @@ public class PlayerHealthManager : MonoBehaviour
 
     public event EventHandler OnPlayerTakeDamage;
     public event EventHandler OnPlayerDeath;
+    public event EventHandler OnPlayerHeal;
 
     [SerializeField] private GameObject explosionPrefab;
 
@@ -60,6 +61,16 @@ public class PlayerHealthManager : MonoBehaviour
         }
     }
 
+    public void Heal(int health)
+    {
+        playerHealth += health;
+        OnPlayerHeal?.Invoke(this, EventArgs.Empty);
+        if (playerHealth >= 100) // túl healelés miatt
+        {
+            playerHealth = 100;
+        }
+    }
+
     public int GetPlayerHealth()
     {
         return playerHealth;
@@ -85,6 +96,14 @@ public class PlayerHealthManager : MonoBehaviour
     public void ToggleGodMode()
     { 
         godMode = !godMode;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Asteroid")
+        {
+            if(!PlayerMovement.Instance.shielded)TakeDamage(collision.GetComponent<Asteroid>().damage);
+        }
     }
 
 
