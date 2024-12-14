@@ -9,6 +9,8 @@ public class PlayerEngineFX : MonoBehaviour
 
     private PlayerMovement playerMovement;
 
+    [SerializeField] private AudioSource engineSource;
+
     private bool forward = false;
 
     private void Start()
@@ -23,6 +25,7 @@ public class PlayerEngineFX : MonoBehaviour
 
         LeftEngine.SetActive(false);
         RightEngine.SetActive(false);
+        if(engineSource.isPlaying) engineSource.Stop();
     }
 
     private void PlayerMovement_OnStopTurn(object sender, System.EventArgs e)
@@ -52,8 +55,10 @@ public class PlayerEngineFX : MonoBehaviour
 
     private void PlayerMovement_OnForwardStopped(object sender, System.EventArgs e)
     {
+
         LeftEngine.SetActive(false);
         RightEngine.SetActive(false);
+        engineSource.Stop();
         forward = false;
     }
 
@@ -61,6 +66,7 @@ public class PlayerEngineFX : MonoBehaviour
     {
         LeftEngine.SetActive(true);
         RightEngine.SetActive(true);
+        if(!engineSource.isPlaying)engineSource.Play();
         forward = true;
     }
 }

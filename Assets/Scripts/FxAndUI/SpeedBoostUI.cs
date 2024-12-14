@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerUpUI : MonoBehaviour
+public class SpeedBoostUI : MonoBehaviour
 {
     [SerializeField] private Image PowerUpSprite;
 
     private void Start()
     {
-        PlayerMovement.Instance.OnThreeWayPowerUpPickup += PlayerMovement_OnThreeWayPowerUpPickup;
+        PlayerMovement.Instance.OnSpeedBoostPickup += PlayerMovement_OnSpeedBoostPickup;
         this.gameObject.SetActive(false);
     }
 
-    private void PlayerMovement_OnThreeWayPowerUpPickup(object sender, PlayerMovement.OnPowerupPickupEventArgs e)
+    private void PlayerMovement_OnSpeedBoostPickup(object sender, PlayerMovement.OnPowerupPickupEventArgs e)
     {
         StartPowerUpUIDisplay(e.powerUpTimeLimit);
     }
@@ -21,7 +21,7 @@ public class PowerUpUI : MonoBehaviour
     public void StartPowerUpUIDisplay(float animLength)
     {
         this.gameObject.SetActive(true);
-        PopupManager.Instance.StartPowerUpUIAnimOpen();
+        PopupManager.Instance.StartSpeedBoostUIAnimOpen();
         PowerUpSprite.fillAmount = 1f;
         StartCoroutine(DisplayTimer(animLength));
     }
@@ -33,11 +33,11 @@ public class PowerUpUI : MonoBehaviour
         {
             time -= Time.deltaTime;
 
-            PowerUpSprite.fillAmount = time/animLength;
+            PowerUpSprite.fillAmount = time / animLength;
 
             yield return null;
         }
-        PopupManager.Instance.StartPowerUpUIAnimClose();
+        PopupManager.Instance.StartSpeedBoostUIAnimClose();
         yield return new WaitForSeconds(PopupManager.Instance.powerUpUIAnimSpeed);
         this.gameObject.SetActive(false);
 
@@ -45,6 +45,6 @@ public class PowerUpUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        PlayerMovement.Instance.OnThreeWayPowerUpPickup -= PlayerMovement_OnThreeWayPowerUpPickup;
+        PlayerMovement.Instance.OnThreeWayPowerUpPickup -= PlayerMovement_OnSpeedBoostPickup;
     }
 }

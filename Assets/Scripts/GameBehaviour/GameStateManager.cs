@@ -20,6 +20,8 @@ public class GameStateManager : MonoBehaviour
 
     private bool isGamePaused = false;
 
+    public bool allowedToPause = true;
+
     public GameState gameState;
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class GameStateManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.Game)
+        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.Game && allowedToPause)
         {
             if(!GameOverUI.Instance.gameOver) ToggleGamePause();
         }

@@ -30,7 +30,6 @@ public class Asteroid : MonoBehaviour
         float distance = Vector2.Distance(this.transform.position, PlayerMovement.Instance.transform.position);
         if (distance > 30f)
         {
-            AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
         }
     }
@@ -80,7 +79,6 @@ public class Asteroid : MonoBehaviour
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
              }
-            AsteroidSpawner.Instance.DecreaseAsteroidCount();
             TryPlayAudio();
             Destroy(this.gameObject);
 
@@ -95,7 +93,10 @@ public class Asteroid : MonoBehaviour
         }
         
     }
-
+    private void OnDestroy()
+    {
+        AsteroidSpawner.Instance.DecreaseAsteroidCount();
+    }
     public void SetSize(float size)
     {
         this.size = size;

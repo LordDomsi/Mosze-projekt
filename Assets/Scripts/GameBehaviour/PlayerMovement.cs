@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public event EventHandler OnTurnLeft;
     public event EventHandler OnTurnRight;
     public event EventHandler OnStopTurn;
+    public event EventHandler OnPlayerShoot;
 
     private float _forog;
 
@@ -37,13 +38,19 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform bulletStartLocation;
 
+    [SerializeField] private Transform speedBoostEffect;
+
+    private float playerDamage = 1f;
+    private const float DEFAULT_SHOOTSPEED = 0.5f;
+    private float playerShootSpeed = 0.5f;
+
     private const string POWERUP_TAG1 = "PowerUp1";
     private const string POWERUP_TAG2 = "PowerUp2";
     private const string POWERUP_TAG3 = "PowerUp3";
     private const string POWERUP_TAG4 = "PowerUp4";
 
     private int PowerUpType = 0;
-    public int maxShield = 3;
+    private int maxShield = 3;
     public int maxHeal = 30;
 
     private bool PoweredUp = false;
@@ -54,9 +61,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float SpeedBoostLimit;
     public bool canMove = true;
     public bool canShoot = true;
+    public bool shootingCooldown = false;
 
-    public event EventHandler<OnThreeWayPowerUpPickupArgs> OnThreeWayPowerUpPickup;
-    public class OnThreeWayPowerUpPickupArgs : EventArgs
+    public event EventHandler<OnPowerupPickupEventArgs> OnThreeWayPowerUpPickup;
+    public event EventHandler<OnPowerupPickupEventArgs> OnSpeedBoostPickup;
+    public class OnPowerupPickupEventArgs : EventArgs
     {
         public float powerUpTimeLimit;
     }
@@ -77,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
-        StageManager.Instance.OnStageInit += StageManager_OnStageInit;
         _rigidbody = GetComponent<Rigidbody2D>();
         if (!legacyMovement)
         {
@@ -87,17 +95,20 @@ public class PlayerMovement : MonoBehaviour
         }
         canMove = true;
         canShoot = true;
-    }
-
-    private void StageManager_OnStageInit(object sender, EventArgs e)
-    {
-        speed = defaultSpeed;
+        StatsUI.Instance.UpdateStats();
     }
 
     private void LocatorSpawner_OnLocatorPickup(object sender, EventArgs e)
     {
-        speed = blackholeSpeed;
         StopPlayer();
+        if (LocatorSpawner.Instance.GetCurrentLocators() < 3)
+        {
+            maxShield++;
+            playerDamage += 0.5f;
+            playerShootSpeed -= 0.2f;
+            speed += 25;
+            StatsUI.Instance.UpdateStats();
+        }
     }
 
     private void Update()
@@ -194,7 +205,7 @@ public class PlayerMovement : MonoBehaviour
                 OnStopTurn?.Invoke(this, EventArgs.Empty);
             }
         }
-        if (canShoot)
+        if (canShoot && !shootingCooldown)
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
@@ -237,22 +248,25 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator SpeedBoostTimer()
     {
+        speedBoostEffect.gameObject.SetActive(true);
         yield return new WaitForSeconds(SpeedBoostLimit);
+        speedBoostEffect.gameObject.SetActive(false);
         speedBoost = false;
     }
 
     private void Shoot()
     {
+        OnPlayerShoot?.Invoke(this, EventArgs.Empty);
         if (PoweredUp)      //three-way shot
         {
             GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
             newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
 
-            GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, 20) * this.transform.rotation);
-            newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 20) * this.transform.up * this.LovSebesseg);
+            GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, 15) * this.transform.rotation);
+            newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 15) * this.transform.up * this.LovSebesseg);
 
-            GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -20) * this.transform.rotation);
-            newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -20) * this.transform.up * this.LovSebesseg);
+            GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -15) * this.transform.rotation);
+            newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -15) * this.transform.up * this.LovSebesseg);
 
         }
 
@@ -262,22 +276,23 @@ public class PlayerMovement : MonoBehaviour
             newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
         }
 
-
+        StartCoroutine(ShootCooldown());
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)      //1 three-way, 2 speed, 3 shield
+    private void OnTriggerEnter2D(Collider2D collision)      //1 three-way, 2 speed, 3 shield, 4 heal
     {
         if (collision.gameObject.tag == POWERUP_TAG1)
         {
             StartCoroutine(PowerUpTimer());
-            OnThreeWayPowerUpPickup?.Invoke(this, new OnThreeWayPowerUpPickupArgs { powerUpTimeLimit = PowerUpTimeLimit });
+            OnThreeWayPowerUpPickup?.Invoke(this, new OnPowerupPickupEventArgs { powerUpTimeLimit = PowerUpTimeLimit });
             PoweredUp = true;
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.POWERUP);
         }
         else if (collision.gameObject.tag == POWERUP_TAG2)
         {
             StartCoroutine(SpeedBoostTimer());
+            OnSpeedBoostPickup?.Invoke(this, new OnPowerupPickupEventArgs { powerUpTimeLimit = SpeedBoostLimit });
             speedBoost = true;
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.POWERUP);
         }
@@ -294,6 +309,13 @@ public class PlayerMovement : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.POWERUP);
             PlayerHealthManager.Instance.Heal(maxHeal);
         }
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        shootingCooldown = true;
+        yield return new WaitForSeconds(playerShootSpeed);
+        shootingCooldown = false;
     }
 
     public void StopPlayer()
@@ -314,8 +336,33 @@ public class PlayerMovement : MonoBehaviour
         shielded = false;
     }
 
-    public void IncreaseMaxShield(int plusShield)
+    public float GetPlayerDamage()
     {
-        maxShield += plusShield;
+        return playerDamage;
+    }
+
+    public float GetPlayerSpeed()
+    {
+        return speed;
+    }
+
+    public int GetPlayerMaxShield()
+    {
+        return maxShield;
+    }
+
+    public float GetPlayerShootSpeed()
+    {
+        return playerShootSpeed;
+    }
+
+    public float GetPlayerDefaultShootSpeed()
+    {
+        return DEFAULT_SHOOTSPEED;
+    }
+
+    private void OnDestroy()
+    {
+        LocatorSpawner.Instance.OnLocatorPickup -= LocatorSpawner_OnLocatorPickup;
     }
 }

@@ -102,7 +102,7 @@ public class PlayerHealthManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "Asteroid")
         {
-            if(!PlayerMovement.Instance.shielded)TakeDamage(collision.GetComponent<Asteroid>().damage);
+            if (!PlayerMovement.Instance.shielded) { TakeDamage(collision.GetComponent<Asteroid>().damage); ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f); collision.GetComponent<Asteroid>().TryPlayAudio(); }
         }
     }
 

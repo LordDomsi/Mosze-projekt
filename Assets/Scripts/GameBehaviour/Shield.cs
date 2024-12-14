@@ -23,7 +23,7 @@ public class Shield : MonoBehaviour
     private void OnEnable()
     {
         shieldRenderer.material = defaultShieldMaterial;
-        shieldHealth = PlayerMovement.Instance.maxShield;
+        shieldHealth = PlayerMovement.Instance.GetPlayerMaxShield();
         ShieldUI.Instance.UpdateVisual();
     }
 
@@ -34,7 +34,7 @@ public class Shield : MonoBehaviour
             ReduceShieldHealth();
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_HIT);
             if(shieldRenderer.gameObject.activeSelf)StartCoroutine(ShieldHitVisual());
-            if (collision.gameObject.tag == ASTEROID_TAG) { Destroy(collision.gameObject); collision.gameObject.GetComponent<Asteroid>().TryPlayAudio(); };
+            if (collision.gameObject.tag == ASTEROID_TAG) { Destroy(collision.gameObject); collision.gameObject.GetComponent<Asteroid>().TryPlayAudio(); ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f); };
         }
     }
 

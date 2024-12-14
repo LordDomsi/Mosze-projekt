@@ -9,6 +9,8 @@ public class ScoreUI : MonoBehaviour
     private Color originalColor;
     [SerializeField] private Color increaseColor;
     private float animLength = 0.15f;
+    private float defaultFontSize = 50f;
+    private float increaseFontSize = 65f;
 
     private void Awake()
     {
@@ -34,7 +36,9 @@ public class ScoreUI : MonoBehaviour
     private IEnumerator HitAnim()
     {
         scoreText.color = increaseColor;
+        scoreText.fontSize = increaseFontSize;
         yield return new WaitForSeconds(animLength);
         scoreText.color = originalColor;
+        scoreText.fontSize = defaultFontSize;
     }
 }

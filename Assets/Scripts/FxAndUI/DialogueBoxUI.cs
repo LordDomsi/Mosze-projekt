@@ -9,8 +9,8 @@ public class DialogueBoxUI : MonoBehaviour
 {
     public static DialogueBoxUI Instance {  get; private set; }
 
-    private float timeBeforeDialogueDisplayStart = 1.5f;
-    private float timeBeforeDialogueDisplayEnd = 3f;
+    private float timeBeforeDialogueDisplayStart = 1f;
+    private float timeBeforeDialogueDisplayEnd = 1f;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -28,6 +28,8 @@ public class DialogueBoxUI : MonoBehaviour
     List<XmlLoader.DialogueData> dialogues = new List<XmlLoader.DialogueData>();
 
     public bool isSubscribed = false;
+
+    private bool typing = false;
 
     private void Awake()
     {
@@ -85,14 +87,29 @@ public class DialogueBoxUI : MonoBehaviour
     {
         if (i<dialogues.Count)
         {
-            //a beszélõ neve alapján változtatja meg az avatár képét
-            string pathToImage = "Images/" + dialogues[i].name;
-            avatar.sprite = Resources.Load<Sprite>(pathToImage);
-            nameText.SetText(dialogues[i].name); //a beszélõnek a nevét átállítja
+            switch (typing)
+            {
+                case true:
+                    typing = false;
+                    StopAllCoroutines();
+                    dialogueText.text = dialogues[i-1].dialogueText;
+                    break;
+                case false:
+                    //a beszélõ neve alapján változtatja meg az avatár képét
+                    string pathToImage = "Images/" + dialogues[i].name;
+                    avatar.sprite = Resources.Load<Sprite>(pathToImage);
+                    nameText.SetText(dialogues[i].name); //a beszélõnek a nevét átállítja
+                    if (i != 0) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.NEXT_TEXT);
+                    StartCoroutine(TypeText(dialogues[i].dialogueText)); // coroutine animálja a kiírást
+                    i++;
+                    break;
+            }
+        }
+        else if (typing)
+        {
+            typing = false;
             StopAllCoroutines();
-            if(i!=0)AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.NEXT_TEXT);
-            StartCoroutine(TypeText(dialogues[i].dialogueText)); // coroutine animálja a kiírást
-            i++;
+            dialogueText.text = dialogues[i - 1].dialogueText;
         }
         else
         {
@@ -112,6 +129,7 @@ public class DialogueBoxUI : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
+        typing = true;
         dialogueText.text = "";
         //átalakítja a dialógust char tömbbé és egyesével kiírja delayel
         foreach (char letter in text.ToCharArray())
@@ -120,6 +138,7 @@ public class DialogueBoxUI : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.TYPING);
             yield return new WaitForSecondsRealtime(textDisplaySpeed); //sima WaitForSeconds nem jó mert azt megállítja a timeScale = 0
         }
+        typing = false;
     }
 
     private IEnumerator WaitThenEndScene(float delay)

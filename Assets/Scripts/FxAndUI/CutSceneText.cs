@@ -69,18 +69,34 @@ public class CutSceneText : MonoBehaviour
         if (i < dialogueTexts.Count)
         {
             displayingText = true;
-            if (typingText) { 
-                typingText = false;
-                StopAllCoroutines();
-                dialogueBoxes[currentTextCount-1].text = dialogueTexts[i-1];
+
+            switch (typingText) {
+                case false:
+                    if (currentTextCount == dialogueBoxes.Count)
+                    {
+                        ResetBoxes();
+                        currentTextCount = 0;
+                    }
+                    StartCoroutine(TypeText(dialogueTexts[i], dialogueBoxes[currentTextCount]));
+                    currentTextCount++;
+                    i++;
+
+                    break;
+                case true:
+                    typingText = false;
+                    StopAllCoroutines();
+                    dialogueBoxes[currentTextCount - 1].text = dialogueTexts[i - 1];
+                    break;
             }
-            if (currentTextCount == dialogueBoxes.Count) { ResetBoxes(); currentTextCount = 0; }
-            StartCoroutine(TypeText(dialogueTexts[i], dialogueBoxes[currentTextCount]));
-            currentTextCount++;
-            i++;
+
         }
-        else
+        else if (typingText)
         {
+            typingText = false;
+            StopAllCoroutines();
+            dialogueBoxes[currentTextCount - 1].text = dialogueTexts[i - 1];
+        }
+        else {
             displayingText = false;
             if (GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame)
             {
@@ -92,7 +108,7 @@ public class CutSceneText : MonoBehaviour
                 GameStateManager.Instance.gameState = GameStateManager.GameState.Menu;
                 Loader.LoadScene(Loader.Scene.MenuScene);
             }
-        }
+        }            
     }
 
     private IEnumerator TypeText(string text, TextMeshProUGUI box)

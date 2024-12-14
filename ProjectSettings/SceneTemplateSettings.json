@@ -110,6 +110,16 @@
             "userAdded": false,
             "type": "UnityEngine.Timeline.TimelineAsset",
             "defaultInstantiationMode": 0
+        },
+        {
+            "userAdded": true,
+            "type": "UnityEditor.Rendering.PostProcessing.PostProcessProfileEditor",
+            "defaultInstantiationMode": 0
+        },
+        {
+            "userAdded": true,
+            "type": "UnityEngine.Rendering.PostProcessing.Vignette",
+            "defaultInstantiationMode": 0
         }
     ],
     "defaultDependencyTypeInfo": {

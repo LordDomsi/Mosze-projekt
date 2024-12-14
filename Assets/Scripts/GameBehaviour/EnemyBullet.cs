@@ -15,10 +15,12 @@ public class EnemyBullet : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerHealthManager.Instance.TakeDamage(bulletDamage);
+            ScreenShakeFX.Instance.ShakeCamera(2f,0.2f);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Shield")
         {
+            ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f);
             Destroy(this.gameObject);
         }
     }

@@ -447,7 +447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "tzjk,tz lbvnmm89\xFC\xF69\xFAlk.-,-\xE9lk\xE1\xE9\u0171\u0151p\xFA"
+  m_text: "tzjk,tz lbvnmm89\xFC\xF69\xFAlk.-,-\xE9lk\xE1\xE9\u0171\u0151p\xFA\xE9\xE1\u0171lp\u0151\xFAi\xF6\xFC98\xF6nm,"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27b3a481f32536b44b14a76fbd596959, type: 2}
   m_sharedMaterial: {fileID: -5710238670317601462, guid: 27b3a481f32536b44b14a76fbd596959, type: 2}
@@ -922,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45174537b23e34843aad819a16e34e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedToPause: 1
   gameState: 0
 --- !u!4 &462460230
 Transform:

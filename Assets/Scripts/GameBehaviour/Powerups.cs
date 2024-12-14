@@ -14,7 +14,7 @@ public class Powerups : MonoBehaviour
 
     public void PowerUpSpawn(Vector2 spawnPos)
     {
-        PowerUpID = Random.Range(0, 4);     //a power-up random
+        PowerUpID = Random.Range(0, 3);     //a power-up random
 
         Quaternion rotate = Quaternion.AngleAxis(0, Vector3.forward);
         GameObject newPowerUp = Instantiate(PowerUpList[PowerUpID], spawnPos, rotate);

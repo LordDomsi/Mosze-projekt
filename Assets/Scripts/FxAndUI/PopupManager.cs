@@ -18,6 +18,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private AnimationCurve PowerUpUICurveClose;
     [SerializeField] private AnimationCurve UIScaleForTransitionCurve;
     [SerializeField] private GameObject PowerUpUIGameObject;
+    [SerializeField] private GameObject SpeedBoostUIGameObject;
     [SerializeField] private GameObject UIGameObject;
 
     [SerializeField] private float zoomInAnimSpeed;
@@ -57,6 +58,21 @@ public class PopupManager : MonoBehaviour
         } 
     }
 
+    //unscaled verzió hogy ne állítsa meg a timescale = 0
+    public IEnumerator PopupCurveAnimUnscaled(GameObject gameObject, float speed, AnimationCurve curve)
+    {
+        float curveTime = 0;
+        float curveAmount = curve.Evaluate(curveTime);
+        while (curveTime < speed)
+        {
+            curveTime += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(curveTime / speed);
+            curveAmount = curve.Evaluate(t);
+            gameObject.transform.localScale = new Vector3(curveAmount, curveAmount, curveAmount);
+            yield return null;
+        }
+    }
+
     public IEnumerator PopupCurveAnimReverse(GameObject gameObject, float speed, AnimationCurve curve)
     {
         float curveTime = 0;
@@ -64,6 +80,22 @@ public class PopupManager : MonoBehaviour
         while (curveTime < speed)
         {
             curveTime += Time.deltaTime;
+            float t = Mathf.Clamp01(curveTime / speed);
+            curveAmount = curve.Evaluate(t);
+            curveAmount = 1 - curveAmount;
+            gameObject.transform.localScale = new Vector3(curveAmount, curveAmount, curveAmount);
+            yield return null;
+        }
+
+    }
+
+    public IEnumerator PopupCurveAnimReverseUnscaled(GameObject gameObject, float speed, AnimationCurve curve)
+    {
+        float curveTime = 0;
+        float curveAmount = curve.Evaluate(curveTime);
+        while (curveTime < speed)
+        {
+            curveTime += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(curveTime / speed);
             curveAmount = curve.Evaluate(t);
             curveAmount = 1 - curveAmount;
@@ -88,11 +120,12 @@ public class PopupManager : MonoBehaviour
             VirtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveAmount);
             yield return null;
         }
-
+        if(targetSize == zoomOutSize) { GameStateManager.Instance.allowedToPause = true; }
         VirtualCamera.m_Lens.OrthographicSize = targetSize;
     }
     public IEnumerator TransitionZoom(GameObject player, Transform spawnPos)
     {
+        GameStateManager.Instance.allowedToPause = false;
         PlayerMovement.Instance.canMove = false;
         PlayerMovement.Instance.StopPlayer();
         AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENTER_BLACKHOLE);
@@ -108,7 +141,7 @@ public class PopupManager : MonoBehaviour
 
     public void StartBlackHoleAnim(GameObject gameObject)
     {
-        StartCoroutine(PopupCurveAnim(gameObject, blackHoleAnimSpeed, BlackHoleCurve));
+        StartCoroutine(PopupCurveAnimUnscaled(gameObject, blackHoleAnimSpeed, BlackHoleCurve));
     }
 
     public void StartZoomInAnim()
@@ -131,6 +164,16 @@ public class PopupManager : MonoBehaviour
         StartCoroutine(PopupCurveAnimReverse(PowerUpUIGameObject, powerUpUIAnimSpeed, PowerUpUICurveClose));
     }
 
+    public void StartSpeedBoostUIAnimOpen()
+    {
+        StartCoroutine(PopupCurveAnim(SpeedBoostUIGameObject, powerUpUIAnimSpeed, PowerUpUICurveOpen));
+    }
+
+    public void StartSpeedBoostUIAnimClose()
+    {
+        StartCoroutine(PopupCurveAnimReverse(SpeedBoostUIGameObject, powerUpUIAnimSpeed, PowerUpUICurveClose));
+    }
+
     public void Transition(GameObject player, Transform spawnPos)
     {
         StartCoroutine(TransitionZoom(player, spawnPos));
@@ -138,11 +181,11 @@ public class PopupManager : MonoBehaviour
 
     public void StartUIScaleAnimClose()
     {
-        StartCoroutine(PopupCurveAnimReverse(UIGameObject, zoomInAnimSpeed, UIScaleForTransitionCurve));
+        StartCoroutine(PopupCurveAnimReverseUnscaled(UIGameObject, zoomInAnimSpeed, UIScaleForTransitionCurve));
     }
     public void StartUIScaleAnimOpen()
     {
-        StartCoroutine(PopupCurveAnim(UIGameObject, zoomOutAnimSpeed, ZoomOutCurve));
+        StartCoroutine(PopupCurveAnimUnscaled(UIGameObject, zoomOutAnimSpeed, ZoomOutCurve));
     }
 
 }

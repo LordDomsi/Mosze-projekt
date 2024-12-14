@@ -8155,6 +8155,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   PowerUpUIGameObject: {fileID: 0}
+  SpeedBoostUIGameObject: {fileID: 0}
   UIGameObject: {fileID: 0}
   zoomInAnimSpeed: 1
   zoomOutAnimSpeed: 1.5
@@ -18157,6 +18158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45174537b23e34843aad819a16e34e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedToPause: 1
   gameState: 0
 --- !u!4 &1669326029
 Transform:
@@ -18796,7 +18798,7 @@ MonoBehaviour:
     loop: 0
     type: 2
   - clip: {fileID: 8300000, guid: 2310ba11a0b2b834f87dedbddf6fa7f5, type: 3}
-    volume: 1
+    volume: 0.7
     loop: 0
     type: 6
   - clip: {fileID: 8300000, guid: d87c66123a5c2864e8810073db1b8f19, type: 3}
@@ -18851,6 +18853,10 @@ MonoBehaviour:
     volume: 0.8
     loop: 0
     type: 16
+  - clip: {fileID: 8300000, guid: 32409a47927dcf349886f15fe72b9fa4, type: 3}
+    volume: 0.8
+    loop: 1
+    type: 17
   musicData:
   - clip: {fileID: 8300000, guid: c80cc32fd2ed5a641a20dd110c00a7b5, type: 3}
     volume: 1
