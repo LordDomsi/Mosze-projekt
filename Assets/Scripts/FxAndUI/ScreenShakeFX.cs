@@ -14,6 +14,7 @@ public class ScreenShakeFX : MonoBehaviour
         Instance = this;
     }
 
+    //camera shake effekt
     public void ShakeCamera(float intensity, float time)
     {
         StartCoroutine(ShakeTimer(intensity, time));

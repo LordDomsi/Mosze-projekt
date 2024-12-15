@@ -35,8 +35,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private AnimationCurve UIElementCurve;
     [SerializeField] private float uiElementSpeed;
 
-    public event EventHandler OnSettingsClicked;
-
     private const string SFXExposedParam = "SFXVolumeExposedParam";
     private const string MusicExposedParam = "MusicVolumeExposedParam";
 
@@ -46,9 +44,7 @@ public class MainMenuUI : MonoBehaviour
 
         newGameButton.onClick.AddListener(() =>
         {
-            SaveManager.Instance.SaveLevel(1);
-            SaveManager.Instance.SaveScore(0);
-            SaveManager.Instance.SaveHealth(100);
+            SaveManager.Instance.SavePlayerData(100, 0, 1, 1f, 0.5f, 250f, 3); //new game-nél reseteli az elmentett player datát 
             GameStateManager.Instance.gameState = GameStateManager.GameState.NewGame;
             Loader.LoadScene(Loader.Scene.CutScene);
         });
@@ -87,18 +83,15 @@ public class MainMenuUI : MonoBehaviour
         });
         nameInputField.onValueChanged.AddListener((string newText) =>
         {
-            Debug.Log("new name saved: "+ newText);
             SaveManager.Instance.SaveEnteredName(newText); //elmenti a beírt nevet
         });
         sfxSlider.onValueChanged.AddListener((float volume) =>
         {
-            Debug.Log("sfx volume updated " + volume);
             SaveManager.Instance.SaveSFXData(volume); //a slider értékének változásakor elmenti az új értéket
             AudioManager.Instance.SetVolume(volume, SFXExposedParam, sfxSlider); //ezután a mixert is updateli
         });
         musicSlider.onValueChanged.AddListener((float volume) =>
         {
-            Debug.Log("music volume updated " + volume);
             SaveManager.Instance.SaveMusicData(volume);
             AudioManager.Instance.SetVolume(volume, MusicExposedParam, musicSlider);
         });

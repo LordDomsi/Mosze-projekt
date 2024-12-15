@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    //bullet collisionért felelõs script
     [SerializeField] private float bulletDamage;
 
     private void Awake()

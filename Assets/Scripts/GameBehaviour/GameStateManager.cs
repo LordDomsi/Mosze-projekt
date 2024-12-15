@@ -7,6 +7,7 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance {  get; private set; }
 
+    //game statek menedzselése
     public enum GameState
     {
         Menu,
@@ -34,13 +35,13 @@ public class GameStateManager : MonoBehaviour
             Instance = this;
         }
 
-        gameState = GameState.Menu;
+        gameState = GameState.Menu; //játék kezdésnél menu
         DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.Game && allowedToPause)
+        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.Game && allowedToPause) //játék megállítása
         {
             if(!GameOverUI.Instance.gameOver) ToggleGamePause();
         }

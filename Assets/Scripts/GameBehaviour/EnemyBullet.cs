@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    //enemy bullet collisionért felelõs script
     private int bulletDamage;
 
     private void OnTriggerEnter2D(Collider2D collision)

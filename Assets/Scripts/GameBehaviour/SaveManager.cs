@@ -21,12 +21,21 @@ public class SaveManager : MonoBehaviour
         public int score;
     }
     [System.Serializable]
+    public class PlayerData //player data
+    {
+        public int currentLevel; 
+        public int currentScore;
+        public int currentHealth;
+        public float currentDamage;
+        public float currentAttackSpeed;
+        public float currentMovementSpeed;
+        public int currentMaxShield;
+    }
+    [System.Serializable]
     public class SaveData //egyesített struktúra
     {
         public string enteredName;
-        public int currentLevel; //jelenlegi szint elmentése
-        public int currentScore;
-        public int currentHealth;
+        public PlayerData playerData;
         public SettingsData settings;
         public List<UserData> leaderboardData = new List<UserData>(); //leaderboard lista
     }
@@ -57,7 +66,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No save file found. Creating new save file.");
-            CreateDefaultSaveFile();
+            CreateDefaultSaveFile(); //ha nincs save data file akkor létrehoz egyet
             Load();
         }
         
@@ -76,7 +85,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData,true);
         string path = Path.Combine(Application.persistentDataPath, "saveData.json");
         File.WriteAllText(path, json);
-        Debug.Log("Saved");
+        Debug.Log("Saved Data To File");
     }
     //betöltés
     public void Load()
@@ -85,6 +94,7 @@ public class SaveManager : MonoBehaviour
         string pureText = File.ReadAllText(path);
         saveData = JsonUtility.FromJson<SaveData>(pureText);
         loaded = true;
+        Debug.Log("Loaded Data From File");
     }
 
     public void SaveMusicData(float volume)
@@ -98,32 +108,25 @@ public class SaveManager : MonoBehaviour
         saveData.settings.sfxVolume = volume;
         Save();
     }
-
-    public void SaveLevel(int level)
-    {
-        saveData.currentLevel = level;
-        Save();
-    }
-
     public void SaveEnteredName(string name)
     {
         saveData.enteredName = name;
         Save();
     }
 
-    public void SaveScore(int score)
+    public void SavePlayerData(int health, int score, int level, float damage, float attackSpeed, float movSpeed, int maxShield)
     {
-        saveData.currentScore = score;
+        saveData.playerData.currentHealth = health;
+        saveData.playerData.currentScore = score;
+        saveData.playerData.currentLevel = level;
+        saveData.playerData.currentDamage = damage;
+        saveData.playerData.currentAttackSpeed = attackSpeed;
+        saveData.playerData.currentMovementSpeed = movSpeed;
+        saveData.playerData.currentMaxShield = maxShield;
         Save();
     }
 
-    public void SaveHealth(int health)
-    {
-        saveData.currentHealth = health;
-        Save();
-    }
-
-    public void AddScoreToLeaderboard(int playerScore)
+    public void AddScoreToLeaderboard(int playerScore) //pontszám hozzáadása leaderboardhoz
     {
         UserData newUserData = new UserData();
         newUserData.name = saveData.enteredName;
@@ -134,14 +137,14 @@ public class SaveManager : MonoBehaviour
             if (newUserData.name == saveData.leaderboardData[i].name)
             {
                 newName = false;
-                if (newUserData.score > saveData.leaderboardData[i].score)
+                if (newUserData.score > saveData.leaderboardData[i].score) //csak akkor menti el a pontszámot ha megdönti a beírt névhez tartozót
                 {
                     saveData.leaderboardData[i].score = newUserData.score;
                     Debug.Log("updated leaderboard data");
                 }
             }
         }
-        if (newName)
+        if (newName) // ha olyan név van beírva ami még nincs a leaderboardban akkor azt elmenti
         {
             saveData.leaderboardData.Add(newUserData);
             Debug.Log("added new leaderboard data entry");

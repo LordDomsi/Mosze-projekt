@@ -18,7 +18,7 @@ public class PowerUpUI : MonoBehaviour
         StartPowerUpUIDisplay(e.powerUpTimeLimit);
     }
 
-    public void StartPowerUpUIDisplay(float animLength)
+    public void StartPowerUpUIDisplay(float animLength) //vizuális timer megjelenítése powerupnál
     {
         this.gameObject.SetActive(true);
         PopupManager.Instance.StartPowerUpUIAnimOpen();

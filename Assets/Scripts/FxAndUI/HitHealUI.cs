@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HitHealUI : MonoBehaviour
 {
+    //képernyõ körüli hit és heal effekt
     [SerializeField] private Color originalColor;
     [SerializeField] private Color hitColor;
     [SerializeField] private Color healColor;

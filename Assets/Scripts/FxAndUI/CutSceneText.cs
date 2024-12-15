@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 public class CutSceneText : MonoBehaviour
-{
+{   //cutscene szöveg megjelenítéséért felelõs script
     private float textDisplaySpeed = 0.04f;
     [SerializeField]private List<TextMeshProUGUI> dialogueBoxes = new List<TextMeshProUGUI>();
     private float timeBeforeDialogueDisplayStart = 2f;
@@ -28,18 +28,17 @@ public class CutSceneText : MonoBehaviour
         displayingText = false;
         cursorPosition = new Vector2(0, 0);
         Cursor.SetCursor(defaultCursorTexture, cursorPosition, CursorMode.Auto);
-        Debug.Log(GameStateManager.Instance.gameState.ToString());
-        if(GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame)
+
+        if(GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame) //ha newgame akkor azokat a szövegeket tölti be
         {
             dialogueTexts = XmlLoader.Instance.GetStoryText(XmlLoader.TextID.backstory);
             AudioManager.Instance.PlayMusic(AudioManager.Music_enum.INTRO_THEME);
         }
-        if (GameStateManager.Instance.gameState == GameStateManager.GameState.Ending)
+        if (GameStateManager.Instance.gameState == GameStateManager.GameState.Ending) //endingnél más szöveget tölt be
         {
             dialogueTexts = XmlLoader.Instance.GetStoryText(XmlLoader.TextID.ending);
             AudioManager.Instance.PlayMusic(AudioManager.Music_enum.ENDING_THEME);
         }
-        Debug.Log(dialogueTexts.Count);
         StartCoroutine(WaitThenDisplayDialogues(timeBeforeDialogueDisplayStart));
     }
 
@@ -71,7 +70,7 @@ public class CutSceneText : MonoBehaviour
             displayingText = true;
 
             switch (typingText) {
-                case false:
+                case false: //elkezdi az írás animációt
                     if (currentTextCount == dialogueBoxes.Count)
                     {
                         ResetBoxes();
@@ -82,7 +81,7 @@ public class CutSceneText : MonoBehaviour
                     i++;
 
                     break;
-                case true:
+                case true: //ha épp megy az írás animáció akkor azt befejezi
                     typingText = false;
                     StopAllCoroutines();
                     dialogueBoxes[currentTextCount - 1].text = dialogueTexts[i - 1];
@@ -96,7 +95,7 @@ public class CutSceneText : MonoBehaviour
             StopAllCoroutines();
             dialogueBoxes[currentTextCount - 1].text = dialogueTexts[i - 1];
         }
-        else {
+        else { //ha elfogytak a szövegek akkor betölti a következõ scene-t
             displayingText = false;
             if (GameStateManager.Instance.gameState == GameStateManager.GameState.NewGame)
             {
@@ -111,6 +110,7 @@ public class CutSceneText : MonoBehaviour
         }            
     }
 
+    //írás animáció
     private IEnumerator TypeText(string text, TextMeshProUGUI box)
     {
         typingText = true;
@@ -123,6 +123,8 @@ public class CutSceneText : MonoBehaviour
         }
         typingText = false;
     }
+
+    //lényegében törli a képernõn kiírt szöveget
     public void ResetBoxes()
     {
         for(int i = 0; i < dialogueBoxes.Count; i++)

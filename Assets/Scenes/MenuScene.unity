@@ -6817,9 +6817,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveData:
     enteredName: Player
-    currentLevel: 1
-    currentScore: 0
-    currentHealth: 100
+    playerData:
+      currentLevel: 1
+      currentScore: 0
+      currentHealth: 100
+      currentDamage: 1
+      currentAttackSpeed: 0.5
+      currentMovementSpeed: 250
+      currentMaxShield: 3
     settings:
       musicVolume: 1
       sfxVolume: 1
@@ -18858,19 +18863,19 @@ MonoBehaviour:
     loop: 1
     type: 17
   musicData:
-  - clip: {fileID: 8300000, guid: c80cc32fd2ed5a641a20dd110c00a7b5, type: 3}
+  - clip: {fileID: 8300000, guid: f87bcb231818f424f9e243528f6a5fee, type: 3}
     volume: 1
     loop: 1
     type: 0
-  - clip: {fileID: 8300000, guid: c154bc5525d04a045a6f7040e2f5054a, type: 3}
+  - clip: {fileID: 8300000, guid: 6741b8425ce689544bed6cd58366cbef, type: 3}
     volume: 1
     loop: 1
     type: 1
-  - clip: {fileID: 8300000, guid: 3052966c55f687347aaa077dc4cc1d98, type: 3}
+  - clip: {fileID: 8300000, guid: bb02a2c767a28844da7c844bd92fac32, type: 3}
     volume: 1
     loop: 0
     type: 3
-  - clip: {fileID: 8300000, guid: 6afc858263a98db48808fe9806b412db, type: 3}
+  - clip: {fileID: 8300000, guid: dee10c7c9c3290f41a28c3999ec03203, type: 3}
     volume: 1
     loop: 1
     type: 2
@@ -19521,7 +19526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rank: {fileID: 507334413}
-  name: {fileID: 229411658}
+  userName: {fileID: 229411658}
   score: {fileID: 377850897}
 --- !u!1 &1751998509
 GameObject:

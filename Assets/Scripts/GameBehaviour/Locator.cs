@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Locator : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //locator felvétele amikor a player hozzáér
     {
         if (collision.gameObject.tag == "Player")
         {

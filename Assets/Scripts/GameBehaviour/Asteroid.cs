@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    //Aszteroidák mozgása
 
     private const string BULLET_TAG = "Bullet";
     private Rigidbody2D rigidBody;
@@ -20,7 +21,7 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
-        InitialForce();
+        InitialForce();  // kezdõ löket random mértékben, mérettõl függõen
         this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);    //megforgatja random szogben
     }
 
@@ -71,7 +72,7 @@ public class Asteroid : MonoBehaviour
         if(collision.gameObject.tag == BULLET_TAG)
         {
             Vector2 pos = this.transform.position;
-            if ((this.size) > 0.04f)
+            if ((this.size) > 0.04f) //ha nem a legkisebb aszteroidát találjuk el akkor 2 kisebb fog helyette spawnolni
              {
                  
                  pos = pos + (Random.insideUnitCircle / 2);
@@ -104,7 +105,7 @@ public class Asteroid : MonoBehaviour
     }
     public float GetSize() { return this.size; }
 
-    public void TryPlayAudio() //csak akkor játsza le a hangeffektet ha a képernyõn belül van az eltalált aszteroida hogy ne legyen összezavaró
+    public void TryPlayAudio() //csak akkor játsza le a hangeffektet ha a képernyõn belül van az eltalált aszteroida hogy ne legyen összezavaró amikor képernyõn kivül találjuk el
     {
         if(this.transform.position.y <= 8f && this.transform.position.y >= -8f && this.transform.position.x <= PlayerMovement.Instance.transform.position.x + 14f && this.transform.position.x >= PlayerMovement.Instance.transform.position.x - 14f) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
     }

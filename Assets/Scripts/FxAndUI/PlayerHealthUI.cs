@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
+    //healthbar visual script
     [SerializeField] private Image HealthBar;
     [SerializeField] private Image Outline;
     [SerializeField] private Image Glow;
@@ -43,12 +44,12 @@ public class PlayerHealthUI : MonoBehaviour
         StartCoroutine(HealAnim());
     }
 
-    public void UpdateHealthBar()
+    public void UpdateHealthBar() //healthbar frissítése
     {
         float fillAm = (float)PlayerHealthManager.Instance.GetPlayerHealth() / (float)PlayerHealthManager.Instance.GetPlayerMaxHealth();
         HealthBar.fillAmount = fillAm;
     }
-    private IEnumerator HitAnim()
+    private IEnumerator HitAnim() //animáció amikor a player sebzõdik
     {
         HealthBar.color = hitColor;
         Outline.color = hitColor;
@@ -59,7 +60,7 @@ public class PlayerHealthUI : MonoBehaviour
         Glow.color = originalColorGlow;
     }
 
-    private IEnumerator HealAnim()
+    private IEnumerator HealAnim() //animáció amikor a player healt kap
     {
         HealthBar.color = healColor;
         Outline.color = healColor;

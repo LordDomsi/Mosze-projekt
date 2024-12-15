@@ -24,8 +24,6 @@ public class EnemySpawner : MonoBehaviour
     {
         Instance = this;
     }
-
-    //Ez nem starton lesz hanem amikor staget váltunk csak az még nincs megírva
     private void Start()
     {
         StageManager.Instance.OnStageInit += StageManager_OnStageInit;
@@ -34,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void StageManager_OnStageInit(object sender, EventArgs e)
     {
-        SpawnAllEnemies();
+        SpawnAllEnemies(); //stage váltásnál lespawnol mindent
     }
 
     public void SpawnAllEnemies()
@@ -58,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
             enemyCount++;
         }
     }
-    public Vector2 GenerateSpawnPosition(Transform corner1, Transform corner2)
+    public Vector2 GenerateSpawnPosition(Transform corner1, Transform corner2) //spawn pozició generálása
     {
         Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(corner1.position.x, corner2.position.x), UnityEngine.Random.Range(corner1.position.y, corner2.position.y));
         return spawnPos;
@@ -67,11 +65,16 @@ public class EnemySpawner : MonoBehaviour
     public void DecreaseEnemyCount()
     {
         enemyCount--;
-        Debug.Log(enemyCount);
+        Debug.Log("Enemy Count On Level:" + enemyCount);
         if (enemyCount == 0)
         {
             OnEnemiesCleared?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.Instance.OnStageInit -= StageManager_OnStageInit;
     }
 }
 

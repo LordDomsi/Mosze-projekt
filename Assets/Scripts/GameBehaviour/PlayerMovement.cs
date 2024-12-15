@@ -7,51 +7,39 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //A player irányításáért felelős script
+
     public static PlayerMovement Instance { get; private set; }
-
-    public GameObject Lovedek;
-    public GameObject Shield;
-
-    private Rigidbody2D _rigidbody;
-
-    private bool forwardMovement;
-    private bool backwardMovement;
-
-    public event EventHandler OnForwardPressed;
-    public event EventHandler OnForwardStopped;
-    public event EventHandler OnTurnLeft;
-    public event EventHandler OnTurnRight;
-    public event EventHandler OnStopTurn;
-    public event EventHandler OnPlayerShoot;
-
-    private float _forog;
-
-    [SerializeField] private float playerSpeed = 6f;
-    public float sebesseg;
-    [SerializeField] private float blackholeSebesseg = 3f;
-
-    [SerializeField] private float forogSebesseg = 1.0f;
-
-    [SerializeField] private float LovSebesseg = 666.0f;
-
-    [SerializeField] private float eletIdo = 5.0f;
-
-    [SerializeField] private Transform bulletStartLocation;
-
-    [SerializeField] private Transform speedBoostEffect;
-
-    private float playerDamage = 1f;
-    private const float DEFAULT_SHOOTSPEED = 0.5f;
-    private float playerShootSpeed = 0.5f;
 
     private const string POWERUP_TAG1 = "PowerUp1";
     private const string POWERUP_TAG2 = "PowerUp2";
     private const string POWERUP_TAG3 = "PowerUp3";
     private const string POWERUP_TAG4 = "PowerUp4";
 
-    private int PowerUpType = 0;
+    public event EventHandler OnForwardPressed;
+    public event EventHandler OnForwardStopped;
+    public event EventHandler OnPlayerShoot;
+    public event EventHandler OnSpeedBoostStart;
+    public event EventHandler OnSpeedBoostEnd;
+
+    public GameObject BulletPrefab; //lövedék
+    public GameObject ShieldVisual;
+    public GameObject SpeedBoostVisual;
+    public GameObject TriShotVisual;
+    [SerializeField] private Transform bulletStartLocation;
+    [SerializeField] private Transform speedBoostEffect; //speed boost effektért felelős post processing gameobject
+
+    private Rigidbody2D rb;
+
+    //player statok
+    [SerializeField] private float BulletSpeed = 666.0f;
+    [SerializeField] private float speed;
+    private const float DEFAULT_SHOOTSPEED = 0.5f;
+    private float playerDamage = 1f;
+    private float playerShootSpeed = 0.5f;
     private int maxShield = 3;
     public int maxHeal = 30;
+    private float speedBoostMultiplier = 1.25f;
 
     private bool PoweredUp = false;
     public bool shielded = false;
@@ -59,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float PowerUpTimeLimit;
     [SerializeField] private float SpeedBoostLimit;
+
     public bool canMove = true;
     public bool canShoot = true;
     public bool shootingCooldown = false;
@@ -70,29 +59,34 @@ public class PlayerMovement : MonoBehaviour
         public float powerUpTimeLimit;
     }
 
-    public bool legacyMovement = false;
-    [SerializeField] private Transform cursor;
+    [SerializeField] private Transform sight;
     [SerializeField] private Texture2D cursorTexture;
     private Vector2 cursorPosition;
-    [SerializeField] private float speed;
-    [SerializeField] private float blackholeSpeed;
-    [SerializeField] private float defaultSpeed;
-
+    private Vector3 mousePosition;
+    private Vector3 direction;
+    private Vector3 targetPoint;
+    private float targetAngle;
+    private float currentAngle;
+    private float mouseDistance;
 
     private void Awake()
     {
         Instance = this;
+        rb = GetComponent<Rigidbody2D>();
+        //statok betöltése fájlból
+        playerDamage = SaveManager.Instance.saveData.playerData.currentDamage;
+        playerShootSpeed = SaveManager.Instance.saveData.playerData.currentAttackSpeed;
+        speed = SaveManager.Instance.saveData.playerData.currentMovementSpeed;
+        maxShield = SaveManager.Instance.saveData.playerData.currentMaxShield;
     }
     private void Start()
     {
         LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
-        _rigidbody = GetComponent<Rigidbody2D>();
-        if (!legacyMovement)
-        {
-            cursor.gameObject.SetActive(true);
-            cursorPosition = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
-            Cursor.SetCursor(cursorTexture, cursorPosition, CursorMode.Auto);
-        }
+
+        sight.gameObject.SetActive(true);
+        cursorPosition = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
+        Cursor.SetCursor(cursorTexture, cursorPosition, CursorMode.Auto);
+
         canMove = true;
         canShoot = true;
         StatsUI.Instance.UpdateStats();
@@ -113,30 +107,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (legacyMovement == false && canMove)
+        if (canMove) // mozgás
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0;
-            Vector3 direction = (mousePosition - transform.position).normalized;
-            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            float currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle - 90, Time.deltaTime * 2f);
-            transform.rotation = Quaternion.Euler(0, 0, (currentAngle));
-            float mouseDistance = Vector2.Distance(transform.position, mousePosition);
-            Vector3 targetPoint = transform.position + transform.up * mouseDistance;
-            cursor.position = targetPoint;
-
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(this.transform.up * speed * 1.2f * Time.deltaTime);
-                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    _rigidbody.AddForce(this.transform.up * speed * Time.deltaTime);
-                    OnForwardPressed?.Invoke(this, EventArgs.Empty);
-                }
+                if (speedBoost){rb.AddForce(this.transform.up * speed * speedBoostMultiplier * Time.deltaTime);OnForwardPressed?.Invoke(this, EventArgs.Empty);}
+                else{rb.AddForce(this.transform.up * speed * Time.deltaTime);OnForwardPressed?.Invoke(this, EventArgs.Empty);}
             }
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
             {
@@ -145,73 +121,40 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(-this.transform.up * (speed / 2) * 1.2f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.AddForce(-this.transform.up * speed / 2 * Time.deltaTime);
-                }
+                if (speedBoost){rb.AddForce(-this.transform.up * (speed / 2) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(-this.transform.up * speed / 2 * Time.deltaTime);}
             }
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(-this.transform.right * (speed / 1.25f) * 1.2f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.AddForce(-this.transform.right * speed / 1.25f * Time.deltaTime);
-                }
+                if (speedBoost){rb.AddForce(-this.transform.right * (speed / 1.25f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(-this.transform.right * speed / 1.25f * Time.deltaTime);}
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                if (speedBoost)
-                {
-                    _rigidbody.AddForce(this.transform.right * (speed / 1.25f) * 1.2f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.AddForce(this.transform.right * speed / 1.25f * Time.deltaTime);
-                }
+                if (speedBoost){rb.AddForce(this.transform.right * (speed / 1.25f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(this.transform.right * speed / 1.25f * Time.deltaTime);}
             }
 
         }
-        if (canMove && legacyMovement == true)
-        {
-
-            forwardMovement = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow));
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
-            {
-                OnForwardStopped?.Invoke(this, EventArgs.Empty);
-            }
-            backwardMovement = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                _forog = 1.0f;
-                OnTurnLeft?.Invoke(this, EventArgs.Empty);
-            }
-            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            {
-                _forog = -1.0f;
-                OnTurnRight?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                _forog = 0.0f;
-                OnStopTurn?.Invoke(this, EventArgs.Empty);
-            }
-        }
-        if (canShoot && !shootingCooldown)
+        if (canShoot && !shootingCooldown) //lövés
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) { Shoot(); AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_SHOOT); }
         }
-
-
-
+    }
+    
+    private void LateUpdate()
+    {
+        if (canMove)
+        { //célkereszt és a player forgatása
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            direction = (mousePosition - transform.position).normalized;
+            targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle - 90, Time.deltaTime * 2f);
+            transform.rotation = Quaternion.Euler(0, 0, (currentAngle));
+            mouseDistance = Vector2.Distance(transform.position, mousePosition);
+            targetPoint = transform.position + transform.up * mouseDistance;
+            sight.position = targetPoint;
+        }
         //ha pálya szélét érinti a hajó akkor teleportáljon a túloldalra
         if (transform.position.y > 6.9f)
         {
@@ -223,35 +166,6 @@ public class PlayerMovement : MonoBehaviour
             float newPosY = transform.position.y * -1 - 0.1f;
             transform.position = new Vector2(transform.position.x, newPosY);
         }
-
-    }
-
-
-    private void FixedUpdate()
-    {
-
-        if (forwardMovement)
-        {
-            _rigidbody.AddForce(this.transform.up * this.sebesseg);
-            OnForwardPressed?.Invoke(this, EventArgs.Empty);
-        }
-
-        if (backwardMovement) _rigidbody.AddForce(-this.transform.up * this.sebesseg / 2);
-        if (_forog != 0.0f) _rigidbody.AddTorque(_forog * this.forogSebesseg);
-    }
-
-    private IEnumerator PowerUpTimer()
-    {
-        yield return new WaitForSeconds(PowerUpTimeLimit);
-        PoweredUp = false;
-    }
-
-    private IEnumerator SpeedBoostTimer()
-    {
-        speedBoostEffect.gameObject.SetActive(true);
-        yield return new WaitForSeconds(SpeedBoostLimit);
-        speedBoostEffect.gameObject.SetActive(false);
-        speedBoost = false;
     }
 
     private void Shoot()
@@ -259,25 +173,22 @@ public class PlayerMovement : MonoBehaviour
         OnPlayerShoot?.Invoke(this, EventArgs.Empty);
         if (PoweredUp)      //three-way shot
         {
-            GameObject newBullet1 = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
-            newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+            GameObject newBullet1 = Instantiate(BulletPrefab, bulletStartLocation.position, this.transform.rotation);
+            newBullet1.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.BulletSpeed);
 
-            GameObject newBullet2 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, 15) * this.transform.rotation);
-            newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 15) * this.transform.up * this.LovSebesseg);
+            GameObject newBullet2 = Instantiate(BulletPrefab, bulletStartLocation.position, Quaternion.Euler(0, 0, 15) * this.transform.rotation);
+            newBullet2.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, 15) * this.transform.up * this.BulletSpeed);
 
-            GameObject newBullet3 = Instantiate(Lovedek, bulletStartLocation.position, Quaternion.Euler(0, 0, -15) * this.transform.rotation);
-            newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -15) * this.transform.up * this.LovSebesseg);
+            GameObject newBullet3 = Instantiate(BulletPrefab, bulletStartLocation.position, Quaternion.Euler(0, 0, -15) * this.transform.rotation);
+            newBullet3.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, -15) * this.transform.up * this.BulletSpeed);
 
         }
-
         else       //sima lövedék
         {
-            GameObject newBullet = Instantiate(Lovedek, bulletStartLocation.position, this.transform.rotation);
-            newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.LovSebesseg);
+            GameObject newBullet = Instantiate(BulletPrefab, bulletStartLocation.position, this.transform.rotation);
+            newBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.BulletSpeed);
         }
-
         StartCoroutine(ShootCooldown());
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)      //1 three-way, 2 speed, 3 shield, 4 heal
@@ -303,6 +214,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 EnableShield();
             }
+            else
+            {
+                ShieldVisual.GetComponent<Shield>().ResetShield();
+            }
         }
         else if (collision.gameObject.tag == POWERUP_TAG4)
         {
@@ -318,21 +233,41 @@ public class PlayerMovement : MonoBehaviour
         shootingCooldown = false;
     }
 
+    private IEnumerator PowerUpTimer()
+    {
+        TriShotVisual.gameObject.SetActive(true);
+        yield return new WaitForSeconds(PowerUpTimeLimit);
+        PoweredUp = false;
+        TriShotVisual.gameObject.SetActive(false);
+    }
+
+    private IEnumerator SpeedBoostTimer()
+    {
+        OnSpeedBoostStart?.Invoke(this, EventArgs.Empty);
+        SpeedBoostVisual.gameObject.SetActive(true);
+        speedBoostEffect.gameObject.SetActive(true);
+        yield return new WaitForSeconds(SpeedBoostLimit);
+        speedBoostEffect.gameObject.SetActive(false);
+        speedBoost = false;
+        SpeedBoostVisual.gameObject.SetActive(false);
+        OnSpeedBoostEnd?.Invoke(this, EventArgs.Empty);
+    }
+
     public void StopPlayer()
     {
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = 0f;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = 0f;
     }
 
     public void EnableShield()
     {
-        Shield.gameObject.SetActive(true);
+        ShieldVisual.gameObject.SetActive(true);
         shielded = true;
     }
 
     public void DisableShield()
     {
-        Shield.gameObject.SetActive(false);
+        ShieldVisual.gameObject.SetActive(false);
         shielded = false;
     }
 
@@ -359,6 +294,16 @@ public class PlayerMovement : MonoBehaviour
     public float GetPlayerDefaultShootSpeed()
     {
         return DEFAULT_SHOOTSPEED;
+    }
+
+    public void EnableSight()
+    {
+        sight.gameObject.SetActive(true);
+    }
+
+    public void DisableSight()
+    {
+        sight.gameObject.SetActive(false);
     }
 
     private void OnDestroy()

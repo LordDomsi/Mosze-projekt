@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {
+    //pontszám megjelenítése
     [SerializeField] private TextMeshProUGUI scoreText;
     private Color originalColor;
     [SerializeField] private Color increaseColor;
@@ -33,12 +34,17 @@ public class ScoreUI : MonoBehaviour
         scoreText.SetText(score.ToString());
     }
 
-    private IEnumerator HitAnim()
+    private IEnumerator HitAnim() //animáció amikor nõ a score
     {
         scoreText.color = increaseColor;
         scoreText.fontSize = increaseFontSize;
         yield return new WaitForSeconds(animLength);
         scoreText.color = originalColor;
         scoreText.fontSize = defaultFontSize;
+    }
+
+    private void OnDestroy()
+    {
+        ScoreManager.Instance.OnScoreIncrease -= ScoreManager_OnScoreIncrease;
     }
 }

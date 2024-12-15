@@ -12,6 +12,7 @@ public class GameOverUI : MonoBehaviour
 
     [SerializeField] private Texture2D defaultCursorTexture;
     private Vector2 cursorPosition;
+   
     private void Awake()
     {
         Instance = this;
@@ -27,7 +28,7 @@ public class GameOverUI : MonoBehaviour
         PlayerHealthManager.Instance.OnPlayerDeath += PlayerHealtManager_OnPlayerDeath;
         gameObject.SetActive(false);
     }
-
+    //game over ui megjelenítése
     private void PlayerHealtManager_OnPlayerDeath(object sender, System.EventArgs e)
     {
         gameObject.SetActive(true);

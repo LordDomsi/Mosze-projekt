@@ -96,7 +96,6 @@ public class AudioManager : MonoBehaviour
         audioMixer.SetFloat(param, value: Mathf.Log10(value) * 40);
         if(value == 0f) audioMixer.SetFloat(param, -80f);
         slider.value = value;
-        Debug.Log(value + param);
     }
 
     //zene lejátszása

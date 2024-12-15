@@ -24,7 +24,7 @@ public class LocatorSpawner : MonoBehaviour
     {
         Instance = this;
         // ezt az értéket majd fájlból kell betölteni 
-        currentLocators = SaveManager.Instance.saveData.currentLevel-1;
+        currentLocators = SaveManager.Instance.saveData.playerData.currentLevel-1;
         locatorAnimator = locatorText.gameObject.GetComponent<Animator>();
         UpdateUI();
     }

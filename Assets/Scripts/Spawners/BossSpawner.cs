@@ -43,4 +43,9 @@ public class BossSpawner : MonoBehaviour
         newBoss.GetComponent<BossAI>().SetBossType(Boss);
 
     }
+
+    private void OnDestroy()
+    {
+        EnemySpawner.Instance.OnEnemiesCleared -= EnemySpawner_OnEnemiesCleared;
+    }
 }

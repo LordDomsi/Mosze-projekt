@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealthManager : MonoBehaviour
-{
+{   //player életerejéért felelõs script
     public static PlayerHealthManager Instance { get; private set; }
 
     public event EventHandler OnPlayerTakeDamage;
@@ -31,14 +31,14 @@ public class PlayerHealthManager : MonoBehaviour
         Instance = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = defaultTexture;
-        playerHealth = SaveManager.Instance.saveData.currentHealth;
+        playerHealth = SaveManager.Instance.saveData.playerData.currentHealth;
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.G))
+        if (Input.GetKeyUp(KeyCode.G)) // tesztelés céljából létrehozott GodMode
         {
-            ToggleGodMode();
+            //ToggleGodMode();
         }
     }
 
@@ -46,16 +46,17 @@ public class PlayerHealthManager : MonoBehaviour
     {
         if (!godMode)
         {
-            if (playerHealth <= 0 && exploded == false)
+            if (playerHealth <= 0 && exploded == false) //ha meghal a player
             {
                 exploded = true;
                 StartCoroutine(PlayerDeath());
             }
             else
             {
-                AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_HIT);
                 playerHealth -= damage;
-                PlayerMovement.Instance.gameObject.GetComponent<HitIndicator>().Hit();
+
+                AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.PLAYER_HIT); //hangeffekt
+                PlayerMovement.Instance.gameObject.GetComponent<HitIndicator>().Hit(); //hit animáció
                 OnPlayerTakeDamage?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -71,6 +72,21 @@ public class PlayerHealthManager : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayerDeath()
+    {
+        PlayerMovement.Instance.canMove = false; //player nem tud mozogni és lõni
+        PlayerMovement.Instance.canShoot = false;
+
+        Instantiate(explosionPrefab, this.transform.position , Quaternion.identity); //robbanás effekt
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION); //robbanás hang
+        spriteRenderer.sprite = explosionTexture; //felrobbant textúrára vált
+        
+        SaveManager.Instance.AddScoreToLeaderboard(ScoreManager.Instance.GetPlayerScore()); //frissíti a leaderboardot
+
+        yield return new WaitForSeconds(timeTillGameOver); //ne egybõl jelenjen meg a game over screen
+        OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+    }
+
     public int GetPlayerHealth()
     {
         return playerHealth;
@@ -81,18 +97,6 @@ public class PlayerHealthManager : MonoBehaviour
         return playerMaxHealth;
     }
 
-    private IEnumerator PlayerDeath()
-    {
-        Instantiate(explosionPrefab, this.transform.position , Quaternion.identity);
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION);
-        spriteRenderer.sprite = explosionTexture;
-        PlayerMovement.Instance.canMove = false;
-        PlayerMovement.Instance.canShoot = false;
-        SaveManager.Instance.AddScoreToLeaderboard(ScoreManager.Instance.GetPlayerScore());
-        yield return new WaitForSeconds(timeTillGameOver);
-        OnPlayerDeath?.Invoke(this, EventArgs.Empty);
-    }
-
     public void ToggleGodMode()
     { 
         godMode = !godMode;
@@ -100,7 +104,7 @@ public class PlayerHealthManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Asteroid")
+        if (collision.gameObject.tag == "Asteroid") //screen shake + audio ha asteroidával ütközik a player
         {
             if (!PlayerMovement.Instance.shielded) { TakeDamage(collision.GetComponent<Asteroid>().damage); ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f); collision.GetComponent<Asteroid>().TryPlayAudio(); }
         }
