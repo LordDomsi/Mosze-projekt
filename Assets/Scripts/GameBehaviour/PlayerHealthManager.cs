@@ -64,12 +64,12 @@ public class PlayerHealthManager : MonoBehaviour
 
     public void Heal(int health)
     {
-        playerHealth += health;
-        OnPlayerHeal?.Invoke(this, EventArgs.Empty);
+        playerHealth += health;  
         if (playerHealth >= 100) // túl healelés miatt
         {
             playerHealth = 100;
         }
+        OnPlayerHeal?.Invoke(this, EventArgs.Empty);
     }
 
     private IEnumerator PlayerDeath()
