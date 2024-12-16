@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Boss3
   enemyPrefab: {fileID: 5086067191987387682, guid: 4d2d39d80fadc244998cdb2f09c14f2b, type: 3}
-  enemyHealth: 15
+  enemyHealth: 320
   enemySpeed: 2
-  enemyShootSpeed: 0.5
-  enemyDamage: 30
-  enemyBulletSpeed: 750
+  enemyShootSpeed: 0.6
+  enemyDamage: 5
+  enemyBulletSpeed: 550
   pointsWorth: 10000
-  rotationSpeed: 25
+  rotationSpeed: 40
   specialAttackShootSpeed: 0.1
   specialAttackRotationSpeed: 70
   twoFirePoints: 1

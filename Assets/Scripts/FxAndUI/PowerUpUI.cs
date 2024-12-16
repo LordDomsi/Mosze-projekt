@@ -7,6 +7,8 @@ public class PowerUpUI : MonoBehaviour
 {
     [SerializeField] private Image PowerUpSprite;
 
+    private bool displayingTriShot = false;
+
     private void Start()
     {
         PlayerMovement.Instance.OnThreeWayPowerUpPickup += PlayerMovement_OnThreeWayPowerUpPickup;
@@ -23,11 +25,13 @@ public class PowerUpUI : MonoBehaviour
         this.gameObject.SetActive(true);
         PopupManager.Instance.StartPowerUpUIAnimOpen();
         PowerUpSprite.fillAmount = 1f;
+        if(displayingTriShot ) StopAllCoroutines();
         StartCoroutine(DisplayTimer(animLength));
     }
 
     private IEnumerator DisplayTimer(float animLength)
     {
+        displayingTriShot = true;
         float time = animLength;
         while (time > 0)
         {
@@ -39,6 +43,7 @@ public class PowerUpUI : MonoBehaviour
         }
         PopupManager.Instance.StartPowerUpUIAnimClose();
         yield return new WaitForSeconds(PopupManager.Instance.powerUpUIAnimSpeed);
+        displayingTriShot = false;
         this.gameObject.SetActive(false);
 
     }

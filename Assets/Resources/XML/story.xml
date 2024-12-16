@@ -22,11 +22,11 @@
 				</dialogue>
 				<dialogue>
 					<name>Elena</name>
-					<text>Szóval, ha jól értem, mi vagyunk az utolsó esély. Szuper. Pont erre vágytam egy hosszú, hibernációban töltött évszázad után.</text>
+					<text>Szóval, ha jól értem, mi vagyunk az utolsó esély. Pont erre vágytam egy hosszú, hibernációban töltött évszázad után.</text>
 				</dialogue>
 				<dialogue>
 					<name>Tareq</name>
-					<text>Várjunk csak, milyen állapotban van a hajó? És hogy a fenébe jutunk el hozzá?</text>
+					<text>És hogy jutunk el az anyahajóhoz?</text>
 				</dialogue>
 				<dialogue>
 					<name>Albert</name>
@@ -52,11 +52,15 @@
 			<end>
 				<dialogue>
 					<name>Albert</name>
-					<text>Megszereztük az első alkatrészt. Már csak 2 kell az anyahajó megtalálásához</text>
+					<text>Megszereztük az első alkatrészt. Amíg nincs meg a többi addig ezt felhasználhatjuk a hajó fejlesztésére.</text>
+				</dialogue>
+				<dialogue>
+					<name>Albert</name>
+					<text>Most hogy már egy kicsit erősebb a hajónk, lehet hogy még esélyünk is van.</text>
 				</dialogue>
 				<dialogue>
 					<name>Mira</name>
-					<text>Ez nem is volt olyan nehéz. Ez most gyanús. Lehet meggyengültek a Lexadariták?</text>
+					<text>Hát ez nem tűnt nehéznek. Lehet meggyengültek a Lexadariták?</text>
 				</dialogue>
 				<dialogue>
 					<name>Tareq</name>
@@ -145,8 +149,8 @@
 		<section>Ahogy az utolsó alkatrész a helyére került, a Codebreaker24 fedélzetén Albert aktiválta az anyahajó helyzetét feltáró lokátort. Az eszköz élesen felvillant, és megjelenítette a GIVTech pontos koordinátáit. Az emberek túlélésének reménye újjászületett, de az öröm rövid életű volt.</section>
 		<section>Az utolsó adatokat rögzítve Albert szavai váratlanul váltottak rideg monotóniára: „Vészhelyzeti protokoll aktiválva. A Lexadariták megérkeztek.”</section>
 		<section>A hajó megrázkódott, amikor egy ellenséges űrhajó flotta jelent meg a semmiből. Az öt harcos gyorsan akcióba lépett. Ketten a hajó védelméért feleltek, míg a többiek megpróbálták előkészíteni a hyperhajtóművet a meneküléshez, de helyzet kilátástalannak tűnt.</section>
-		<section>Albert feladata mindig is az emberiség védelme volt ezt viszont a jelenlegi helyzetben csak egyféleképpen tudta teljesíteni. Albert csak ennyit mondott: „Köszönöm ezt a kalandot, de attól tartok elérkeztünk közös utunk végéhez.”</section>
-		<section>Ezután kitépte mellkasából az atommagot, ami életben tartotta majd utolsó mozdulatával belerakta a hajó lövő rendszerébe. Tareq megdöbbenve, de hezitáció nélkül kilőtte az atommagot, ami robbanásával elpusztította a Lexadariták flottájának 90 százalékát.</section>
+		<section>Albert feladata mindig is az emberiség védelme volt ezt viszont a jelenlegi helyzetben csak egyféleképpen tudta teljesíteni. Albert csak ennyit mondott: „Attól tartok elérkeztünk közös utunk végéhez. Egy élmény volt!”</section>
+		<section>Ezután Albert kitépte a mellkasából azt az atommagot, ami életben tartotta majd utolsó mozdulatával belerakta a hajó lövedék rendszerébe. Tareq megdöbbenve, de hezitáció nélkül kilőtte az atommagot, ami robbanásával elpusztította a Lexadariták flottájának 90 százalékát.</section>
 		<section>Miután legyőzték a flottát, a harcosok elindultak visszavenni a GIVTechet, de meglepődtek, amikor felfedezték, hogy az eddig GIVTechet irányító Lexadariták mind elpusztultak. A hajón viszont egy másik sokkoló információra tettek szert.</section>
 		<section>A Lexadariták nem egyszerűen megszállók voltak. A fajuk egy evolúciós zsákutca volt, és kihaló félben voltak. Az emberi DNS-t használták volna túlélésükhöz. Nem pusztítani akartak, hanem egy kétségbeesett tervet hajtottak végre.</section>
 		<section>A csapat döntési helyzetbe került: elpusztítják a maradék Lexadaritákat, megvédve az emberiséget, vagy megpróbálnak tárgyalni velük, kockáztatva, hogy egy újabb háború alakul ki.</section>

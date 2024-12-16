@@ -126,12 +126,12 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                if (speedBoost){rb.AddForce(-this.transform.right * (speed / 1.25f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(-this.transform.right * speed / 1.25f * Time.deltaTime);}
+                if (speedBoost){rb.AddForce(-this.transform.right * (speed / 1.20f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(-this.transform.right * speed / 1.20f * Time.deltaTime);}
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                if (speedBoost){rb.AddForce(this.transform.right * (speed / 1.25f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(this.transform.right * speed / 1.25f * Time.deltaTime);}
+                if (speedBoost){rb.AddForce(this.transform.right * (speed / 1.20f) * speedBoostMultiplier * Time.deltaTime);}else{rb.AddForce(this.transform.right * speed / 1.20f * Time.deltaTime);}
             }
 
         }

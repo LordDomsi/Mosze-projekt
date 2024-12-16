@@ -102,13 +102,5 @@ public class PlayerHealthManager : MonoBehaviour
         godMode = !godMode;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Asteroid") //screen shake + audio ha asteroidával ütközik a player
-        {
-            if (!PlayerMovement.Instance.shielded) { TakeDamage(collision.GetComponent<Asteroid>().damage); ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f); collision.GetComponent<Asteroid>().TryPlayAudio(); }
-        }
-    }
-
 
 }

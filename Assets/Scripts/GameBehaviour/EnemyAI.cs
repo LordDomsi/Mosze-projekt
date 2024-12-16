@@ -32,12 +32,26 @@ public class EnemyAI : MonoBehaviour
             polygonCollider.enabled = false;
             OnEnemyDisabled?.Invoke(this, EventArgs.Empty);
         }
-
-        //ha aktív akkor mozogjon és nézzen a player felé
+        LookTowardsPlayer();
+        //ha aktív akkor mozogjon
         if (enemyActive)
         {
-            LookTowardsPlayer();
             MovementHandle(distance);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        //ha pálya szélét érinti akkor teleportáljon a túloldalra
+        if (transform.position.y > 6.9f)
+        {
+            float newPosY = transform.position.y * -1 + 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+        if (transform.position.y < -6.9f)
+        {
+            float newPosY = transform.position.y * -1 - 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
         }
     }
 
@@ -73,18 +87,18 @@ public class EnemyAI : MonoBehaviour
     {
         Vector3 direction = PlayerMovement.Instance.transform.position - transform.position; // a player felé nézzen az enemy
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle-90);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemyTypeSO.rotationSpeed * Time.deltaTime);
     }
 
     private void MovementHandle(float distance)
     {
         float speed;
-        if (distance > 12f)
+        if (distance > 10f)
         {
             speed = -enemyTypeSO.enemySpeed; // balra mozog
         }
-        else if (distance < 8f)
+        else if (distance < 6f)
         {
             speed = enemyTypeSO.enemySpeed;  // jobbra mozog   
         }

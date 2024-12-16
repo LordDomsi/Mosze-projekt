@@ -111,7 +111,9 @@ public class BossAI : MonoBehaviour
     private void BasicAttack()
     {
         // a player felé nézzen a boss
-        Quaternion targetRotation = LookTowardsObject(PlayerMovement.Instance.transform);
+        Vector3 direction = PlayerMovement.Instance.transform.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle-90);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bossTypeSO.rotationSpeed * Time.deltaTime);
 
         shootingTimer += Time.deltaTime;

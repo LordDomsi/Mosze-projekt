@@ -17,7 +17,7 @@ public class Asteroid : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    public int damage = 5;
+    public int damage = 3;
 
     private void Start()
     {
@@ -87,9 +87,9 @@ public class Asteroid : MonoBehaviour
             if (size == 0.08f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[1]);
             if (size == 0.16f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[2]);
 
-            if (Random.Range(1, 101) < 6)        //Power-up 5% eséllyel spawnol
+            if (Random.Range(1, 101) <= 11)        //Power-up 10% eséllyel spawnol
             {
-                GetComponent<Powerups>().PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
+                PowerUpSpawner.Instance.PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
             }
         }
         
@@ -101,13 +101,27 @@ public class Asteroid : MonoBehaviour
     public void SetSize(float size)
     {
         this.size = size;
-        damage = (int)(size / 0.04f * 5);
+        damage = (int)(size / 0.04f * 2);
     }
     public float GetSize() { return this.size; }
 
     public void TryPlayAudio() //csak akkor játsza le a hangeffektet ha a képernyõn belül van az eltalált aszteroida hogy ne legyen összezavaró amikor képernyõn kivül találjuk el
     {
         if(this.transform.position.y <= 8f && this.transform.position.y >= -8f && this.transform.position.x <= PlayerMovement.Instance.transform.position.x + 14f && this.transform.position.x >= PlayerMovement.Instance.transform.position.x - 14f) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player") //screen shake + audio ha asteroidával ütközik a player
+        {
+            if (!PlayerMovement.Instance.shielded)
+            {
+                PlayerHealthManager.Instance.TakeDamage(damage);
+                ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f);
+                TryPlayAudio();
+                Destroy(this.gameObject);
+            }
+        }
     }
 
 }

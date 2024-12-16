@@ -7,6 +7,8 @@ public class SpeedBoostUI : MonoBehaviour
 {
     [SerializeField] private Image PowerUpSprite;
 
+    private bool displayingSpeedBoost = false;   
+
     private void Start()
     {
         PlayerMovement.Instance.OnSpeedBoostPickup += PlayerMovement_OnSpeedBoostPickup;
@@ -23,11 +25,13 @@ public class SpeedBoostUI : MonoBehaviour
         this.gameObject.SetActive(true);
         PopupManager.Instance.StartSpeedBoostUIAnimOpen();
         PowerUpSprite.fillAmount = 1f;
+        if(displayingSpeedBoost) StopAllCoroutines();
         StartCoroutine(DisplayTimer(animLength));
     }
 
     private IEnumerator DisplayTimer(float animLength)
     {
+        displayingSpeedBoost = true;
         float time = animLength;
         while (time > 0)
         {
@@ -39,6 +43,7 @@ public class SpeedBoostUI : MonoBehaviour
         }
         PopupManager.Instance.StartSpeedBoostUIAnimClose();
         yield return new WaitForSeconds(PopupManager.Instance.powerUpUIAnimSpeed);
+        displayingSpeedBoost = false;
         this.gameObject.SetActive(false);
 
     }
