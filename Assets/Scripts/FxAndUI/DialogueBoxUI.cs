@@ -9,8 +9,8 @@ public class DialogueBoxUI : MonoBehaviour
 {
     public static DialogueBoxUI Instance {  get; private set; }
 
-    private float timeBeforeDialogueDisplayStart = 1.5f;
-    private float timeBeforeDialogueDisplayEnd = 3f;
+    private float timeBeforeDialogueDisplayStart = 1f;
+    private float timeBeforeDialogueDisplayEnd = 1f;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -29,6 +29,8 @@ public class DialogueBoxUI : MonoBehaviour
 
     public bool isSubscribed = false;
 
+    private bool typing = false;
+
     private void Awake()
     {
         Instance = this;
@@ -40,6 +42,7 @@ public class DialogueBoxUI : MonoBehaviour
         LocatorSpawner.Instance.OnLocatorPickup += LocatorSpawner_OnLocatorPickup;
         isSubscribed = true;
         dialogueBox.gameObject.SetActive(false);
+        Cursor.visible = true;
     }
     private void Update()
     {   //space-el tovább lehet nyomni a dialógust
@@ -72,10 +75,14 @@ public class DialogueBoxUI : MonoBehaviour
         if (dialogues.Count > 0)
         {
             //ha van dialógus akkor megjelenik a ui
-            dialogueBox.gameObject.SetActive(true);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.DIALOGUE_POPUP);
             displayingText = true;
-            PlayerMovement.Instance.canShoot = false;
+            dialogueBox.gameObject.SetActive(true); //dialógus megjelenítése
+            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.DIALOGUE_POPUP); // hangeffekt
+            
+            Cursor.visible = false; //eltûnik a cursor
+            PlayerMovement.Instance.DisableSight();
+            PlayerMovement.Instance.canShoot = false; // a player nem tud lõni
+
             Time.timeScale = 0; //megállít mindent ami deltatime-ot használ (lényegében mindent)
         }
         NextText();
@@ -85,20 +92,38 @@ public class DialogueBoxUI : MonoBehaviour
     {
         if (i<dialogues.Count)
         {
-            //a beszélõ neve alapján változtatja meg az avatár képét
-            string pathToImage = "Images/" + dialogues[i].name;
-            avatar.sprite = Resources.Load<Sprite>(pathToImage);
-            nameText.SetText(dialogues[i].name); //a beszélõnek a nevét átállítja
+            switch (typing)
+            {
+                case true: //ha még megy az írás animáció akkor befejezi
+                    typing = false;
+                    StopAllCoroutines();
+                    dialogueText.text = dialogues[i-1].dialogueText;
+                    break;
+                case false: // ha nem megy az írás akkor a következõ szöveget elkezdi írni
+                    string pathToImage = "Images/" + dialogues[i].name; //a beszélõ neve alapján változtatja meg az avatár képét
+                    avatar.sprite = Resources.Load<Sprite>(pathToImage);
+
+                    nameText.SetText(dialogues[i].name); //a beszélõnek a nevét átállítja
+                    StartCoroutine(TypeText(dialogues[i].dialogueText)); // coroutine animálja a kiírást
+
+                    if (i != 0) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.NEXT_TEXT); //hangeffekt
+                    i++;
+                    break;
+            }
+        }
+        else if (typing)
+        {
+            typing = false;
             StopAllCoroutines();
-            if(i!=0)AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.NEXT_TEXT);
-            StartCoroutine(TypeText(dialogues[i].dialogueText)); // coroutine animálja a kiírást
-            i++;
+            dialogueText.text = dialogues[i - 1].dialogueText;
         }
         else
         {
             //ha elfogytak a dialógusok akkor eltûnik a ui és tovább megy a game
             dialogues.Clear();
             displayingText=false;
+            Cursor.visible = true;
+            PlayerMovement.Instance.EnableSight();
             dialogueBox.gameObject.SetActive(false);
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.DIALOGUE_POPUP);
             Time.timeScale=1f;
@@ -112,6 +137,7 @@ public class DialogueBoxUI : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
+        typing = true;
         dialogueText.text = "";
         //átalakítja a dialógust char tömbbé és egyesével kiírja delayel
         foreach (char letter in text.ToCharArray())
@@ -120,6 +146,7 @@ public class DialogueBoxUI : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.TYPING);
             yield return new WaitForSecondsRealtime(textDisplaySpeed); //sima WaitForSeconds nem jó mert azt megállítja a timeScale = 0
         }
+        typing = false;
     }
 
     private IEnumerator WaitThenEndScene(float delay)
@@ -128,7 +155,12 @@ public class DialogueBoxUI : MonoBehaviour
         OnGameEnd?.Invoke(this, EventArgs.Empty);
         yield return new WaitForSeconds(delay);
         GameStateManager.Instance.gameState = GameStateManager.GameState.Ending;
-        AudioManager.Instance.PlayMusic(AudioManager.Music_enum.ENDING_THEME);
         Loader.LoadScene(Loader.Scene.CutScene);
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.Instance.OnStageInit -= StageManager_OnStageInit;
+        LocatorSpawner.Instance.OnLocatorPickup -= LocatorSpawner_OnLocatorPickup;
     }
 }

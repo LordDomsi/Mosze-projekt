@@ -12,6 +12,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private Texture2D defaultCursorTexture;
     private Vector2 cursorPosition;
 
+    //pause menu megjelenítéséért felelõs script
     private void Awake()
     {
         resumeButton.onClick.AddListener(() =>

@@ -11,6 +11,7 @@ public class StageBackgroundHandler : MonoBehaviour
         StageManager.Instance.OnStageInit += Stagemanager_OnStageInit;
     }
     //stage váltásnál eldönti melyik map legyen aktív
+    //pályaváltásnál lényegében csak a háttér változik meg amúgy ugyanoda spawnol a player mindig
     private void Stagemanager_OnStageInit(object sender, System.EventArgs e)
     {
         for(int i = 0; i< stageTilemaps.Count; i++)
@@ -24,5 +25,10 @@ public class StageBackgroundHandler : MonoBehaviour
                 stageTilemaps[i].SetActive(false);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.Instance.OnStageInit -= Stagemanager_OnStageInit;
     }
 }

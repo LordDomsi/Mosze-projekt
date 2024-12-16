@@ -6,12 +6,12 @@ using UnityEngine;
 public class LeaderboardItem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI rank;
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private TextMeshProUGUI score;
 
-    public void Init(string name, int score, int rank)
+    public void Init(string name, int score, int rank) // leaderboard elemek frissítése
     {
-        this.name.SetText(name);
+        this.userName.SetText(name);
         this.score.SetText(score.ToString());
         this.rank.SetText(rank.ToString() + ".");
     }

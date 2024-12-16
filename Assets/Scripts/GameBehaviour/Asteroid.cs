@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    //Aszteroidák mozgása
 
     private const string BULLET_TAG = "Bullet";
     private Rigidbody2D rigidBody;
@@ -16,12 +17,13 @@ public class Asteroid : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    public int damage = 3;
+
     private void Start()
     {
-        InitialForce();
+        InitialForce();  // kezdõ löket random mértékben, mérettõl függõen
         this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);    //megforgatja random szogben
     }
-
 
     //Ha túl messze kerül az asteroida a playertõl akkor kitörlõdik
     private void LateUpdate()
@@ -29,7 +31,6 @@ public class Asteroid : MonoBehaviour
         float distance = Vector2.Distance(this.transform.position, PlayerMovement.Instance.transform.position);
         if (distance > 30f)
         {
-            AsteroidSpawner.Instance.DecreaseAsteroidCount();
             Destroy(this.gameObject);
         }
     }
@@ -71,7 +72,7 @@ public class Asteroid : MonoBehaviour
         if(collision.gameObject.tag == BULLET_TAG)
         {
             Vector2 pos = this.transform.position;
-            if ((this.size) > 0.04f)
+            if ((this.size) > 0.04f) //ha nem a legkisebb aszteroidát találjuk el akkor 2 kisebb fog helyette spawnolni
              {
                  
                  pos = pos + (Random.insideUnitCircle / 2);
@@ -79,26 +80,48 @@ public class Asteroid : MonoBehaviour
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
                  AsteroidSpawner.Instance.SpawnAsteroid(pos, size/2);
              }
-            AsteroidSpawner.Instance.DecreaseAsteroidCount();
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
+            TryPlayAudio();
             Destroy(this.gameObject);
 
             if (size == 0.04f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[0]); // méret szerint növeli a player score-t
             if (size == 0.08f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[1]);
             if (size == 0.16f) ScoreManager.Instance.IncreasePlayerScore(pointsWorthList[2]);
 
-            if (Random.Range(1, 101) < 6)        //Power-up 5% eséllyel spawnol
+            if (Random.Range(1, 101) <= 11)        //Power-up 10% eséllyel spawnol
             {
-                GetComponent<Powerups>().PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
+                PowerUpSpawner.Instance.PowerUpSpawn(pos);     //az elpusztított aszteroida koordinátáin spawnol
             }
         }
         
     }
-
+    private void OnDestroy()
+    {
+        AsteroidSpawner.Instance.DecreaseAsteroidCount();
+    }
     public void SetSize(float size)
     {
         this.size = size;
+        damage = (int)(size / 0.04f * 2);
     }
     public float GetSize() { return this.size; }
+
+    public void TryPlayAudio() //csak akkor játsza le a hangeffektet ha a képernyõn belül van az eltalált aszteroida hogy ne legyen összezavaró amikor képernyõn kivül találjuk el
+    {
+        if(this.transform.position.y <= 8f && this.transform.position.y >= -8f && this.transform.position.x <= PlayerMovement.Instance.transform.position.x + 14f && this.transform.position.x >= PlayerMovement.Instance.transform.position.x - 14f) AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ASTEROID_DESTROY);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player") //screen shake + audio ha asteroidával ütközik a player
+        {
+            if (!PlayerMovement.Instance.shielded)
+            {
+                PlayerHealthManager.Instance.TakeDamage(damage);
+                ScreenShakeFX.Instance.ShakeCamera(2f, 0.2f);
+                TryPlayAudio();
+                Destroy(this.gameObject);
+            }
+        }
+    }
 
 }

@@ -29,7 +29,7 @@ public class EnemyShoot : MonoBehaviour
         shootingPoint = ShootingPoint.Left;
     }
 
-    private void EnemyAi_OnEnemyDisabled(object sender, System.EventArgs e)
+    private void EnemyAi_OnEnemyDisabled(object sender, System.EventArgs e) // csak akkor lõ ha aktív az ai
     {
         shootingActive = false;
     }
@@ -56,6 +56,7 @@ public class EnemyShoot : MonoBehaviour
     private void Shoot()
     {
         AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_SHOOT);
+
         GameObject newEnemyBullet = null;
         if (!enemyTypeSO.twoFirePoints)
         {
@@ -79,5 +80,11 @@ public class EnemyShoot : MonoBehaviour
         }
         newEnemyBullet.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.enemyTypeSO.enemyBulletSpeed);
         newEnemyBullet.GetComponent<EnemyBullet>().SetBulletDamage(enemyTypeSO.enemyDamage);
+    }
+
+    private void OnDestroy()
+    {
+        enemyAi.OnEnemyActivated -= EnemyAi_OnEnemyActivated;
+        enemyAi.OnEnemyDisabled -= EnemyAi_OnEnemyDisabled;
     }
 }

@@ -9,7 +9,7 @@ public class PlayerEngineFX : MonoBehaviour
 
     private PlayerMovement playerMovement;
 
-    private bool forward = false;
+    [SerializeField] private AudioSource engineSource;
 
     private void Start()
     {
@@ -17,50 +17,46 @@ public class PlayerEngineFX : MonoBehaviour
 
         playerMovement.OnForwardPressed += PlayerMovement_OnForwardPressed;
         playerMovement.OnForwardStopped += PlayerMovement_OnForwardStopped;
-        playerMovement.OnTurnLeft += PlayerMovement_OnTurnLeft;
-        playerMovement.OnTurnRight += PlayerMovement_OnTurnRight;
-        playerMovement.OnStopTurn += PlayerMovement_OnStopTurn;
+        PlayerHealthManager.Instance.OnPlayerDeath += PlayerHealthManager_OnPlayerDeath;
 
         LeftEngine.SetActive(false);
         RightEngine.SetActive(false);
+        if(engineSource.isPlaying) engineSource.Stop();
     }
 
-    private void PlayerMovement_OnStopTurn(object sender, System.EventArgs e)
+    private void PlayerHealthManager_OnPlayerDeath(object sender, System.EventArgs e)
     {
-        if (!forward)
-        {
-            LeftEngine.SetActive(false);
-            RightEngine.SetActive(false);
-        }
-    }
-
-    private void PlayerMovement_OnTurnRight(object sender, System.EventArgs e)
-    {
-        if (!forward)
-        {
-            LeftEngine.SetActive(true);
-        }
-    }
-
-    private void PlayerMovement_OnTurnLeft(object sender, System.EventArgs e)
-    {
-        if (!forward)
-        {
-            RightEngine.SetActive(true);
-        }
+        LeftEngine.SetActive(false);
+        RightEngine.SetActive(false);
+        engineSource.Stop();
     }
 
     private void PlayerMovement_OnForwardStopped(object sender, System.EventArgs e)
     {
+
         LeftEngine.SetActive(false);
         RightEngine.SetActive(false);
-        forward = false;
+        engineSource.Stop();
     }
 
+    //ha player elõre megy akkor megjeleníti az engine effektet és lejátsza a hangeffektet
     private void PlayerMovement_OnForwardPressed(object sender, System.EventArgs e)
     {
-        LeftEngine.SetActive(true);
-        RightEngine.SetActive(true);
-        forward = true;
+        if (!DialogueBoxUI.Instance.displayingText && !GameOverUI.Instance.gameOver)
+        {
+            LeftEngine.SetActive(true);
+            RightEngine.SetActive(true);
+            if (!engineSource.isPlaying) engineSource.Play();
+        }
+        else
+        {
+            engineSource.Stop();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        playerMovement.OnForwardPressed -= PlayerMovement_OnForwardPressed;
+        playerMovement.OnForwardStopped -= PlayerMovement_OnForwardStopped;
     }
 }

@@ -9,7 +9,7 @@ public class BossAI : MonoBehaviour
     private bool initialMovement = true;
     private float bossHealth;
     [SerializeField] private GameObject explosionPrefab;
-    public enum BossState
+    public enum BossState //két fázisa van a bossnak, ezek között váltogat egy timer alapján
     {
         BasicAttack,
         SpecialAttack
@@ -111,11 +111,13 @@ public class BossAI : MonoBehaviour
     private void BasicAttack()
     {
         // a player felé nézzen a boss
-        Quaternion targetRotation = LookTowardsObject(PlayerMovement.Instance.transform);
+        Vector3 direction = PlayerMovement.Instance.transform.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle-90);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bossTypeSO.rotationSpeed * Time.deltaTime);
 
         shootingTimer += Time.deltaTime;
-        if (shootingTimer > bossTypeSO.enemyShootSpeed)
+        if (shootingTimer > bossTypeSO.enemyShootSpeed && !GameOverUI.Instance.gameOver)
         {
             Shoot();
             shootingTimer = 0f;
@@ -149,7 +151,7 @@ public class BossAI : MonoBehaviour
         }
         //külön timer a special attacknak
         specialAttackShootingTimer += Time.deltaTime;
-        if(specialAttackShootingTimer > bossTypeSO.specialAttackShootSpeed)
+        if(specialAttackShootingTimer > bossTypeSO.specialAttackShootSpeed && !GameOverUI.Instance.gameOver)
         {
             specialAttackShootingTimer = 0f;
             Shoot();

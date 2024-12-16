@@ -5,7 +5,6 @@ public class EnemyAI : MonoBehaviour
 {
     private EnemyTypeScriptableObject enemyTypeSO;
     private bool enemyActive = false;
-    //private int direction = 1;
     private Rigidbody2D rb;
     private PolygonCollider2D polygonCollider;
     private float enemyHealth;
@@ -33,28 +32,44 @@ public class EnemyAI : MonoBehaviour
             polygonCollider.enabled = false;
             OnEnemyDisabled?.Invoke(this, EventArgs.Empty);
         }
-
-        //ha aktív akkor mozogjon és nézzen a player felé
+        LookTowardsPlayer();
+        //ha aktív akkor mozogjon
         if (enemyActive)
         {
-            LookTowardsPlayer();
             MovementHandle(distance);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        //ha pálya szélét érinti akkor teleportáljon a túloldalra
+        if (transform.position.y > 6.9f)
+        {
+            float newPosY = transform.position.y * -1 + 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
+        }
+        if (transform.position.y < -6.9f)
+        {
+            float newPosY = transform.position.y * -1 - 0.1f;
+            transform.position = new Vector2(transform.position.x, newPosY);
         }
     }
 
     public void TakeDamage(float playerBulletDamage)
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_HIT);
-        enemyHealth = enemyHealth - playerBulletDamage;
-        EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>();
-        this.gameObject.GetComponent<HitIndicator>().Hit();
-        enemyHealthBar.UpdateHealthBar(enemyHealth, enemyTypeSO.enemyHealth);
-        if (enemyHealth <= 0)
+        enemyHealth = enemyHealth - playerBulletDamage; //hp update
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.ENEMY_HIT); //hangeffekt
+        EnemyHealthBar enemyHealthBar = GetComponent<EnemyHealthBar>(); //hp bar updateelése
+        enemyHealthBar.UpdateHealthBar(enemyHealth, enemyTypeSO.enemyHealth); 
+        this.gameObject.GetComponent<HitIndicator>().Hit(); //hit animáció
+        
+        if (enemyHealth <= 0) // ha meghal az enemy
         {
-            ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth);
-            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION);
-            ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth);
-            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+            ScoreManager.Instance.IncreasePlayerScore(enemyTypeSO.pointsWorth); //növeli a player scoret
+            AudioManager.Instance.PlaySFX(AudioManager.SFX_enum.EXPLOSION); //hangeffekt
+            ScorePopup.Instance.Popup(this.transform, enemyTypeSO.pointsWorth); // megjeleníti hogy mennyi pontot kap a player
+            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity); // robbanás animáció
             Destroy(gameObject);
             EnemySpawner.Instance.DecreaseEnemyCount();
         }
@@ -72,18 +87,18 @@ public class EnemyAI : MonoBehaviour
     {
         Vector3 direction = PlayerMovement.Instance.transform.position - transform.position; // a player felé nézzen az enemy
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle-90);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemyTypeSO.rotationSpeed * Time.deltaTime);
     }
 
     private void MovementHandle(float distance)
     {
         float speed;
-        if (distance > 12f)
+        if (distance > 10f)
         {
             speed = -enemyTypeSO.enemySpeed; // balra mozog
         }
-        else if (distance < 8f)
+        else if (distance < 6f)
         {
             speed = enemyTypeSO.enemySpeed;  // jobbra mozog   
         }

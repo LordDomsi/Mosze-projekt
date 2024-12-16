@@ -6,7 +6,7 @@ public class PowerUpIdleAnim : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 100f;
 
-    void Update()
+    private void Update() //powerup forog, wow
     {
         transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }

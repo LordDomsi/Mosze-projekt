@@ -17,9 +17,11 @@ MonoBehaviour:
   enemyHealth: 2
   enemySpeed: 3
   enemyShootSpeed: 1.5
-  enemyDamage: 5
+  enemyDamage: 3
   enemyBulletSpeed: 400
   pointsWorth: 100
-  rotationSpeed: 10
+  rotationSpeed: 20
   specialAttackShootSpeed: 0
-  enemyCountBasedOnStage: 020000000000000000000000
+  specialAttackRotationSpeed: 0
+  twoFirePoints: 0
+  enemyCountBasedOnStage: 1e0000000500000005000000

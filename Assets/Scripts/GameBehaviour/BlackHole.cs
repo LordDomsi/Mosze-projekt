@@ -40,4 +40,10 @@ public class BlackHole : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        LocatorSpawner.Instance.OnLocatorPickup -= BossSpawner_OnLocatorPickup;
+        EnemySpawner.Instance.OnEnemiesSpawned -= EnemySpawner_OnEnemiesSpawned;
+    }
+
 }

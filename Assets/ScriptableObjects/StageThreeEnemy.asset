@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: StageThreeEnemy
   enemyPrefab: {fileID: 5086067191987387682, guid: 591872c3724fc65489ee18bde66d3a2e, type: 3}
-  enemyHealth: 5
+  enemyHealth: 10
   enemySpeed: 5
-  enemyShootSpeed: 0.6
-  enemyDamage: 15
-  enemyBulletSpeed: 700
+  enemyShootSpeed: 0.8
+  enemyDamage: 5
+  enemyBulletSpeed: 550
   pointsWorth: 300
-  rotationSpeed: 25
+  rotationSpeed: 40
   specialAttackShootSpeed: 0
   specialAttackRotationSpeed: 0
   twoFirePoints: 1
-  enemyCountBasedOnStage: 000000000000000002000000
+  enemyCountBasedOnStage: 000000000000000014000000

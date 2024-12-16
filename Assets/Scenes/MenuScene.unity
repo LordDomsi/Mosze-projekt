@@ -6817,9 +6817,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveData:
     enteredName: Player
-    currentLevel: 1
-    currentScore: 0
-    currentHealth: 100
+    playerData:
+      currentLevel: 1
+      currentScore: 0
+      currentHealth: 100
+      currentDamage: 1
+      currentAttackSpeed: 0.5
+      currentMovementSpeed: 250
+      currentMaxShield: 3
     settings:
       musicVolume: 1
       sfxVolume: 1
@@ -8155,6 +8160,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   PowerUpUIGameObject: {fileID: 0}
+  SpeedBoostUIGameObject: {fileID: 0}
   UIGameObject: {fileID: 0}
   zoomInAnimSpeed: 1
   zoomOutAnimSpeed: 1.5
@@ -18157,6 +18163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45174537b23e34843aad819a16e34e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedToPause: 1
   gameState: 0
 --- !u!4 &1669326029
 Transform:
@@ -18796,7 +18803,7 @@ MonoBehaviour:
     loop: 0
     type: 2
   - clip: {fileID: 8300000, guid: 2310ba11a0b2b834f87dedbddf6fa7f5, type: 3}
-    volume: 1
+    volume: 0.7
     loop: 0
     type: 6
   - clip: {fileID: 8300000, guid: d87c66123a5c2864e8810073db1b8f19, type: 3}
@@ -18851,23 +18858,31 @@ MonoBehaviour:
     volume: 0.8
     loop: 0
     type: 16
+  - clip: {fileID: 8300000, guid: 32409a47927dcf349886f15fe72b9fa4, type: 3}
+    volume: 0.8
+    loop: 1
+    type: 17
   musicData:
-  - clip: {fileID: 8300000, guid: ffb81db72926dee459d29958083c1d61, type: 3}
+  - clip: {fileID: 8300000, guid: f87bcb231818f424f9e243528f6a5fee, type: 3}
     volume: 1
     loop: 1
     type: 0
-  - clip: {fileID: 8300000, guid: 1b738f42d33abe54ba5e700b082d59df, type: 3}
+  - clip: {fileID: 8300000, guid: 6741b8425ce689544bed6cd58366cbef, type: 3}
     volume: 1
     loop: 1
     type: 1
-  - clip: {fileID: 8300000, guid: 3136735a801382f43aa62e0df75a0e0d, type: 3}
+  - clip: {fileID: 8300000, guid: bb02a2c767a28844da7c844bd92fac32, type: 3}
     volume: 1
-    loop: 1
+    loop: 0
     type: 3
-  - clip: {fileID: 8300000, guid: 3136735a801382f43aa62e0df75a0e0d, type: 3}
+  - clip: {fileID: 8300000, guid: dee10c7c9c3290f41a28c3999ec03203, type: 3}
     volume: 1
     loop: 1
     type: 2
+  - clip: {fileID: 8300000, guid: eff8eb4f95554d940988a1a70540da7b, type: 3}
+    volume: 1
+    loop: 0
+    type: 4
   musicSource: {fileID: 157266389}
   sfxSource: {fileID: 1560854312}
   audioMixer: {fileID: 24100000, guid: 5bcadeaef5dbccc4dbac92f30018df17, type: 2}
@@ -19511,7 +19526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rank: {fileID: 507334413}
-  name: {fileID: 229411658}
+  userName: {fileID: 229411658}
   score: {fileID: 377850897}
 --- !u!1 &1751998509
 GameObject:

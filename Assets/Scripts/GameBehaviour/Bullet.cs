@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float bulletDamage = 1f;
+    //bullet collisionért felelõs script
+    [SerializeField] private float bulletDamage;
+
+    private void Awake()
+    {
+        bulletDamage = PlayerMovement.Instance.GetPlayerDamage();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

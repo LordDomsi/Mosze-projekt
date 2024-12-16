@@ -25,6 +25,7 @@ public class ImageFade : MonoBehaviour
         StartCoroutine(FadeIn());
     }
 
+    //képernyõ fade amikor vége a játéknak
     private IEnumerator FadeIn()
     {
         yield return new WaitForSeconds(fadeTime);

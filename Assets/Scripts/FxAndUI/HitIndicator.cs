@@ -13,7 +13,7 @@ public class HitIndicator : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
     }
-
+    //hit animáció
     public void Hit()
     {
         StartCoroutine(HitAnim());

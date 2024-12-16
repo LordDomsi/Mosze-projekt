@@ -29,14 +29,16 @@ public class AudioManager : MonoBehaviour
         BUTTON_HOVER,
         DIALOGUE_POPUP,
         NEXT_TEXT,
-        TYPING
+        TYPING,
+        ENGINE_SOUND
     }
     public enum Music_enum
     {
         MENU_THEME,
         GAME_THEME,
         GAMEOVER_THEME,
-        ENDING_THEME
+        ENDING_THEME,
+        INTRO_THEME
     }
 
     //hangokhoz kapcsolódó adatstruktúra
@@ -92,8 +94,8 @@ public class AudioManager : MonoBehaviour
     public void SetVolume(float value, string param, Slider slider)
     {
         audioMixer.SetFloat(param, value: Mathf.Log10(value) * 40);
+        if(value == 0f) audioMixer.SetFloat(param, -80f);
         slider.value = value;
-        Debug.Log(value + param);
     }
 
     //zene lejátszása
@@ -126,6 +128,8 @@ public class AudioManager : MonoBehaviour
                 auSource.clip = sfxData[i].clip;
                 auSource.volume = sfxData[i].volume;
                 auSource.loop = sfxData[i].loop;
+                if (type == SFX_enum.ASTEROID_DESTROY) { auSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f); }
+                else auSource.pitch = 1f;
                 auSource.Play();
                 break;
             }

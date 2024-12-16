@@ -16,11 +16,12 @@ TagManager:
   - Boss
   - BlackHole
   - Shield
+  - PowerUp4
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessLayer
   - Water
   - UI
   - player
@@ -34,7 +35,6 @@ TagManager:
   - blackholeouter
   - MenuBackground
   - Shield
-  - 
   - 
   - 
   - 
