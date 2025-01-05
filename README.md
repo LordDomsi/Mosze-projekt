@@ -8,6 +8,8 @@
 
 A CodeBreaker24 egy felülnézetes lövöldözős játék ("top-down arcade shooter"), amiben a játékos egy űrhajót irányít 3 szinten keresztül. Különböző akadályokat kell kikerülni (aszteroidák) és "ufo" ellenfeleket kell legyőzni. Minden pálya végén egy "Boss Fight" található, amelynek legyőzése megnyit egy kaput a következő pályára. Mindent pálya végén a játékos űrhajója egyre erősebb lesz, viszont az ellenfelek is nehezednek. A játék során az aszteroidák lelövésével powerupokat szerezhet a játékos, amik kulcsfontosságúak a ellenfelek legyőzéséhez. Mindezek mellett a történetet felugró ablakokban lehet követni.
 
+[Bemutató videó](https://www.youtube.com/watch?v=iyK5bsh9tZ8)
+
 ## Futtatás
 
 A kimeneti fájl (.exe) futtatása
